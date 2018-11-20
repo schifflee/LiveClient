@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using PowerCreator.LiveClient.Core.Enums;
 using PowerCreator.LiveClient.Core.Models;
@@ -30,8 +31,10 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         private byte[] _buffer;
 
         private Task _task;
+        private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         internal VideoDevice(string videoDeviceName, int id)
         {
+            
             ID = id;
             Name = videoDeviceName;
 
@@ -64,7 +67,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
                 if (_buffer == null)
                     _buffer = new byte[_getBufferSize()];
 
-                _task = new Task();
+                //_task = new Task();
             }
             return IsOpen;
         }

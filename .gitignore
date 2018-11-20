@@ -3,3 +3,15 @@
 ################################################################################
 
 /.vs/PowerCreator.LiveClient.Desktop/v15
+/packages
+/PowerCreator.LiveClient.Core/bin/Debug
+/PowerCreator.LiveClient.Core/obj/Debug
+/PowerCreator.LiveClient.Desktop/obj/Debug
+/PowerCreator.LiveClient.Infrastructure/bin/Debug
+/PowerCreator.LiveClient.Infrastructure/obj/Debug
+/PowerCreator.LiveClient.Log/bin/Debug
+/PowerCreator.LiveClient.Log/obj/Debug
+/PowerCreator.LiveClient.VsNetSdk/bin/Debug
+/PowerCreator.LiveClient.VsNetSdk/obj/Debug
+/Test/bin/Debug
+/Test/obj/Debug
