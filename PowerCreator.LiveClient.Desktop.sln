@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Log", "PowerCreator.LiveClient.Log\PowerCreator.LiveClient.Log.csproj", "{55B61E6C-0A37-4FBB-91C4-ED3FC6FBC56B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.VsNetSdk", "PowerCreator.LiveClient.VsNetSdk\PowerCreator.LiveClient.VsNetSdk.csproj", "{31B15B01-3201-4B76-95E1-8A06EDFC0C38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Desktop", "PowerCreator.LiveClient.Desktop\PowerCreator.LiveClient.Desktop.csproj", "{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Core", "PowerCreator.LiveClient.Core\PowerCreator.LiveClient.Core.csproj", "{CDDE7C0B-C588-496E-9D3C-E7EB28485198}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{124CBB70-907A-4949-9632-C2A74F3C4ABC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{8B11BD9D-C16A-4A5C-8FA5-8D89B3181C58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LiveClient.Common", "LiveClient.Common", "{C3ED2F1C-FF99-4234-889D-65F8C7CE46DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Infrastructure", "PowerCreator.LiveClient.Infrastructure\PowerCreator.LiveClient.Infrastructure.csproj", "{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D5E9D0DC-D820-4A92-9AA2-68860317FFB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Tests", "PowerCreator.LiveClient.Tests\PowerCreator.LiveClient.Tests.csproj", "{875FCD19-1161-49D8-97AD-C24ECA1273DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55B61E6C-0A37-4FBB-91C4-ED3FC6FBC56B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B61E6C-0A37-4FBB-91C4-ED3FC6FBC56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B61E6C-0A37-4FBB-91C4-ED3FC6FBC56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B61E6C-0A37-4FBB-91C4-ED3FC6FBC56B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31B15B01-3201-4B76-95E1-8A06EDFC0C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31B15B01-3201-4B76-95E1-8A06EDFC0C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31B15B01-3201-4B76-95E1-8A06EDFC0C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31B15B01-3201-4B76-95E1-8A06EDFC0C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDDE7C0B-C588-496E-9D3C-E7EB28485198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDDE7C0B-C588-496E-9D3C-E7EB28485198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDDE7C0B-C588-496E-9D3C-E7EB28485198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDDE7C0B-C588-496E-9D3C-E7EB28485198}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B11BD9D-C16A-4A5C-8FA5-8D89B3181C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B11BD9D-C16A-4A5C-8FA5-8D89B3181C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B11BD9D-C16A-4A5C-8FA5-8D89B3181C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B11BD9D-C16A-4A5C-8FA5-8D89B3181C58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{875FCD19-1161-49D8-97AD-C24ECA1273DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{875FCD19-1161-49D8-97AD-C24ECA1273DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{875FCD19-1161-49D8-97AD-C24ECA1273DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{875FCD19-1161-49D8-97AD-C24ECA1273DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7} = {C3ED2F1C-FF99-4234-889D-65F8C7CE46DA}
+		{875FCD19-1161-49D8-97AD-C24ECA1273DD} = {D5E9D0DC-D820-4A92-9AA2-68860317FFB3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.2.1.505.2\lib\NET35
+		SolutionGuid = {2A1E9249-FE12-4DB8-A908-94A98406A458}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
+	EndGlobalSection
+EndGlobal
