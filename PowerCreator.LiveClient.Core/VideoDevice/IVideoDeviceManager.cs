@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.VideoDevice
 {
-    public interface IVideoDeviceManager
+    public interface IVideoDeviceManager : IDisposable
     {
         IEnumerable<IVideoDevice> GetVideoDevices();
 

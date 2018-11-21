@@ -64,9 +64,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioDeviceTests\AudioDeviceManagerTest.cs" />
+    <Compile Include="AudioDeviceTests\AudioDeviceTest.cs" />
+    <Compile Include="AudioEncoderTests\AacEncoderTest.cs" />
+    <Compile Include="RecordFileTests\RecordFileTest.cs" />
     <Compile Include="TestBaseWithLocalIocManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VideoDeviceTests\VideoDeviceManagerTest.cs" />
+    <Compile Include="VideoDeviceTests\VideoDeviceTest.cs" />
+    <Compile Include="VideoEncoderTests\VideoEncoderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

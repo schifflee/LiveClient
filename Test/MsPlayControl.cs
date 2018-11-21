@@ -12,7 +12,7 @@ using PowerCreator.LiveClient.Core.Models;
 
 namespace Test
 {
-    public partial class MsPlayControl : UserControl, IObserver<VideoDeviceData>
+    public partial class MsPlayControl : UserControl, IObserver<VideoDeviceDataContext>
     {
         public MsPlayControl()
         {
@@ -29,18 +29,30 @@ namespace Test
             throw new NotImplementedException();
         }
 
-        public void OnNext(VideoDeviceData value)
+        public void OnNext(VideoDeviceDataContext value)
         {
-            MessageBox.Show(string.Format("{0}:{1}", value.Data, value.DataLength));
+            axMSPlayer1.InputDecVideo(value.Data, value.DataLength);
         }
+        private IDisposable unsubscriber;
+        IVideoDevice videoDevice;
+        VideoDeviceManager videoDeviceManager;
+        public void OpenVideoDevice(int deviceId)
+        {
+             
+            if (videoDeviceManager == null) {
+                videoDeviceManager = new VideoDeviceManager();
+            }
+            videoDevice = videoDeviceManager.GetVideoDeviceById(0);
+            unsubscriber = videoDevice.Subscribe(this);
+            videoDevice.OpenDevice();
+            axMSPlayer1.StopDecData();
+            axMSPlayer1.StartInputDecData(0, videoDevice.DeviceBitmapInfoHeader);
+        }
+        public void CloseVideoDevice()
+        {
+            unsubscriber.Dispose();
+            videoDevice.CloseDevice();
 
-        public void OpenCamera(int id)
-        {
-            VideoDeviceManager videoDeviceManager = new VideoDeviceManager();
-            var s = videoDeviceManager.GetVideoDeviceById(0);
-            s.Subscribe(this);
-            s.OpenDevice();
         }
-       
     }
 }

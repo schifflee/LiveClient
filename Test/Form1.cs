@@ -31,15 +31,15 @@ namespace Test
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (t.IsCompleted)
-                t.Dispose();
-            t = null;
-            if (t == null)
-            {
-                t = new Task(aa, cancellationTokenSource.Token);
-            }
-            t.Start();
-            //msPlayControl1.OpenCamera(0);
+            //if (t.IsCompleted)
+            //    t.Dispose();
+            //t = null;
+            //if (t == null)
+            //{
+            //    t = new Task(aa, cancellationTokenSource.Token);
+            //}
+           // t.Start();
+            msPlayControl1.OpenVideoDevice(0);
         }
         private void aa()
         {
@@ -52,7 +52,8 @@ namespace Test
 
         private void button2_Click(object sender, EventArgs e)
         {
-            cancellationTokenSource.Cancel();
+            msPlayControl1.CloseVideoDevice();
+            //cancellationTokenSource.Cancel();
         }
     }
 }

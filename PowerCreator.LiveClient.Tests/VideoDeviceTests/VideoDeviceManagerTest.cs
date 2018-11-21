@@ -18,6 +18,8 @@ namespace PowerCreator.LiveClient.Tests.VideoDeviceTests
             Assert.IsNotNull(deviceList);
 
             Assert.IsTrue(deviceList.Any());
+
+            videoDeviceManager.Dispose();
         }
         [TestMethod]
         public void ShouldGetLocalVideoDeviceByDeviceId()
@@ -29,6 +31,8 @@ namespace PowerCreator.LiveClient.Tests.VideoDeviceTests
             Assert.IsNotNull(videoDevice);
 
             Assert.IsTrue(videoDevice.ID == 0);
+
+            videoDeviceManager.Dispose();
         }
     }
 }

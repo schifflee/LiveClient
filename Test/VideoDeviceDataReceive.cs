@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Test
 {
-    public class VideoDeviceDataReceive : IObserver<VideoDeviceData>
+    public class VideoDeviceDataReceive : IObserver<VideoDeviceDataContext>
     {
         public void OnCompleted()
         {
@@ -19,7 +19,7 @@ namespace Test
             throw new NotImplementedException();
         }
 
-        public void OnNext(VideoDeviceData value)
+        public void OnNext(VideoDeviceDataContext value)
         {
            
         }

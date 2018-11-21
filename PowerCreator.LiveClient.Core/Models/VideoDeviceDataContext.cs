@@ -1,10 +1,10 @@
 ﻿namespace PowerCreator.LiveClient.Core.Models
 {
-    public struct VideoDeviceData
+    public struct VideoDeviceDataContext
     {
         public int Data { get; }
         public int DataLength { get; }
-        public VideoDeviceData(int data, int dataLength)
+        public VideoDeviceDataContext(int data, int dataLength)
         {
             Data = data;
             DataLength = dataLength;

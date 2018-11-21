@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace PowerCreator.LiveClient.Core.VideoDevice
 {
-    public class VideoDeviceManager : IVideoDeviceManager, IDisposable
+    public class VideoDeviceManager : IVideoDeviceManager
     {
         private readonly IntPtr _handle;
 
@@ -54,10 +54,11 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             {
                 if (disposing)
                 {
-                    //TODO 释放视频设备
+                    foreach (var videoDevice in _videoDeviceList)
+                        videoDevice.Dispose();
                 }
-               VsNetCameraSdk.Camera_FreeInstance(_handle);
-               disposedValue = true;
+                VsNetCameraSdk.Camera_FreeInstance(_handle);
+                disposedValue = true;
             }
         }
         ~VideoDeviceManager()

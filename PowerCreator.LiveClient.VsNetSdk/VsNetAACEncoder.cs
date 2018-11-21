@@ -26,9 +26,9 @@ namespace PowerCreator.LiveClient.VsNetSdk
 
 
         [DllImport("lib\\VSNet.dll", EntryPoint = "AACEncoder_SetDataCallFunc", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int AACEncoder_SetDataCallFunc(IntPtr intPtr, DeviceDataCallBack action, int context);
+        public static extern int AACEncoder_SetDataCallFunc(IntPtr intPtr, AudioDeviceDataCallBack action, int context);
 
-        public delegate void DeviceDataCallBack(ref DataHeader dataHeader, IntPtr pData, int pContext);
+        public delegate void AudioDeviceDataCallBack(ref DataHeader dataHeader, IntPtr pData, int pContext);
 
         [DllImport("lib\\VSNet.dll", EntryPoint = "AACEncoder_EncData", CallingConvention = CallingConvention.Cdecl)]
         public static extern int AACEncoder_EncData(IntPtr intPtr, int buffer, int size, int timeStamp);

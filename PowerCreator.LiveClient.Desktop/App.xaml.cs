@@ -13,7 +13,7 @@ namespace PowerCreator.LiveClient.Desktop
         {
             Bootstrapper bootstrapper = new Bootstrapper();
             bootstrapper.Run();
-            var s = bootstrapper.Container.Resolve<Class1>();
+            //var s = bootstrapper.Container.Resolve<Unsubscriber>();
         }
 
 

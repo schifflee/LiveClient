@@ -30,6 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DirectShowLib, Version=2.1.0.1599, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DirectShowLib.1.0.0\lib\DirectShowLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Desktop.Net40, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Desktop.Net40.4.1.1\lib\net40\Prism.Desktop.Net40.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,26 +49,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioDevice\AudioDevice.cs" />
+    <Compile Include="AudioDevice\AudioDeviceManager.cs" />
+    <Compile Include="AudioDevice\IAudioDevice.cs" />
+    <Compile Include="AudioDevice\IAudioDeviceManager.cs" />
+    <Compile Include="AudioEncoder\AacEncoder.cs" />
+    <Compile Include="AudioEncoder\IAacEncoder.cs" />
+    <Compile Include="DevicDataRecipient.cs" />
+    <Compile Include="Enums\RecState.cs" />
+    <Compile Include="Models\AudioDeviceDataContext.cs" />
+    <Compile Include="Models\AudioEncodedDataContext.cs" />
+    <Compile Include="Models\VideoEncodedDataContext.cs" />
+    <Compile Include="Record\IRecord.cs" />
+    <Compile Include="Record\Record.cs" />
     <Compile Include="VideoDevice\VideoDevice.cs" />
-    <Compile Include="VideoDevice\VideoDeviceGraphicsDataRecipient.cs" />
     <Compile Include="VideoDevice\VideoDeviceManager.cs" />
     <Compile Include="VideoDevice\IVideoDevice.cs" />
     <Compile Include="VideoDevice\IVideoDeviceManager.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Unsubscriber.cs" />
     <Compile Include="Enums\VideoDeviceDataFormat.cs" />
-    <Compile Include="Models\VideoDeviceData.cs" />
+    <Compile Include="Models\VideoDeviceDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VideoEncoder\H264VideoEncoder.cs" />
+    <Compile Include="VideoEncoder\IVideoEncoder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PowerCreator.LiveClient.Infrastructure\PowerCreator.LiveClient.Infrastructure.csproj">
       <Project>{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7}</Project>
       <Name>PowerCreator.LiveClient.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PowerCreator.LiveClient.Log\PowerCreator.LiveClient.Log.csproj">
+      <Project>{55b61e6c-0a37-4fbb-91c4-ed3fc6fbc56b}</Project>
+      <Name>PowerCreator.LiveClient.Log</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PowerCreator.LiveClient.VsNetSdk\PowerCreator.LiveClient.VsNetSdk.csproj">
       <Project>{31b15b01-3201-4b76-95e1-8a06edfc0c38}</Project>
       <Name>PowerCreator.LiveClient.VsNetSdk</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
