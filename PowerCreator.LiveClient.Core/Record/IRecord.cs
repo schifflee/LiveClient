@@ -10,7 +10,7 @@ namespace PowerCreator.LiveClient.Core.Record
     public interface IRecord : IDisposable
     {
         bool IsRecord { get; }
-        RecState RecState { get; }
+        RecAndLiveState State { get; }
 
         bool StartRecord(string recordFileSavePath);
 

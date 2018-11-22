@@ -67,7 +67,6 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             VsNetCameraSdk.Camera_CloseCamera(_handle);
             IsOpen = false;
             return true;
-
         }
 
         public bool OpenDevice()

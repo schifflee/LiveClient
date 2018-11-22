@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="User32Sdk.cs" />
     <Compile Include="VsNetAACEncoder.cs" />
     <Compile Include="VsNetCameraSdk.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

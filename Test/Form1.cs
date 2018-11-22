@@ -1,4 +1,9 @@
-﻿using System;
+﻿using PowerCreator.LiveClient.Core.AudioDevice;
+using PowerCreator.LiveClient.Core.AudioEncoder;
+using PowerCreator.LiveClient.Core.LiveBroadcast;
+using PowerCreator.LiveClient.Core.VideoDevice;
+using PowerCreator.LiveClient.Core.VideoEncoder;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -54,6 +59,25 @@ namespace Test
         {
             msPlayControl1.CloseVideoDevice();
             //cancellationTokenSource.Cancel();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            var videoEncoder = new H264VideoEncoder();
+            var videoDeviceManager =new VideoDeviceManager();
+            var videoDevice = videoDeviceManager.GetVideoDeviceById(0);
+
+            videoEncoder.SetVideoSource(videoDevice);
+
+            var aacEncoder =new AacEncoder();
+            var audioDeviceManager =new AudioDeviceManager();
+            var audioDevice = audioDeviceManager.GetAudioDeviceById(1);
+
+            aacEncoder.SetAudioDataSource(audioDevice);
+
+            LiveBroadcast liveBroadcast = new LiveBroadcast(videoEncoder, aacEncoder);
+            liveBroadcast.StartLive("192.168.0.202", 1935, "live", "test");
         }
     }
 }

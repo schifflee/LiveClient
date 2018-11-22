@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using DirectShowLib;
@@ -94,9 +96,9 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
         }
         private void _audioDeviceData(ref DataHeader dataHeader, IntPtr pData, int pContext)
         {
-#if DEBUG
-            Debug.WriteLine("_audioDeviceData:" + dataHeader.DataSize);
-#endif
+//#if DEBUG
+//            Debug.WriteLine("_audioDeviceData:" + dataHeader.DataSize);
+//#endif
             AudioEncodedDataContext audioEncodedDataContext = new AudioEncodedDataContext(pData, dataHeader.DataSize, (int)dataHeader.TimeStamp, Convert.ToBoolean(dataHeader.KeyFrame));
             foreach (var observer in _observers)
             {
@@ -109,12 +111,18 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
 
         public override void OnError(Exception error) { }
 
+        [HandleProcessCorruptedStateExceptions]
+        [SecurityCritical]
         public override void OnNext(AudioDeviceDataContext value)
         {
-#if DEBUG
-            Debug.WriteLine("SourceAudioDataLength:" + value.DataLength);
-#endif
-            AACEncoder_EncData(_handle, value.Data, value.DataLength, (int)DateTime.Now.Ticks);
+//#if DEBUG
+//            Debug.WriteLine("SourceAudioDataLength:" + value.DataLength);
+//#endif
+            try
+            {
+                AACEncoder_EncData(_handle, value.Data, value.DataLength, (int)DateTime.Now.Ticks);
+            }
+            catch { }
         }
         #endregion
 
@@ -125,7 +133,8 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
                 _observers.Add(observer);
             return new Unsubscriber<AudioEncodedDataContext>(_observers, observer, (observers) =>
             {
-                if (!observers.Any()) {
+                if (!observers.Any())
+                {
                     StopAudioEncoder();
                 }
             });

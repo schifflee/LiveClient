@@ -116,17 +116,17 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
 
         public override void OnNext(VideoDeviceDataContext value)
         {
-#if DEBUG
-            Debug.WriteLine("SourceDataLength:" + value.DataLength);
-#endif
+//#if DEBUG
+//            Debug.WriteLine("SourceDataLength:" + value.DataLength);
+//#endif
 
             _startVideoEncoder(value.Data, value.DataLength, _getTimeStamp(), ref _outputData, ref _outputDataSize, ref _outputTimeStamp, ref _outputKeyFrame);
             VideoEncodedDataContext videoEncodedDataContext = new VideoEncodedDataContext(_outputData, _outputDataSize, _outputTimeStamp, _outputKeyFrame);
             foreach (var observer in _observers)
             {
-#if DEBUG
-                Debug.WriteLine("EncodedDataLength:" + videoEncodedDataContext.DataLength);
-#endif
+//#if DEBUG
+//                Debug.WriteLine("EncodedDataLength:" + videoEncodedDataContext.DataLength);
+//#endif
 
                 observer.OnNext(videoEncodedDataContext);
             }

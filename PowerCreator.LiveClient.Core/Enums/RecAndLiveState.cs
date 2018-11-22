@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.Enums
 {
-    public enum RecState
+    public enum RecAndLiveState
     {
         NotStart = 0,
         Started = 1,
