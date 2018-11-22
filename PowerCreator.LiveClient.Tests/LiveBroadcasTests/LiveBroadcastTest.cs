@@ -4,13 +4,7 @@ using PowerCreator.LiveClient.Core.AudioEncoder;
 using PowerCreator.LiveClient.Core.LiveBroadcast;
 using PowerCreator.LiveClient.Core.VideoDevice;
 using PowerCreator.LiveClient.Core.VideoEncoder;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Tests.LiveBroadcasTests
 {

@@ -4,12 +4,7 @@ using PowerCreator.LiveClient.Core.AudioEncoder;
 using PowerCreator.LiveClient.Core.Record;
 using PowerCreator.LiveClient.Core.VideoDevice;
 using PowerCreator.LiveClient.Core.VideoEncoder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Tests.RecordFileTests
 {
@@ -37,9 +32,9 @@ namespace PowerCreator.LiveClient.Tests.RecordFileTests
             aacEncoder.SetAudioDataSource(audioDevice);
 
             Record record = new Record(videoEncoder, aacEncoder);
-            record.StartRecord(@"test.mp4");
+            Assert.IsTrue(record.StartRecord(@"test.mp4"));
             Thread.Sleep(3000);
-            record.StopRecord();
+            Assert.IsTrue(record.StopRecord());
         }
         [TestMethod]
         public void VideoSourceSwitchTest()
@@ -50,11 +45,11 @@ namespace PowerCreator.LiveClient.Tests.RecordFileTests
             aacEncoder.SetAudioDataSource(audioDevice);
 
             Record record = new Record(videoEncoder, aacEncoder);
-            record.StartRecord(@"test.mp4");
+            Assert.IsTrue(record.StartRecord(@"test.mp4"));
             Thread.Sleep(3000);
             Assert.IsTrue(videoEncoder.SetVideoSource(videoDeviceManager.GetVideoDeviceById(1)));
             Thread.Sleep(3000);
-            record.StopRecord();
+            Assert.IsTrue(record.StopRecord());
         }
     }
 }
