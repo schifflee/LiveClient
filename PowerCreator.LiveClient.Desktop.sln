@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D5E9D0DC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Tests", "PowerCreator.LiveClient.Tests\PowerCreator.LiveClient.Tests.csproj", "{875FCD19-1161-49D8-97AD-C24ECA1273DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.WebPlatform.Sdk", "PowerCreator.WebPlatform.Sdk\PowerCreator.WebPlatform.Sdk.csproj", "{CC075E42-2BE2-4EAA-ACFD-508B445DB652}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Modules.MsPlayer", "PowerCreator.LiveClient.Modules.MsPlay\PowerCreator.LiveClient.Modules.MsPlayer.csproj", "{80A4A92B-75DD-4328-BCA9-8921CFA8233C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,14 @@ Global
 		{875FCD19-1161-49D8-97AD-C24ECA1273DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{875FCD19-1161-49D8-97AD-C24ECA1273DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{875FCD19-1161-49D8-97AD-C24ECA1273DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC075E42-2BE2-4EAA-ACFD-508B445DB652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC075E42-2BE2-4EAA-ACFD-508B445DB652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC075E42-2BE2-4EAA-ACFD-508B445DB652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC075E42-2BE2-4EAA-ACFD-508B445DB652}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80A4A92B-75DD-4328-BCA9-8921CFA8233C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80A4A92B-75DD-4328-BCA9-8921CFA8233C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80A4A92B-75DD-4328-BCA9-8921CFA8233C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80A4A92B-75DD-4328-BCA9-8921CFA8233C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,10 +76,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7} = {C3ED2F1C-FF99-4234-889D-65F8C7CE46DA}
 		{875FCD19-1161-49D8-97AD-C24ECA1273DD} = {D5E9D0DC-D820-4A92-9AA2-68860317FFB3}
+		{80A4A92B-75DD-4328-BCA9-8921CFA8233C} = {124CBB70-907A-4949-9632-C2A74F3C4ABC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.2.1.505.2\lib\NET35
-		SolutionGuid = {2A1E9249-FE12-4DB8-A908-94A98406A458}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
+		SolutionGuid = {2A1E9249-FE12-4DB8-A908-94A98406A458}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal
