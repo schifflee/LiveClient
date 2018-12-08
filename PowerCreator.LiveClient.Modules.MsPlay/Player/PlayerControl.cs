@@ -10,14 +10,15 @@ using System.Windows.Forms;
 using PowerCreator.LiveClient.Core.Models;
 using PowerCreator.LiveClient.Core.VideoDevice;
 
-namespace PowerCreator.LiveClient.Modules.MsPlayer.MsPlayer
+namespace PowerCreator.LiveClient.Modules.MsPlayer.Player
 {
-    public partial class MsPlayerControl : UserControl, IObserver<VideoDeviceDataContext>
+    public partial class PlayerControl: UserControl, IObserver<VideoDeviceDataContext>
     {
-        public MsPlayerControl()
+        public PlayerControl()
         {
             InitializeComponent();
         }
+
         private IDisposable _unsubscriber;
         private IVideoDevice _currentUseVideoSource;
         private bool _isPlay;
@@ -30,8 +31,9 @@ namespace PowerCreator.LiveClient.Modules.MsPlayer.MsPlayer
             _currentUseVideoSource = videoSource;
             _unsubscriber = _currentUseVideoSource.Subscribe(this);
             _currentUseVideoSource.OpenDevice();
-            MSPlayer.StopDecData();
-            MSPlayer.StartInputDecData(0, _currentUseVideoSource.DeviceBitmapInfoHeader);
+
+            MsPlayerControl.StopDecData();
+            MsPlayerControl.StartInputDecData(0, _currentUseVideoSource.DeviceBitmapInfoHeader);
             _isPlay = true;
             return true;
         }
@@ -50,7 +52,7 @@ namespace PowerCreator.LiveClient.Modules.MsPlayer.MsPlayer
 
         public void OnNext(VideoDeviceDataContext value)
         {
-            MSPlayer.InputDecVideo(value.Data, value.DataLength);
+            MsPlayerControl.InputDecVideo(value.Data, value.DataLength);
         }
     }
 }

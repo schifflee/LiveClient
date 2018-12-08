@@ -16,6 +16,9 @@ namespace PowerCreator.LiveClient.Desktop
         protected override void ConfigureModuleCatalog()
         {
             base.ConfigureModuleCatalog();
+
+            ModuleCatalog moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
+            moduleCatalog.AddModule(typeof(TestModule.TestModule));
         }
         protected override void ConfigureContainer()
         {
