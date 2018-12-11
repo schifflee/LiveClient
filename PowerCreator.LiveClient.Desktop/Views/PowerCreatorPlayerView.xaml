@@ -1,16 +1,16 @@
-﻿<UserControl x:Class="PowerCreator.LiveClient.Modules.MsPlayer.Player.MsPlayerControl"
+﻿<UserControl x:Class="PowerCreator.LiveClient.Desktop.Views.PowerCreatorPlayerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PowerCreator.LiveClient.Modules.MsPlayer.Player"
-             mc:Ignorable="d" Height="auto" Width="auto">
+             xmlns:local="clr-namespace:PowerCreator.LiveClient.Desktop.WinFormControl"
+             mc:Ignorable="d" Height="Auto" Width="Auto">
     <Grid>
         <Grid Background="#474747">
             <TextBlock FontSize="20" HorizontalAlignment="Center" Foreground="#5A5A5A" VerticalAlignment="Center">密云直播课堂</TextBlock>
         </Grid>
         <WindowsFormsHost Background="CadetBlue" Visibility="Hidden">
-            <local:PlayerControl x:Name="MsPlayer"/>
+            <local:MsPlayerControl x:Name="MsPlayer"/>
         </WindowsFormsHost>
     </Grid>
 </UserControl>

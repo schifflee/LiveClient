@@ -40,6 +40,12 @@
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net46\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -58,8 +64,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Globalization" />
     <Reference Include="System.Runtime" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -76,6 +84,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -87,11 +96,43 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controls\AngleBorder.cs" />
+    <Compile Include="Controls\ControlAttachProperty.cs" />
+    <Compile Include="Controls\FButton.xaml.cs">
+      <DependentUpon>FButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartupParameters.cs" />
     <Compile Include="IStartupParameters.cs" />
     <Compile Include="PowerCreatorLiveClientBootstrapper.Desktop.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CameraDeviceView.xaml.cs">
+      <DependentUpon>CameraDeviceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClassRoomTeachingView.xaml.cs">
+      <DependentUpon>ClassRoomTeachingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MicrophoneVolumeControlView.xaml.cs">
+      <DependentUpon>MicrophoneVolumeControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PowerCreatorPlayerView.xaml.cs">
+      <DependentUpon>PowerCreatorPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayVolumeControlView.xaml.cs">
+      <DependentUpon>PlayVolumeControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecordingControlView.xaml.cs">
+      <DependentUpon>RecordingControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WinFormControl\MsPlayerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinFormControl\MsPlayerControl.Designer.cs">
+      <DependentUpon>MsPlayerControl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -109,20 +150,73 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinFormControl\MsPlayerControl.resx">
+      <DependentUpon>MsPlayerControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\iconfont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Include="unity.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\FButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ButtonIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CameraDeviceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClassRoomTeachingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MicrophoneVolumeControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PowerCreatorPlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayVolumeControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecordingControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,14 +226,43 @@
       <Project>{cdde7c0b-c588-496e-9d3c-e7eb28485198}</Project>
       <Name>PowerCreator.LiveClient.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PowerCreator.LiveClient.Infrastructure\PowerCreator.LiveClient.Infrastructure.csproj">
+      <Project>{A564A8F2-0EE1-49CF-B62F-F1E3DE10F2C7}</Project>
+      <Name>PowerCreator.LiveClient.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PowerCreator.LiveClient.Log\PowerCreator.LiveClient.Log.csproj">
       <Project>{55B61E6C-0A37-4FBB-91C4-ED3FC6FBC56B}</Project>
       <Name>PowerCreator.LiveClient.Log</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TestModule\TestModule.csproj">
-      <Project>{94360d48-c322-4b7c-b1ac-735d0348d1b3}</Project>
-      <Name>TestModule</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="AxMSPLAYERLib">
+      <Guid>{192BF73C-6727-4012-96DD-036C83162F27}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="MSPLAYERLib">
+      <Guid>{192BF73C-6727-4012-96DD-036C83162F27}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

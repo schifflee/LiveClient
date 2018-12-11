@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="PowerCreator.LiveClient.Desktop.Views.CameraDeviceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Background="Transparent" HorizontalAlignment="Center">
+            <MenuItem Background="#323232" Header="" Style="{StaticResource TransparentHeaderMenuItem}" Icon="&#xE635;"></MenuItem>
+        </Menu>
+    </Grid>
+</UserControl>

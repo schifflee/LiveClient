@@ -25,3 +25,16 @@
 /PowerCreator.LiveClient.Modules.MsPlay/bin/Debug
 /TestModule/obj/Debug
 /TestModule/bin/Debug
+/PowerCreator.LiveClient.Core/bin/Release
+/PowerCreator.LiveClient.Desktop/bin/Release
+/PowerCreator.LiveClient.Desktop/obj/Release
+/PowerCreator.LiveClient.Infrastructure/bin/Release
+/PowerCreator.LiveClient.Infrastructure/obj/Release
+/PowerCreator.LiveClient.Log/bin/Release
+/PowerCreator.LiveClient.Log/obj/Release
+/PowerCreator.LiveClient.Tests/obj/Release
+/PowerCreator.LiveClient.VsNetSdk/bin/Release
+/PowerCreator.LiveClient.VsNetSdk/obj/Release
+/PowerCreator.WebPlatform.Sdk/obj/Release
+/Test/obj/Release
+/PowerCreator.LiveClient.Core/obj/Release

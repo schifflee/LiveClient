@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TestModule.Views
+namespace PowerCreator.LiveClient.Desktop.Views
 {
     /// <summary>
-    /// TestControl.xaml 的交互逻辑
+    /// ClassRoomTeachingView.xaml 的交互逻辑
     /// </summary>
-    public partial class TestControl : UserControl
+    public partial class ClassRoomTeachingView : UserControl
     {
-        public TestControl()
+        public ClassRoomTeachingView()
         {
             InitializeComponent();
         }

@@ -8,10 +8,11 @@ namespace PowerCreator.LiveClient.Desktop
     /// <summary>
     /// Shell.xaml 的交互逻辑
     /// </summary>
-    public partial class Shell : Window
+    public partial class Shell : MetroWindow
     {
         public Shell()
         {
+            InitializeComponent();
         }
     }
 }

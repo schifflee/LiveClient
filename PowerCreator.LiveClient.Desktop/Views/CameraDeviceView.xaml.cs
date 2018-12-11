@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PowerCreator.LiveClient.Modules.MsPlayer.Player
+namespace PowerCreator.LiveClient.Desktop.Views
 {
     /// <summary>
-    /// MsPlayerControl.xaml 的交互逻辑
+    /// CameraDeviceView.xaml 的交互逻辑
     /// </summary>
-    public partial class MsPlayerControl : UserControl
+    public partial class CameraDeviceView : UserControl
     {
-        public MsPlayerControl()
+        public CameraDeviceView()
         {
             InitializeComponent();
         }
