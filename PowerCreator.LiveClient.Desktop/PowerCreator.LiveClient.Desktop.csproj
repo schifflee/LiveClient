@@ -116,6 +116,12 @@
     <Compile Include="Views\ClassRoomTeachingView.xaml.cs">
       <DependentUpon>ClassRoomTeachingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CourseContentsView.xaml.cs">
+      <DependentUpon>CourseContentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LiveControlView.xaml.cs">
+      <DependentUpon>LiveControlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MicrophoneVolumeControlView.xaml.cs">
       <DependentUpon>MicrophoneVolumeControlView.xaml</DependentUpon>
     </Compile>
@@ -201,6 +207,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ClassRoomTeachingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CourseContentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LiveControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
