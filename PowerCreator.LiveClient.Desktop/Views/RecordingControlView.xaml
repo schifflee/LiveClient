@@ -13,9 +13,9 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
-            <Border Height="1" Background="Aqua"/>
+            <Border Height="1" Background="#B39DDB"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#B39DDB" FontWeight="Bold" Text="课堂录制"/>
-            <Border Grid.Column="2" Height="1" Background="Aqua"/>
+            <Border Grid.Column="2" Height="1" Background="#B39DDB"/>
         </Grid>
         <Grid Grid.Row="1" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -36,7 +36,7 @@
                             ToolTip="开始录制">
                         <materialDesign:PackIcon Kind="Play" Foreground="White"  Height="24" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" FontSize="10" Text="开始录制" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="开始录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -47,7 +47,7 @@
                             ToolTip="暂停录制">
                         <materialDesign:PackIcon Kind="Pause" Foreground="White"  Height="24" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" FontSize="10" Text="暂停录制" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="暂停录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
@@ -58,7 +58,7 @@
                             ToolTip="停止录制">
                         <materialDesign:PackIcon Kind="Stop" Foreground="White"  Height="24" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" FontSize="10" Text="停止录制" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="停止录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                 </Grid>
             </Grid>
         </Grid>

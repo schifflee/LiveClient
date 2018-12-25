@@ -13,9 +13,9 @@
                 <ColumnDefinition Width=".2*"/>
                 <ColumnDefinition Width=".4*"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Height="1" Background="Aqua"></Border>
+            <Border Grid.Column="0" Height="1" Background="#B39DDB"></Border>
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#B39DDB" FontWeight="Bold">授课内容</TextBlock>
-            <Border Grid.Column="2" Height="1" Background="Aqua"></Border>
+            <Border Grid.Column="2" Height="1" Background="#B39DDB"></Border>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -24,67 +24,71 @@
                 <RowDefinition Height=".25*"/>
                 <RowDefinition Height=".25*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Background="#F2F2F2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".3*"/>
-                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width=".2*"/>
+                    <ColumnDefinition Width=".6*"/>
                     <ColumnDefinition Width=".1*"/>
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="演示文稿" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Content="演示文稿:" Foreground="#333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <ComboBox Grid.Column="1"/>
-                <Button Grid.Column="2" Height="30" Grid.Row="0" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
+                <Button Grid.Column="2" Height="30" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
-                <Button Grid.Column="3" Grid.Row="0" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
+                <Button Grid.Column="3" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="打开">
                     <materialDesign:PackIcon Kind="Settings" Width="24" Height="24" />
                 </Button>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".3*"/>
-                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width=".2*"/>
+                    <ColumnDefinition Width=".6*"/>
                     <ColumnDefinition Width=".1*"/>
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="暖场视频" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Content="暖场视频:" Foreground="#333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <ComboBox Grid.Column="1"/>
-                <Button Grid.Column="2" Height="30" Grid.Row="0" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
+                <Button Grid.Column="2" Height="30" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
-                <Button Grid.Column="3" Grid.Row="0" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
+                <Button Grid.Column="3" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="打开">
                     <materialDesign:PackIcon Kind="Settings" Width="24" Height="24" />
                 </Button>
             </Grid>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Background="#F2F2F2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".3*"/>
-                    <ColumnDefinition Width=".5*"/>
                     <ColumnDefinition Width=".2*"/>
+                    <ColumnDefinition Width=".6*"/>
+                    <ColumnDefinition Width=".1*"/>
+                    <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="外接设备" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Content="外接设备:"  Foreground="#333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <ComboBox Grid.Column="1"/>
                 <Button Grid.Column="2" Height="30" Grid.Row="0" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
+                <Label Grid.Column="3" Width="30"/>
             </Grid>
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".3*"/>
-                    <ColumnDefinition Width=".5*"/>
                     <ColumnDefinition Width=".2*"/>
+                    <ColumnDefinition Width=".6*"/>
+                    <ColumnDefinition Width=".1*"/>
+                    <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="桌面窗口" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Content="桌面窗口:" Foreground="#333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <ComboBox Grid.Column="1"/>
                 <Button Grid.Column="2" Height="30" Grid.Row="0" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
+                <Label Grid.Column="3" Width="30"/>
             </Grid>
         </Grid>
     </Grid>

@@ -16,9 +16,9 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
-            <Border Height="1" Background="Aqua"/>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#B39DDB" FontWeight="Bold" Text="课堂直播"/>
-            <Border Grid.Column="2" Height="1" Background="Aqua"/>
+            <Border Height="1" Background="#B39DDB"/>
+            <TextBlock Grid.Column="1" Foreground="#B39DDB"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="课堂直播"/>
+            <Border Grid.Column="2" Height="1" Background="#B39DDB"/>
         </Grid>
         <Grid Grid.Row="1" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -39,7 +39,7 @@
                             ToolTip="开始上课">
                         <materialDesign:PackIcon Kind="Play" Foreground="White"  Height="30" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" Text="立即上课" FontSize="10" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1" Foreground="#333" Text="立即上课" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -48,9 +48,9 @@
                     </Grid.RowDefinitions>
                     <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                             ToolTip="课间休息">
-                        <materialDesign:PackIcon Kind="Pause" Foreground="White"  Height="24" Width="30" />
+                        <materialDesign:PackIcon Kind="Pause" Foreground="White"  Height="30" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" Text="课间休息" FontSize="10" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1"  Foreground="#333" Text="课间休息" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
@@ -61,7 +61,7 @@
                             ToolTip="立即下课">
                         <materialDesign:PackIcon Kind="Stop" Foreground="White"  Height="24" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" FontSize="10" Text="立即下课" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1"  Foreground="#333" FontSize="12" Text="立即下课"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                 </Grid>
 
             </Grid>
