@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using PowerCreator.LiveClient.Desktop.ViewModels;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PowerCreator.LiveClient.Desktop.Views
 {
@@ -20,9 +8,10 @@ namespace PowerCreator.LiveClient.Desktop.Views
     /// </summary>
     public partial class CameraDeviceView : UserControl
     {
-        public CameraDeviceView()
+        public CameraDeviceView(CameraDeviceViewModel cameraDeviceViewModel)
         {
             InitializeComponent();
+            this.DataContext = cameraDeviceViewModel;
         }
     }
 }

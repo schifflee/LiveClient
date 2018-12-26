@@ -14,7 +14,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="928*" MinWidth="928"/>
             <ColumnDefinition Width="3"/>
-            <ColumnDefinition Width="333*" MinWidth="333"/>
+            <ColumnDefinition Width="333" MinWidth="333"/>
         </Grid.ColumnDefinitions>
         <Grid></Grid>
         <GridSplitter  x:Name="gsSplitterr" Grid.Column="1"  HorizontalAlignment="Stretch" Background="#FF9F9F9F"></GridSplitter>
@@ -22,11 +22,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="225"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="180"/>
+                <RowDefinition Height="390*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="AliceBlue">
                 <views:PowerCreatorPlayerView/>
@@ -43,21 +39,40 @@
                 <views:PlayVolumeControlView Grid.Column="2"/>
                 <views:CameraDeviceView Grid.Column="4"/>
             </Grid>
-            <Grid Grid.Row="3">
-                <views:ClassRoomTeachingView/>
-            </Grid>
-            <Grid Grid.Row="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".49*"/>
-                    <ColumnDefinition Width=".01*"/>
-                    <ColumnDefinition Width=".49*"/>
-                </Grid.ColumnDefinitions>
-                <views:LiveControlView Grid.Column="0"/>
-                <views:RecordingControlView Grid.Column="2"/>
-            </Grid>
-            <Grid Grid.Row="6">
-                <views:CourseContentsView/>
+            <Grid Grid.Row="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="180"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1">
+                        <views:ClassRoomTeachingView/>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".49*"/>
+                            <ColumnDefinition Width=".01*"/>
+                            <ColumnDefinition Width=".49*"/>
+                        </Grid.ColumnDefinitions>
+                        <views:LiveControlView Grid.Column="0"/>
+                        <views:RecordingControlView Grid.Column="2"/>
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <views:CourseContentsView/>
+                    </Grid>
+                </Grid>
+
+                <Controls:Flyout Header="课堂互动" Visibility="Hidden" Width="333" Background="#474747" Position="Right" IsOpen="True">
+                    <StackPanel
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                    </StackPanel>
+                </Controls:Flyout>
             </Grid>
         </Grid>
+       
     </Grid>
 </Controls:MetroWindow>
