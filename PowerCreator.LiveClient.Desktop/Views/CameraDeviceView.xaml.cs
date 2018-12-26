@@ -1,4 +1,5 @@
-﻿using PowerCreator.LiveClient.Desktop.ViewModels;
+﻿using Microsoft.Practices.Unity;
+using PowerCreator.LiveClient.Desktop.ViewModels;
 using System.Windows.Controls;
 
 namespace PowerCreator.LiveClient.Desktop.Views
@@ -8,10 +9,20 @@ namespace PowerCreator.LiveClient.Desktop.Views
     /// </summary>
     public partial class CameraDeviceView : UserControl
     {
-        public CameraDeviceView(CameraDeviceViewModel cameraDeviceViewModel)
+        public CameraDeviceView()
         {
             InitializeComponent();
-            this.DataContext = cameraDeviceViewModel;
         }
+
+        [Dependency]
+        public CameraDeviceViewModel ViewModel
+        {
+            set
+            {
+                this.DataContext = value;
+            }
+        }
+
+
     }
 }

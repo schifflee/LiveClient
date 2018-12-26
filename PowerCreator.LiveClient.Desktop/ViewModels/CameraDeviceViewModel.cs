@@ -4,7 +4,7 @@ namespace PowerCreator.LiveClient.Desktop.ViewModels
 {
     public class CameraDeviceViewModel : NotificationObject
     {
-        public CameraDeviceViewModel(string liveId)
+        public CameraDeviceViewModel()
         {
             foground = "#aaa";
         }
