@@ -38,3 +38,6 @@
 /PowerCreator.WebPlatform.Sdk/obj/Release
 /Test/obj/Release
 /PowerCreator.LiveClient.Core/obj/Release
+/LiveClientDesktop/bin/Debug
+/LiveClientDesktop/lib
+/LiveClientDesktop/obj/Debug

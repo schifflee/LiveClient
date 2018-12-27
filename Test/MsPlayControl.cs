@@ -39,14 +39,14 @@ namespace Test
         public void OpenVideoDevice(int deviceId)
         {
              
-            if (videoDeviceManager == null) {
-                videoDeviceManager = new VideoDeviceManager();
-            }
-            videoDevice = videoDeviceManager.GetVideoDeviceById(0);
-            unsubscriber = videoDevice.Subscribe(this);
-            videoDevice.OpenDevice();
-            axMSPlayer1.StopDecData();
-            axMSPlayer1.StartInputDecData(0, videoDevice.DeviceBitmapInfoHeader);
+            //if (videoDeviceManager == null) {
+            //    videoDeviceManager = new VideoDeviceManager();
+            //}
+            //videoDevice = videoDeviceManager.GetVideoDeviceById(0);
+            //unsubscriber = videoDevice.Subscribe(this);
+            //videoDevice.OpenDevice();
+            //axMSPlayer1.StopDecData();
+            //axMSPlayer1.StartInputDecData(0, videoDevice.DeviceBitmapInfoHeader);
         }
         public void CloseVideoDevice()
         {

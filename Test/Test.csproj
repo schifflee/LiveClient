@@ -117,6 +117,10 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\密云app\MiYun\VSNetLib\PowerCreatorSDK.csproj">
+      <Project>{1211b8ac-a757-4b88-b105-559458d7d94a}</Project>
+      <Name>PowerCreatorSDK</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PowerCreator.LiveClient.Core\PowerCreator.LiveClient.Core.csproj">
       <Project>{cdde7c0b-c588-496e-9d3c-e7eb28485198}</Project>
       <Name>PowerCreator.LiveClient.Core</Name>

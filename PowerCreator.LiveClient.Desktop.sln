@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Log
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.VsNetSdk", "PowerCreator.LiveClient.VsNetSdk\PowerCreator.LiveClient.VsNetSdk.csproj", "{31B15B01-3201-4B76-95E1-8A06EDFC0C38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Desktop", "PowerCreator.LiveClient.Desktop\PowerCreator.LiveClient.Desktop.csproj", "{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Core", "PowerCreator.LiveClient.Core\PowerCreator.LiveClient.Core.csproj", "{CDDE7C0B-C588-496E-9D3C-E7EB28485198}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{8B11BD9D-C16A-4A5C-8FA5-8D89B3181C58}"
@@ -22,6 +20,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.LiveClient.Tests", "PowerCreator.LiveClient.Tests\PowerCreator.LiveClient.Tests.csproj", "{875FCD19-1161-49D8-97AD-C24ECA1273DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreator.WebPlatform.Sdk", "PowerCreator.WebPlatform.Sdk\PowerCreator.WebPlatform.Sdk.csproj", "{CC075E42-2BE2-4EAA-ACFD-508B445DB652}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreatorSDK", "..\密云app\MiYun\VSNetLib\PowerCreatorSDK.csproj", "{1211B8AC-A757-4B88-B105-559458D7D94A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveClientDesktop", "LiveClientDesktop\LiveClientDesktop.csproj", "{FB781776-5665-4157-B257-14CF63D6C776}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +39,6 @@ Global
 		{31B15B01-3201-4B76-95E1-8A06EDFC0C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31B15B01-3201-4B76-95E1-8A06EDFC0C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31B15B01-3201-4B76-95E1-8A06EDFC0C38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BCA3EEB-C6F8-4945-9D3C-82D8BC12699B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CDDE7C0B-C588-496E-9D3C-E7EB28485198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CDDE7C0B-C588-496E-9D3C-E7EB28485198}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDDE7C0B-C588-496E-9D3C-E7EB28485198}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,6 +59,14 @@ Global
 		{CC075E42-2BE2-4EAA-ACFD-508B445DB652}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC075E42-2BE2-4EAA-ACFD-508B445DB652}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC075E42-2BE2-4EAA-ACFD-508B445DB652}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1211B8AC-A757-4B88-B105-559458D7D94A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1211B8AC-A757-4B88-B105-559458D7D94A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1211B8AC-A757-4B88-B105-559458D7D94A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1211B8AC-A757-4B88-B105-559458D7D94A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB781776-5665-4157-B257-14CF63D6C776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB781776-5665-4157-B257-14CF63D6C776}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB781776-5665-4157-B257-14CF63D6C776}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB781776-5665-4157-B257-14CF63D6C776}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

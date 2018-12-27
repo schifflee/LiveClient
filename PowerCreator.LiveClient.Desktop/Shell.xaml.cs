@@ -1,7 +1,6 @@
 ﻿using MahApps.Metro.Controls;
-using Microsoft.Practices.Prism.Logging;
-using PowerCreator.LiveClient.Log;
-using System.Windows;
+using Microsoft.Practices.Unity;
+using PowerCreator.LiveClient.Desktop.ViewModels;
 
 namespace PowerCreator.LiveClient.Desktop
 {
@@ -10,9 +9,10 @@ namespace PowerCreator.LiveClient.Desktop
     /// </summary>
     public partial class Shell : MetroWindow
     {
-        public Shell()
+        public Shell(IUnityContainer container)
         {
             InitializeComponent();
+            this.DataContext = new ShellViewModel();
         }
     }
 }

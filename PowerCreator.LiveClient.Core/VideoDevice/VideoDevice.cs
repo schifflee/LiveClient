@@ -139,8 +139,10 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         }
         private void _setDeviceAvailableStatus()
         {
-            IsAvailable = _openDevice();
-            _closeDevice();
+             IsAvailable = _openDevice();
+            if (IsAvailable) {
+                _closeDevice();
+            }
         }
         private void _closeDevice()
         {

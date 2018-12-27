@@ -37,7 +37,7 @@
                 </Grid.ColumnDefinitions>
                 <views:MicrophoneVolumeControlView Grid.Column="0"/>
                 <views:PlayVolumeControlView Grid.Column="2"/>
-                <views:CameraDeviceView Grid.Column="4"/>
+                <views:CameraDeviceView Grid.Column="4" DataContext="{Binding VmContext.CameraDeviceViewModel}"/>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid>

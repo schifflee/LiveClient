@@ -91,10 +91,6 @@
       <Project>{cdde7c0b-c588-496e-9d3c-e7eb28485198}</Project>
       <Name>PowerCreator.LiveClient.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PowerCreator.LiveClient.Desktop\PowerCreator.LiveClient.Desktop.csproj">
-      <Project>{8bca3eeb-c6f8-4945-9d3c-82d8bc12699b}</Project>
-      <Name>PowerCreator.LiveClient.Desktop</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PowerCreator.LiveClient.Infrastructure\PowerCreator.LiveClient.Infrastructure.csproj">
       <Project>{a564a8f2-0ee1-49cf-b62f-f1e3de10f2c7}</Project>
       <Name>PowerCreator.LiveClient.Infrastructure</Name>

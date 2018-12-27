@@ -1,25 +1,14 @@
 ﻿using Microsoft.Practices.Prism.ViewModel;
+using PowerCreator.LiveClient.Desktop.Services;
 
 namespace PowerCreator.LiveClient.Desktop.ViewModels
 {
     public class CameraDeviceViewModel : NotificationObject
     {
-        public CameraDeviceViewModel()
+        public CameraDeviceViewModel(CameraDeviceService cameraDeviceService)
         {
-            foground = "#aaa";
+            cameraDeviceService.GetVideoDevices();
+
         }
-        private string foground;
-
-        public string Foground
-        {
-            get { return foground; }
-            set
-            {
-                foground = value;
-                this.RaisePropertyChanged("Foground");
-            }
-        }
-
-
     }
 }

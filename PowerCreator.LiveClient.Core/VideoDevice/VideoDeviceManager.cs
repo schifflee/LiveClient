@@ -8,6 +8,8 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
 {
     public class VideoDeviceManager : IVideoDeviceManager
     {
+        //public static VideoDeviceManager Instance { get; } = new VideoDeviceManager();
+
         private readonly IntPtr _handle;
 
         private IEnumerable<IVideoDevice> _videoDeviceList;

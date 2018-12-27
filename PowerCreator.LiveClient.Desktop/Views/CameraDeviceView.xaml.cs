@@ -13,16 +13,5 @@ namespace PowerCreator.LiveClient.Desktop.Views
         {
             InitializeComponent();
         }
-
-        [Dependency]
-        public CameraDeviceViewModel ViewModel
-        {
-            set
-            {
-                this.DataContext = value;
-            }
-        }
-
-
     }
 }

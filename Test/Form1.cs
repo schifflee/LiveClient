@@ -3,6 +3,7 @@ using PowerCreator.LiveClient.Core.AudioEncoder;
 using PowerCreator.LiveClient.Core.LiveBroadcast;
 using PowerCreator.LiveClient.Core.VideoDevice;
 using PowerCreator.LiveClient.Core.VideoEncoder;
+using PowerCreatorSDK.Camera;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,6 +37,8 @@ namespace Test
 
         private void button1_Click(object sender, EventArgs e)
         {
+            VideoDeviceManager videoDeviceManager =  VideoDeviceManager.Instance;
+            var s = videoDeviceManager.GetVideoDevices();
             //if (t.IsCompleted)
             //    t.Dispose();
             //t = null;
@@ -43,7 +46,7 @@ namespace Test
             //{
             //    t = new Task(aa, cancellationTokenSource.Token);
             //}
-           // t.Start();
+            // t.Start();
             msPlayControl1.OpenVideoDevice(0);
         }
         private void aa()
@@ -64,20 +67,20 @@ namespace Test
         private void button3_Click(object sender, EventArgs e)
         {
 
-            var videoEncoder = new H264VideoEncoder();
-            var videoDeviceManager =new VideoDeviceManager();
-            var videoDevice = videoDeviceManager.GetVideoDeviceById(0);
+            //var videoEncoder = new H264VideoEncoder();
+            //var videoDeviceManager =new VideoDeviceManager();
+            //var videoDevice = videoDeviceManager.GetVideoDeviceById(0);
 
-            videoEncoder.SetVideoSource(videoDevice);
+            //videoEncoder.SetVideoSource(videoDevice);
 
-            var aacEncoder =new AacEncoder();
-            var audioDeviceManager =new AudioDeviceManager();
-            var audioDevice = audioDeviceManager.GetAudioDeviceById(1);
+            //var aacEncoder =new AacEncoder();
+            //var audioDeviceManager =new AudioDeviceManager();
+            //var audioDevice = audioDeviceManager.GetAudioDeviceById(1);
 
-            aacEncoder.SetAudioDataSource(audioDevice);
+            //aacEncoder.SetAudioDataSource(audioDevice);
 
-            LiveBroadcast liveBroadcast = new LiveBroadcast(videoEncoder, aacEncoder);
-            liveBroadcast.StartLive("192.168.0.202", 1935, "live", "test");
+            //LiveBroadcast liveBroadcast = new LiveBroadcast(videoEncoder, aacEncoder);
+            //liveBroadcast.StartLive("192.168.0.202", 1935, "live", "test");
         }
     }
 }

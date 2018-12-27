@@ -22,18 +22,18 @@ namespace PowerCreator.LiveClient.Desktop.WinFormControl
 
         public void OpenDevice(IVideoDevice videoDevice)
         {
-            unsubscriber?.Dispose();
-            unsubscriber = videoDevice.Subscribe(this);
-            MsPlayer.StopDecData();
-            MsPlayer.StartInputDecData(0, videoDevice.DeviceBitmapInfoHeader);
+            //unsubscriber?.Dispose();
+            //unsubscriber = videoDevice.Subscribe(this);
+            //MsPlayer.StopDecData();
+            //MsPlayer.StartInputDecData(0, videoDevice.DeviceBitmapInfoHeader);
         }
         public void CloseDevice()
         {
-            unsubscriber?.Dispose();
+            //unsubscriber?.Dispose();
         }
         public void OnNext(VideoDeviceDataContext value)
         {
-            MsPlayer.InputDecVideo(value.Data, value.DataLength);
+            //MsPlayer.InputDecVideo(value.Data, value.DataLength);
         }
 
         public void OnCompleted()
