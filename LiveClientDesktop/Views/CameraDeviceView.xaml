@@ -9,7 +9,45 @@
             <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
         <Menu Background="Transparent" HorizontalAlignment="Center">
-            <MenuItem Background="#323232" Header="" Foreground="{Binding Foground}" Style="{StaticResource TransparentHeaderMenuItem}" Icon="&#xE635;"></MenuItem>
+            <MenuItem ItemsSource="{Binding CameraDeviceList}" Background="#323232" Header="" Style="{StaticResource TransparentHeaderMenuItem}" Icon="&#xE635;" >
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Header" Value="{Binding OwnerVideoDevice.Name}" />
+                        <Setter Property="IsEnabled" Value="{Binding OwnerVideoDevice.IsEnable}"/>
+                        <Setter Property="Command" Value="{Binding Path=DataContext.ChangeCameraCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type MenuItem}}}"/>
+                        <Setter Property="CommandParameter" Value="{Binding Path=OwnerVideoDevice.ID}"/>
+                        <Setter Property="Width" Value="95"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="MenuItem">
+                                    <Grid ToolTip="{TemplateBinding Header}" Height="24" Width="{TemplateBinding Width}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="15"/>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="&#xe7ab;" x:Name="menuIcon" Visibility="{Binding ShowSelectIcon}"  Foreground="#188CFF" Style="{StaticResource FIcon}"/>
+                                        <Border x:Name="_border"   Grid.ColumnSpan="2"/>
+                                        <TextBlock  Margin="5 0 0 0" TextTrimming="WordEllipsis" Foreground="{Binding Foreground}"  Grid.Column="1"  VerticalAlignment="Center" x:Name="_txt" Text="{Binding Header,RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="_border" Property="Background" Value="{Binding Background}"/>
+                                            <Setter TargetName="_txt" Property="Foreground" Value="#188CFF"/>
+                                            <Setter TargetName="menuIcon" Property="Foreground" Value="#188CFF"/>
+                                            <Setter TargetName="_border" Property="Cursor" Value="Hand"/>
+                                            <Setter TargetName="_txt" Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter TargetName="_txt" Property="Foreground" Value="Gray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
         </Menu>
     </Grid>
 </UserControl>

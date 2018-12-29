@@ -12,9 +12,7 @@ namespace LiveClientDesktop.Services
         private readonly IVideoDeviceManager _videoDeviceManager;
         public CameraDeviceService(IVideoDeviceManager videoDeviceManager)
         {
-            if (videoDeviceManager == null)
-                throw new ArgumentNullException("videoDeviceManager");
-            _videoDeviceManager = videoDeviceManager;
+            _videoDeviceManager = videoDeviceManager ?? throw new ArgumentNullException("videoDeviceManager");
         }
         public IEnumerable<IVideoDevice> GetVideoDevices()
         {
