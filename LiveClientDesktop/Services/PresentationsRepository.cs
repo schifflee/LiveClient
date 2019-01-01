@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveClientDesktop.Services
 {
@@ -27,7 +25,7 @@ namespace LiveClientDesktop.Services
             var presentations = GetAllPresentations();
             if (presentations != null && presentations.Any())
             {
-                if (presentations.Where(p => p.Name == presentationInfo.Name).Any())
+                if (presentations.Where(p => p.Name == presentationInfo.Name && p.DemoType == presentationInfo.DemoType).Any())
                 {
                     return true;
                 }
@@ -61,7 +59,7 @@ namespace LiveClientDesktop.Services
             return true;
 
         }
-        private List<PresentationInfo> GetAllPresentations(Func<PresentationInfo, bool> where = null)
+        public List<PresentationInfo> GetAllPresentations(Func<PresentationInfo, bool> where = null)
         {
             try
             {

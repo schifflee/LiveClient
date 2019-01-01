@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LiveClientDesktop.WinFormControl"
-             mc:Ignorable="d" Height="Auto" Width="Auto">
+             mc:Ignorable="d" Height="Auto" Width="Auto"
+             Loaded="UserControl_Loaded">
     <Grid>
-        <Grid Background="#474747">
+        <Grid Background="#474747" x:Name="aaaaaaaaa">
             <TextBlock FontSize="20" HorizontalAlignment="Center" Foreground="#5A5A5A" VerticalAlignment="Center">密云直播课堂</TextBlock>
         </Grid>
-        <WindowsFormsHost Background="CadetBlue" Visibility="Hidden">
+        <WindowsFormsHost Background="CadetBlue">
             <local:MsPlayerControl x:Name="MsPlayer"/>
         </WindowsFormsHost>
     </Grid>

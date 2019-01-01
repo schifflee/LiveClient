@@ -13,7 +13,7 @@ namespace PowerCreator.LiveClient.Infrastructure
         public static T DeserializeObject<T>(IEnumerable<string> inputContents)
         {
             if (!inputContents.Any()) return default(T);
-            return JsonConvert.DeserializeObject<T>($"[{inputContents.Aggregate((item1, item2) => string.Format($"{item1},{item2}"))}]");
+            return JsonConvert.DeserializeObject<T>($"[{inputContents.Aggregate((item1, item2) => string.Format("{0},{1}", item1, item2))}]");
         }
         public static string SerializeObject(object value)
         {

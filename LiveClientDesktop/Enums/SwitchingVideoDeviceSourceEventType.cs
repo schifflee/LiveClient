@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace LiveClientDesktop.Enums
 {
-    public enum DemoFileType
+    public enum SwitchingVideoDeviceSourceEventType
     {
-        None,
-        Video,
-        Image,
-        Audio,
-        PPT
+        Video1,
+        VGA
     }
 }

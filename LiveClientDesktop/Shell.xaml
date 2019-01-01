@@ -5,8 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:LiveClientDesktop.Views"
-                      mc:Ignorable="d"
-        Title="密云直播客户端"
+        mc:Ignorable="d" Title="密云直播客户端"
+        Closing="MetroWindow_Closing"
         MinHeight="720" MinWidth="1280" Height="720" Width="1280">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,7 +23,7 @@
                 <RowDefinition Height="390*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="AliceBlue">
-                <views:PowerCreatorPlayerView/>
+                <views:PowerCreatorPlayerView DataContext="{Binding VMContext.PowerCreatorPlayerViewModel}"/>
             </Grid>
             <Grid Grid.Row="1" Background="DarkCyan">
                 <Grid.ColumnDefinitions>
@@ -59,16 +59,16 @@
                         <views:RecordingControlView Grid.Column="2"/>
                     </Grid>
                     <Grid Grid.Row="4">
-                        <views:CourseContentsView/>
+                        <views:CourseContentsView DataContext="{Binding VMContext.CourseContentsViewModel}"/>
                     </Grid>
                 </Grid>
 
-                <Controls:Flyout Header="课堂互动" Visibility="Hidden" Width="333" Background="#474747" Position="Right" IsOpen="True">
+                <!--<Controls:Flyout Header="课堂互动" Visibility="Hidden" Width="333" Background="#474747" Position="Right" IsOpen="True">
                     <StackPanel
                             HorizontalAlignment="Right"
                             Orientation="Horizontal">
                     </StackPanel>
-                </Controls:Flyout>
+                </Controls:Flyout>-->
             </Grid>
         </Grid>
 

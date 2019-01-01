@@ -14,5 +14,13 @@ namespace LiveClientDesktop.ViewModels
         {
             get; set;
         }
+
+        [Dependency]
+        public CourseContentsViewModel CourseContentsViewModel
+        {
+            get; set;
+        }
+        [Dependency]
+        public PowerCreatorPlayerViewModel PowerCreatorPlayerViewModel { get; set; }
     }
 }

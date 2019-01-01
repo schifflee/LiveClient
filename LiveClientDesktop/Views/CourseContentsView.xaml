@@ -32,13 +32,16 @@
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="演示文稿:" Foreground="#333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <ComboBox Grid.Column="1"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding PresentationViewModel.PresentationList}"
+                          SelectedValuePath="Presentation.FileFullPath"
+                          DisplayMemberPath="Presentation.Name"
+                          SelectedItem="{Binding PresentationViewModel.CurrentSelectedPresentation}"/>
                 <Button Grid.Column="2" Height="30" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
                 <Button Grid.Column="3" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
-                            materialDesign:RippleAssist.IsCentered="True" ToolTip="打开">
+                            materialDesign:RippleAssist.IsCentered="True" ToolTip="打开" Command="{Binding PresentationViewModel.OpenSelectPresentationFileWindow}">
                     <materialDesign:PackIcon Kind="Settings" Width="24" Height="24" />
                 </Button>
             </Grid>
@@ -50,13 +53,16 @@
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="暖场视频:" Foreground="#333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <ComboBox Grid.Column="1"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding PresentationViewModel.WarmVideoList}"
+                          SelectedValuePath="Presentation.FileFullPath"
+                          DisplayMemberPath="Presentation.Name"
+                          SelectedItem="{Binding PresentationViewModel.CurrentSelectedWarmVideo}"/>
                 <Button Grid.Column="2" Height="30" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
                 <Button Grid.Column="3" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
-                            materialDesign:RippleAssist.IsCentered="True" ToolTip="打开">
+                            materialDesign:RippleAssist.IsCentered="True" ToolTip="打开" Command="{Binding PresentationViewModel.OpenSelectWarmVideoFileWindow}">
                     <materialDesign:PackIcon Kind="Settings" Width="24" Height="24" />
                 </Button>
             </Grid>
@@ -68,7 +74,10 @@
                     <ColumnDefinition Width=".1*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="外接设备:"  Foreground="#333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <ComboBox Grid.Column="1"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding CameraDeviceViewModel.CameraDeviceList}"
+                          SelectedValuePath="ID"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding CameraDeviceViewModel.CurrentSelectedDevice}" />
                 <Button Grid.Column="2" Height="30" Grid.Row="0" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
                             materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />

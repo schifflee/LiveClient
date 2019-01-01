@@ -1,18 +1,19 @@
 ﻿using Microsoft.Practices.Prism.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
 
 namespace LiveClientDesktop.ViewModels
 {
     public class CourseContentsViewModel : NotificationObject
     {
+        [Dependency]
+        public PresentationViewModel PresentationViewModel { get; set; }
 
-        public CourseContentsViewModel()
+        public CameraDeviceViewModel CameraDeviceViewModel { get; private set; }
+
+        public CourseContentsViewModel(CameraDeviceViewModel cameraDeviceViewModel)
         {
-
+            CameraDeviceViewModel = cameraDeviceViewModel;
+            CameraDeviceViewModel.SetSelectCameraDevice(0);
         }
     }
 }

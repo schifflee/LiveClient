@@ -100,7 +100,11 @@
     </Compile>
     <Compile Include="Enums\DemoFileType.cs" />
     <Compile Include="Enums\DemoType.cs" />
+    <Compile Include="Enums\SwitchingVideoDeviceSourceEventType.cs" />
+    <Compile Include="EventAggregations\SwitchingVideoDeviceEvent.cs" />
+    <Compile Include="EventAggregations\SystemClosingEvent.cs" />
     <Compile Include="Models\PresentationInfo.cs" />
+    <Compile Include="Models\VideoDeviceEventContext.cs" />
     <Compile Include="Models\VideoDeviceInfo.cs" />
     <Compile Include="PowerCreatorLiveClientBootstrapper.cs" />
     <Compile Include="Services\CameraDeviceService.cs" />
@@ -111,6 +115,8 @@
     <Compile Include="ViewModels\CameraDeviceItemViewModel.cs" />
     <Compile Include="ViewModels\CameraDeviceViewModel.cs" />
     <Compile Include="ViewModels\CourseContentsViewModel.cs" />
+    <Compile Include="ViewModels\PowerCreatorPlayerViewModel.cs" />
+    <Compile Include="ViewModels\PresentationItemViewModel.cs" />
     <Compile Include="ViewModels\PresentationViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
