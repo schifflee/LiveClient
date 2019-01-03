@@ -37,7 +37,7 @@
                           DisplayMemberPath="Presentation.Name"
                           SelectedItem="{Binding PresentationViewModel.CurrentSelectedPresentation}"/>
                 <Button Grid.Column="2" Height="30" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
-                            materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
+                            materialDesign:RippleAssist.IsCentered="True" ToolTip="播放" Command="{Binding SwitchDemonstrationSceneCommand}" CommandParameter="0">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
                 <Button Grid.Column="3" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
@@ -58,7 +58,7 @@
                           DisplayMemberPath="Presentation.Name"
                           SelectedItem="{Binding PresentationViewModel.CurrentSelectedWarmVideo}"/>
                 <Button Grid.Column="2" Height="30" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
-                            materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
+                            materialDesign:RippleAssist.IsCentered="True" ToolTip="播放" Command="{Binding SwitchDemonstrationSceneCommand}" CommandParameter="1">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
                 <Button Grid.Column="3" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
@@ -79,7 +79,7 @@
                           DisplayMemberPath="Name"
                           SelectedItem="{Binding CameraDeviceViewModel.CurrentSelectedDevice}" />
                 <Button Grid.Column="2" Height="30" Grid.Row="0" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" 
-                            materialDesign:RippleAssist.IsCentered="True" ToolTip="播放">
+                            materialDesign:RippleAssist.IsCentered="True" ToolTip="播放" Command="{Binding SwitchDemonstrationSceneCommand}" CommandParameter="2">
                     <materialDesign:PackIcon Kind="PlayCircleOutline" Width="24" Height="24" />
                 </Button>
                 <Label Grid.Column="3" Width="30"/>

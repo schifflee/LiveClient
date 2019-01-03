@@ -22,5 +22,16 @@ namespace LiveClientDesktop.ViewModels
         }
         [Dependency]
         public PowerCreatorPlayerViewModel PowerCreatorPlayerViewModel { get; set; }
+
+        [Dependency]
+        public PlayVolumeControlViewModel PlayVolumeControlViewModel { get; set; }
+
+        [Dependency]
+        public MicrophoneVolumeControlViewModel MicrophoneVolumeControlViewModel { get; set; }
+
+        [Dependency]
+        public SpeechViewModel SpeechViewModel { get; set; }
+
+        
     }
 }

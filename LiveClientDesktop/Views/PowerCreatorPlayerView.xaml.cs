@@ -27,47 +27,41 @@ namespace LiveClientDesktop.Views
     /// </summary>
     public partial class PowerCreatorPlayerView : UserControl
     {
-        private IEventAggregator _eventAggregator { get; set; }
-        private SubscriptionToken subscriptionToken;
-        private SubscriptionToken subscriptionToken1;
+        private EventSubscriptionManager _eventSubscriptionManager;
+        private SubscriptionToken switchingVideoDeviceEventSubscriptionToken;
+        private SubscriptionToken systemCloseEventSubscriptionToken;
         public PowerCreatorPlayerView()
         {
             InitializeComponent();
         }
-        public void SwitchingVideoDeviceEventHandler(VideoDeviceEventContext eventContext)
-        {
-            MsPlayer.OpenDevice(eventContext.OwnerVideoDevice);
-        }
-        public bool EventFilter(VideoDeviceEventContext eventContext)
-        {
-            return eventContext.EventType == SwitchingVideoDeviceSourceEventType.Video1;
-        }
+      
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            _eventAggregator = (this.DataContext as PowerCreatorPlayerViewModel).EventAggregator;
-
-            SwitchingVideoDeviceEvent fundAddedEvent = _eventAggregator.GetEvent<SwitchingVideoDeviceEvent>();
-
-            if (subscriptionToken != null)
+            var vm = this.DataContext as PowerCreatorPlayerViewModel;
+            if (vm != null)
             {
-                fundAddedEvent.Unsubscribe(subscriptionToken);
+                _eventSubscriptionManager = vm.EventSubscriptionManager;
+
+                switchingVideoDeviceEventSubscriptionToken = _eventSubscriptionManager.Subscribe<SwitchingVideoDeviceEvent, VideoDeviceEventContext>(null, SwitchingVideoDeviceEventHandler, EventFilter);
+
+                systemCloseEventSubscriptionToken = _eventSubscriptionManager.Subscribe<ShutDownEvent, bool>(null, SystemShutdown, null);
             }
-
-            subscriptionToken = fundAddedEvent.Subscribe(SwitchingVideoDeviceEventHandler, ThreadOption.UIThread, false, EventFilter);
-
-            SystemClosingEvent fundAddedEvent1 = _eventAggregator.GetEvent<SystemClosingEvent>();
-
-            if (subscriptionToken1 != null)
-            {
-                fundAddedEvent1.Unsubscribe(subscriptionToken1);
-            }
-
-            subscriptionToken1 = fundAddedEvent1.Subscribe(WinClose, ThreadOption.UIThread, false);
         }
-        public void WinClose(bool b)
+        private void SwitchingVideoDeviceEventHandler(VideoDeviceEventContext eventContext)
         {
-            MsPlayer.CloseDevice();
+            MsPlayerContainer.Visibility = Visibility.Visible;
+
+            MsPlayer.OpenDevice(eventContext.OwnerVideoDevice);
+        }
+        private bool EventFilter(VideoDeviceEventContext eventContext)
+        {
+            return eventContext.EventType == SwitchingVideoDeviceSourceEventType.Video1;
+        }
+        private void SystemShutdown(bool isClosing)
+        {
+            if (isClosing)
+                MsPlayer.CloseDevice();
         }
     }
 }

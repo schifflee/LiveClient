@@ -7,10 +7,10 @@
              mc:Ignorable="d" Height="Auto" Width="Auto"
              Loaded="UserControl_Loaded">
     <Grid>
-        <Grid Background="#474747" x:Name="aaaaaaaaa">
+        <Grid Background="#474747">
             <TextBlock FontSize="20" HorizontalAlignment="Center" Foreground="#5A5A5A" VerticalAlignment="Center">密云直播课堂</TextBlock>
         </Grid>
-        <WindowsFormsHost Background="CadetBlue">
+        <WindowsFormsHost Background="CadetBlue" x:Name="MsPlayerContainer" Visibility="Hidden">
             <local:MsPlayerControl x:Name="MsPlayer"/>
         </WindowsFormsHost>
     </Grid>

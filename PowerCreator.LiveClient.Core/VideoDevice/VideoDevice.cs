@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Practices.Prism.Logging;
 using PowerCreator.LiveClient.Core.Enums;
 using PowerCreator.LiveClient.Core.Models;
 using PowerCreator.LiveClient.Infrastructure.Object;
@@ -13,6 +14,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
 {
     public class VideoDevice : IVideoDevice
     {
+        private readonly ILoggerFacade _logger;
         public int ID { get; private set; }
 
         public string Name { get; private set; }
@@ -51,8 +53,9 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         private byte[] _buffer;
         private bool _isRuningPullDeviceData;
         private int _bufferHandle;
-        internal VideoDevice(string videoDeviceName, int id)
+        internal VideoDevice(string videoDeviceName, int id, ILoggerFacade logger)
         {
+            _logger = logger;
             ID = id;
             Name = videoDeviceName;
             _handle = VsNetCameraSdk.Camera_AllocInstance();
@@ -64,8 +67,9 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             if (!IsOpen) return true;
 
             _stopPullDeviceData();
-            VsNetCameraSdk.Camera_CloseCamera(_handle);
             IsOpen = false;
+            VsNetCameraSdk.Camera_CloseCamera(_handle);
+            
             return true;
         }
 
@@ -111,18 +115,23 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         {
             while (_isRuningPullDeviceData)
             {
-                _getDeviceData(ref _buffer);
-                if (_bufferHandle <= 0)
-                {
-                    _bufferHandle = _buffer.ToIntHandle();
+                _logger.Log(_isRuningPullDeviceData + ",1111" + Name,Category.Info,Priority.Low);
+                if (IsOpen) {
+                    _getDeviceData(ref _buffer);
+                    if (_bufferHandle <= 0)
+                    {
+                        _bufferHandle = _buffer.ToIntHandle();
+                    }
+                    VideoDeviceDataContext videoDeviceData = new VideoDeviceDataContext(_bufferHandle, _buffer.Length);
+                    foreach (var observer in _observers)
+                    {
+                        observer.OnNext(videoDeviceData);
+                    }
                 }
-                VideoDeviceDataContext videoDeviceData = new VideoDeviceDataContext(_bufferHandle, _buffer.Length);
-                foreach (var observer in _observers)
-                {
-                    observer.OnNext(videoDeviceData);
-                }
+                
                 Thread.Sleep(40);
             }
+            _logger.Log(_isRuningPullDeviceData + "," + Name, Category.Info, Priority.Low);
         }
 
         private void _getDeviceData(ref byte[] b)

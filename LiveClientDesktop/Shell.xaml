@@ -10,11 +10,13 @@
         MinHeight="720" MinWidth="1280" Height="720" Width="1280">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="928*" MinWidth="928"/>
+            <ColumnDefinition Width="944*" MinWidth="944"/>
             <ColumnDefinition Width="3"/>
             <ColumnDefinition Width="333" MinWidth="333"/>
         </Grid.ColumnDefinitions>
-        <Grid></Grid>
+        <Grid Grid.Column="0">
+            <views:SpeechView DataContext="{Binding VMContext.SpeechViewModel}"/>
+        </Grid>
         <GridSplitter  x:Name="gsSplitterr" Grid.Column="1"  HorizontalAlignment="Stretch" Background="#FF9F9F9F"></GridSplitter>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
@@ -33,8 +35,8 @@
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
-                <views:MicrophoneVolumeControlView Grid.Column="0"/>
-                <views:PlayVolumeControlView Grid.Column="2"/>
+                <views:MicrophoneVolumeControlView Grid.Column="0" DataContext="{Binding VMContext.MicrophoneVolumeControlViewModel}"/>
+                <views:PlayVolumeControlView Grid.Column="2" DataContext="{Binding VMContext.PlayVolumeControlViewModel}" />
                 <views:CameraDeviceView Grid.Column="4" DataContext="{Binding VMContext.CameraDeviceViewModel}"/>
             </Grid>
             <Grid Grid.Row="2">

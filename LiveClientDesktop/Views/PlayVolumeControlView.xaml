@@ -8,7 +8,8 @@
             <ColumnDefinition Width="3"/>
             <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
-        <customControls:FButton Grid.Column="0" FIcon="&#xe609;" Style="{StaticResource FButton_Transparency}"></customControls:FButton>
-        <Slider Grid.Column="2" TickFrequency="5" Orientation="Horizontal" VerticalAlignment="Center" Minimum="1" Maximum="100" Foreground="White" />
+        <customControls:FButton Grid.Column="0" Visibility="{Binding DisplayPlaySoundBtn}" Command="{Binding SoundMuteCommand}" FIcon="&#xe609;" Style="{StaticResource FButton_Transparency}"/>
+        <customControls:FButton Grid.Column="0" Visibility="{Binding DisplayMuteBtn}" Command="{Binding PlaySoundCommand}" FIcon="&#xe6a7;" Style="{StaticResource FButton_Transparency}"/>
+        <Slider Grid.Column="2" TickFrequency="5" Orientation="Horizontal" Value="{Binding SoundVolume}" VerticalAlignment="Center" Minimum="1" Maximum="100" Foreground="White" />
     </Grid>
 </UserControl>

@@ -20,7 +20,7 @@ namespace LiveClientDesktop.Models
 
         public string FileFullPath { get; set; }
 
-        public DemoFileType DemoFileType
+        public DemonstratioType DemoFileType
         {
             get
             {
@@ -32,7 +32,7 @@ namespace LiveClientDesktop.Models
 
         public DemoType DemoType { get; set; }
 
-        private DemoFileType GetDemoFileType()
+        private DemonstratioType GetDemoFileType()
         {
             switch (Path.GetExtension(FileFullPath).ToLower())
             {
@@ -41,15 +41,15 @@ namespace LiveClientDesktop.Models
                 case ".mkv":
                 case ".wav":
                 case ".flv":
-                case ".asf": return DemoFileType.Video;
+                case ".asf": return DemonstratioType.Video;
                 case ".jpg":
                 case ".png":
-                case ".bmp": return DemoFileType.Image;
+                case ".bmp": return DemonstratioType.Image;
                 case ".ppt":
-                case ".pptx": return DemoFileType.PPT;
+                case ".pptx": return DemonstratioType.PPT;
                 case ".m4a":
-                case ".mp3": return DemoFileType.Audio;
-                default: return DemoFileType.None;
+                case ".mp3": return DemonstratioType.Audio;
+                default: return DemonstratioType.None;
             }
         }
 

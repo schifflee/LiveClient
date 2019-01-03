@@ -15,14 +15,18 @@ namespace LiveClientDesktop.WinFormControl
     public partial class MsPlayerControl : UserControl, IObserver<VideoDeviceDataContext>
     {
         protected IDisposable unsubscriber;
+        private object syncState = new object();
+        private readonly string identity;
         public MsPlayerControl()
         {
             InitializeComponent();
+            identity = Guid.NewGuid().ToString();
         }
 
         public void OpenDevice(IVideoDevice videoDevice)
         {
             unsubscriber?.Dispose();
+            unsubscriber = null;
             videoDevice.OpenDevice();
             unsubscriber = videoDevice.Subscribe(this);
             PowerMsPlayer.StopDecData();
@@ -30,21 +34,24 @@ namespace LiveClientDesktop.WinFormControl
         }
         public void CloseDevice()
         {
-            unsubscriber?.Dispose();
+            lock (syncState)
+            {
+                unsubscriber?.Dispose();
+            }
         }
         public void OnNext(VideoDeviceDataContext value)
         {
-            PowerMsPlayer.InputDecVideo(value.Data, value.DataLength);
+            lock (syncState) {
+                PowerMsPlayer.InputDecVideo(value.Data, value.DataLength);
+            }
         }
 
         public void OnCompleted()
         {
-            throw new NotImplementedException();
         }
 
         public void OnError(Exception error)
         {
-            throw new NotImplementedException();
         }
     }
 }

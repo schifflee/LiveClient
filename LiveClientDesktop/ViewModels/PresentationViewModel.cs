@@ -143,6 +143,7 @@ namespace LiveClientDesktop.ViewModels
         private void OpenSelectFileDialog(DemoType demoType, string fileFilter, Action<string> callback)
         {
             var selectedFileName = OpenFileDialogHelper.OpenFileDialogWindow(fileFilter);
+            if (string.IsNullOrEmpty(selectedFileName)) return;
             _presentationsRepository.AddPersentation(new PresentationInfo
             {
                 FileFullPath = selectedFileName,

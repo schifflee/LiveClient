@@ -37,8 +37,8 @@ namespace Test
 
         private void button1_Click(object sender, EventArgs e)
         {
-            VideoDeviceManager videoDeviceManager =  VideoDeviceManager.Instance;
-            var s = videoDeviceManager.GetVideoDevices();
+            //VideoDeviceManager videoDeviceManager =  VideoDeviceManager.Instance;
+           // var s = videoDeviceManager.GetVideoDevices();
             //if (t.IsCompleted)
             //    t.Dispose();
             //t = null;

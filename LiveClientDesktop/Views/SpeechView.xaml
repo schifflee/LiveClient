@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="LiveClientDesktop.Views.SpeechView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:winformControls="clr-namespace:LiveClientDesktop.WinFormControl" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <SolidColorBrush Color="#202129" Opacity=".7" x:Key="OpacityBrush"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="DefaultScene">
+            <Grid.Background>
+                <ImageBrush x:Name="ImageControl" ImageSource="pack://siteoforigin:,,,/Resources/5.png"></ImageBrush>
+            </Grid.Background>
+        </Grid>
+        <WindowsFormsHost x:Name="DemonstrationPPTScene" Visibility="Hidden">
+            <winformControls:PowerPointViewer x:Name="PPTViewer"/>
+        </WindowsFormsHost>
+        <WindowsFormsHost x:Name="DemonstrationVideoDeviceScene" Visibility="Hidden">
+            <winformControls:MsPlayerControl  x:Name="MsPlayer"/>
+        </WindowsFormsHost>
+    </Grid>
+</UserControl>

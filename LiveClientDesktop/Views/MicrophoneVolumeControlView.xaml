@@ -8,7 +8,8 @@
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
-        <customControls:FButton Grid.Column="0" FIcon="&#xe61f;" Style="{StaticResource FButton_Transparency}"></customControls:FButton>
-        <Slider Grid.Column="1" TickFrequency="5" Orientation="Horizontal" VerticalAlignment="Center" Minimum="1" Maximum="100" Foreground="White" />
+        <customControls:FButton Grid.Column="0"  Visibility="{Binding displayMicrophoneBtn}" Command="{Binding MicrophoneMuteCommand}" FIcon="&#xe61f;" Style="{StaticResource FButton_Transparency}"></customControls:FButton>
+        <customControls:FButton Grid.Column="0"  Visibility="{Binding DisplayMicrophoneMuteBtn}" Command="{Binding PlayMicrophoneSoundCommand}" FIcon="&#xe6ef;" Style="{StaticResource FButton_Transparency}" ></customControls:FButton>
+        <Slider Grid.Column="1" TickFrequency="5" Orientation="Horizontal" VerticalAlignment="Center" Minimum="1" Maximum="100" Value="{Binding MicrophoneVolume}" Foreground="White" />
     </Grid>
 </UserControl>

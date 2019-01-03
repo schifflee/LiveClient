@@ -1,4 +1,5 @@
-﻿using PowerCreator.LiveClient.Infrastructure.Byte.Extensions;
+﻿using Microsoft.Practices.Prism.Logging;
+using PowerCreator.LiveClient.Infrastructure.Byte.Extensions;
 using PowerCreator.LiveClient.VsNetSdk;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,12 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
 
         private readonly IntPtr _handle;
 
+        private readonly ILoggerFacade _logger;
+
         private IEnumerable<IVideoDevice> _videoDeviceList;
-        public VideoDeviceManager()
+        public VideoDeviceManager(ILoggerFacade logger)
         {
+            _logger = logger;
             _handle = VsNetCameraSdk.Camera_AllocInstance();
             _videoDeviceList = _getVideoDevices();
         }
@@ -33,7 +37,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             ICollection<IVideoDevice> videoDeviceList = new List<IVideoDevice>();
             for (int index = 0; index < _getVideoDeviceTotal(); index++)
             {
-                videoDeviceList.Add(new VideoDevice(_getVideoDeviceName(index), index));
+                videoDeviceList.Add(new VideoDevice(_getVideoDeviceName(index), index,_logger));
             }
             return videoDeviceList;
         }

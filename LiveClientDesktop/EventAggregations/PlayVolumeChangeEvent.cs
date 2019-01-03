@@ -2,7 +2,8 @@
 
 namespace LiveClientDesktop.EventAggregations
 {
-    public class SystemClosingEvent : CompositePresentationEvent<bool>
+    public class PlayVolumeChangeEvent : CompositePresentationEvent<int>
     {
+
     }
 }

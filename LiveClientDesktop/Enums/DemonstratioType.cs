@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace LiveClientDesktop.Enums
 {
-    public enum DemoFileType
+    public enum DemonstratioType
     {
         None,
         Video,
         Image,
         Audio,
-        PPT
+        PPT,
+        VideoDevice
     }
 }

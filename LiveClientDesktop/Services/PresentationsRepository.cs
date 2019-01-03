@@ -13,10 +13,13 @@ namespace LiveClientDesktop.Services
         private const string _saveFileName = "Presentations";
         private readonly string _saveFilePath = string.Empty;
         private readonly ILoggerFacade _logger;
+        private readonly SystemConfig _config;
         private readonly int _maximumSavedEntry;
-        public PresentationsRepository(ILoggerFacade logger, int maximumSavedEntry)
+
+        public PresentationsRepository(ILoggerFacade logger, SystemConfig config, int maximumSavedEntry)
         {
-            _saveFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            _config = config ?? throw new ArgumentNullException("config");
+            _saveFilePath = _config.AllDataSavePath;
             _logger = logger;
             _maximumSavedEntry = maximumSavedEntry;
         }
