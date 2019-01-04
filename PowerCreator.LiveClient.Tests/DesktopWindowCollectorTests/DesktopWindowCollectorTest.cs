@@ -19,7 +19,6 @@ namespace PowerCreator.LiveClient.Tests.DesktopWindowCollectorTests
     public class DesktopWindowCollectorTest : TestBaseWithLocalIocManager
     {
         private readonly IVideoEncoder videoEncoder;
-        private readonly IVideoDeviceManager videoDeviceManager;
         private readonly IAacEncoder aacEncoder;
         private readonly IAudioDeviceManager audioDeviceManager;
         public DesktopWindowCollectorTest()

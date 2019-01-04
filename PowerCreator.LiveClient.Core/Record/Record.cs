@@ -13,14 +13,11 @@ using PowerCreator.LiveClient.VsNetSdk;
 
 namespace PowerCreator.LiveClient.Core.Record
 {
-    public class Record : IRecord, IObserver<AudioEncodedDataContext>, IObserver<VideoEncodedDataContext>
+    public class Record : IRecord
     {
         public RecAndLiveState State { get; private set; }
 
         public bool IsRecord { get; private set; }
-
-        protected IDisposable unsubscriberVideoData;
-        protected IDisposable unsubscriberAudioData;
 
         private readonly IntPtr _handle;
         private readonly IVideoEncoder _videoEncoder;
@@ -44,8 +41,8 @@ namespace PowerCreator.LiveClient.Core.Record
 
             if (_setRecordInfo(recordFileSavePath))
             {
-                unsubscriberVideoData = _videoEncoder.Subscribe(this);
-                unsubscriberAudioData = _aacEncoder.Subscribe(this);
+                _videoEncoder.PushingData += _videoEncoder_PushingData;
+                _aacEncoder.PushingData += _aacEncoder_PushingData;
                 State = RecAndLiveState.Started;
                 IsRecord = true;
                 return true;
@@ -53,12 +50,22 @@ namespace PowerCreator.LiveClient.Core.Record
             return false;
         }
 
+        private void _aacEncoder_PushingData(AudioEncodedDataContext value)
+        {
+            VsNetRecordSdk.FileMuxer_WriteAudio(_handle, value.Data.ToInt32(), value.DataLength, value.KeyFrame);
+        }
+
+        private void _videoEncoder_PushingData(VideoEncodedDataContext value)
+        {
+            VsNetRecordSdk.FileMuxer_WriteVideo(_handle, value.Data, value.DataLength, value.KeyFrame, value.TimeStamp);
+        }
+
         public bool StopRecord()
         {
             if (!IsRecord) return true;
 
-            unsubscriberVideoData.Dispose();
-            unsubscriberAudioData.Dispose();
+            _videoEncoder.PushingData -= _videoEncoder_PushingData;
+            _aacEncoder.PushingData -= _aacEncoder_PushingData;
             if (VsNetRecordSdk.FileMuxer_EndWrite(_handle) == 0)
             {
                 State = RecAndLiveState.NotStart;
@@ -91,26 +98,6 @@ namespace PowerCreator.LiveClient.Core.Record
         {
             return VsNetRecordSdk.FileMuxer_BeginWrite(_handle, fileSavePath, _videoEncoder.IntBitmapInfoHeader, Marshal.SizeOf(new BitmapInfoHeader()), _aacEncoder.IntWaveFormatEx, 2) == 0;
         }
-
-        #region IObserver Support
-
-        public void OnNext(AudioEncodedDataContext value)
-        {
-            VsNetRecordSdk.FileMuxer_WriteAudio(_handle, value.Data.ToInt32(), value.DataLength, value.KeyFrame);
-        }
-        public void OnNext(VideoEncodedDataContext value)
-        {
-            VsNetRecordSdk.FileMuxer_WriteVideo(_handle, value.Data, value.DataLength, value.KeyFrame, value.TimeStamp);
-        }
-
-        public void OnError(Exception error) { }
-
-        public void OnCompleted()
-        { }
-
-
-
-        #endregion
 
         #region IDisposable Support
         private bool disposedValue = false;

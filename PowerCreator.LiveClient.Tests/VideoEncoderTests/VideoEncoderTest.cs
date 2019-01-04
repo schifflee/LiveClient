@@ -13,10 +13,8 @@ using System.Threading.Tasks;
 namespace PowerCreator.LiveClient.Tests.VideoEncoderTests
 {
     [TestClass]
-    public class VideoEncoderTest : TestBaseWithLocalIocManager, IObserver<VideoEncodedDataContext>
+    public class VideoEncoderTest : TestBaseWithLocalIocManager
     {
-        protected IDisposable unsubscriber;
-
         public void OnCompleted()
         {
             throw new NotImplementedException();
@@ -40,11 +38,11 @@ namespace PowerCreator.LiveClient.Tests.VideoEncoderTests
             var videoDevice = videoDeviceManager.GetVideoDeviceById(0);
             Assert.IsTrue(videoEncoder.SetVideoSource(videoDevice));
             videoEncoder.StartVideoEncoder();
-            unsubscriber = videoEncoder.Subscribe(this);
+            videoEncoder.PushingData += VideoEncoder_PushingData;
             Assert.IsTrue(videoEncoder.IsStartEncoder);
             Assert.IsTrue(videoDevice.IsOpen);
             Thread.Sleep(5000);
-            unsubscriber.Dispose();
+            videoEncoder.PushingData -= VideoEncoder_PushingData;
             Thread.Sleep(5000);
             videoEncoder.StopVideoEncoder();
             Assert.IsFalse(videoDevice.IsOpen);
@@ -52,6 +50,11 @@ namespace PowerCreator.LiveClient.Tests.VideoEncoderTests
             videoEncoder.Dispose();
             videoDeviceManager.Dispose();
 
+        }
+
+        private void VideoEncoder_PushingData(VideoEncodedDataContext value)
+        {
+            Debug.WriteLine("VideoEncoderTest:" + value.DataLength);
         }
     }
 }

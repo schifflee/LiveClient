@@ -59,6 +59,8 @@
     <Compile Include="Enums\RecAndLiveState.cs" />
     <Compile Include="EnumWindows\IWindowEnumerator.cs" />
     <Compile Include="EnumWindows\WindowEnumerator.cs" />
+    <Compile Include="IPushingDataEventBase.cs" />
+    <Compile Include="PushingDataEventBase.cs" />
     <Compile Include="LiveBroadcast\ILiveBroadcast.cs" />
     <Compile Include="LiveBroadcast\LiveBroadcast.cs" />
     <Compile Include="Models\AudioDeviceDataContext.cs" />

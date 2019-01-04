@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.AudioDevice
 {
-    public sealed class AudioDevice : IAudioDevice
+    public sealed class AudioDevice : PushingDataEventBase<AudioDeviceDataContext>, IAudioDevice
     {
         public string Name { get; private set; }
 
@@ -30,15 +30,12 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
         private IntPtr _audioDataFormat;
         private IntPtr _handle;
         private int _bufferSize = 0;
-        private List<IObserver<AudioDeviceDataContext>> _observers;
         private bool _isRuningPullAudioData;
         internal AudioDevice(string audioDeviceName, int Id)
         {
             ID = Id;
             Name = audioDeviceName;
-
             _handle = VsNetSoundRecorderSdk.SoundRecorder_CreateInstance();
-            _observers = new List<IObserver<AudioDeviceDataContext>>();
         }
 
         public bool OpenDevice()
@@ -56,7 +53,7 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
         public bool CloseDevice()
         {
             if (!IsOpen) return true;
-            
+
             _isRuningPullAudioData = false;
 
             IsOpen = !(VsNetSoundRecorderSdk.SoundRecorder_CloseRecorder(_handle) == 0);
@@ -80,10 +77,7 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
                     byte[] buffer = new byte[_bufferSize];
                     _getAudioData(ref buffer[0], _bufferSize);
                     AudioDeviceDataContext audioDeviceData = new AudioDeviceDataContext(buffer.ToIntHandle(), _bufferSize);
-                    foreach (var observer in _observers)
-                    {
-                        observer.OnNext(audioDeviceData);
-                    }
+                    Pushing(audioDeviceData);
                 }
                 Thread.Sleep(40);
             }
@@ -101,22 +95,7 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
             return VsNetSoundRecorderSdk.SoundRecorder_GetDataSize(_handle);
         }
 
-
-        #region IObservable Support
-        public IDisposable Subscribe(IObserver<AudioDeviceDataContext> observer)
-        {
-            if (!_observers.Contains(observer))
-                _observers.Add(observer);
-            return new Unsubscriber<AudioDeviceDataContext>(_observers, observer, (observers) =>
-            {
-                if (!observers.Any())
-                {
-                    CloseDevice();
-                }
-            });
-        }
-        #endregion
-
+        
         #region IDisposable Support
         private bool disposedValue = false;
 
@@ -124,10 +103,6 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
         {
             if (!disposedValue)
             {
-                if (disposing)
-                {
-                    _observers.Clear();
-                }
                 VsNetSoundRecorderSdk.SoundRecorder_FreeInstance(_handle);
                 disposedValue = true;
             }
@@ -140,6 +115,16 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected override void OnSubscribe()
+        {
+            OpenDevice();
+        }
+
+        protected override void OnAllUnSubscribe()
+        {
+            CloseDevice();
         }
 
         #endregion

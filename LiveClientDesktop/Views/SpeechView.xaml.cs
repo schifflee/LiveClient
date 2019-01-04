@@ -63,7 +63,7 @@ namespace LiveClientDesktop.Views
         }
         private void SystemShutdown(bool isClose)
         {
-
+            MsPlayer.CloseDevice();
         }
     }
 }

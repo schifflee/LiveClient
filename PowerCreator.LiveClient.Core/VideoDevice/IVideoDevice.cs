@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.VideoDevice
 {
-    public interface IVideoDevice : IObservable<VideoDeviceDataContext>, IDisposable
+    public interface IVideoDevice : IPushingDataPushingData<VideoDeviceDataContext>, IDisposable
     {
         int ID { get; }
 
@@ -29,5 +29,6 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         bool OpenDevice();
 
         bool CloseDevice();
+
     }
 }

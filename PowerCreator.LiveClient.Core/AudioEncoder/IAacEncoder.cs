@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.AudioEncoder
 {
-    public interface IAacEncoder : IObservable<AudioEncodedDataContext>, IDisposable
+    public interface IAacEncoder : IPushingDataPushingData<AudioEncodedDataContext>, IDisposable
     {
         bool IsStartEncoder { get; }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.VideoEncoder
 {
-    public interface IVideoEncoder : IObservable<VideoEncodedDataContext>, IDisposable
+    public interface IVideoEncoder : IPushingDataPushingData<VideoEncodedDataContext>, IDisposable
     {
         bool IsStartEncoder { get; }
         int IntBitmapInfoHeader { get; }

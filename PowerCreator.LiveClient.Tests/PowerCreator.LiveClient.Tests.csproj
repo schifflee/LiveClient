@@ -87,6 +87,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LiveClientDesktop\LiveClientDesktop.csproj">
+      <Project>{fb781776-5665-4157-b257-14cf63d6c776}</Project>
+      <Name>LiveClientDesktop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PowerCreator.LiveClient.Core\PowerCreator.LiveClient.Core.csproj">
       <Project>{cdde7c0b-c588-496e-9d3c-e7eb28485198}</Project>
       <Name>PowerCreator.LiveClient.Core</Name>

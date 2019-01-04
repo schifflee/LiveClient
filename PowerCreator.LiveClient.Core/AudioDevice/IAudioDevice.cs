@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.AudioDevice
 {
-    public interface IAudioDevice : IObservable<AudioDeviceDataContext>, IDisposable
+    public interface IAudioDevice :IPushingDataPushingData<AudioDeviceDataContext>, IDisposable
     {
         int ID { get; }
         string Name { get; }

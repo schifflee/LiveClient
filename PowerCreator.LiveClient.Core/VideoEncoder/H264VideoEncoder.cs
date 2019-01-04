@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.VideoEncoder
 {
-    public class H264VideoEncoder : DevicDataRecipient<VideoDeviceDataContext>, IVideoEncoder
+    public class H264VideoEncoder : PushingDataEventBase<VideoEncodedDataContext>, IVideoEncoder
     {
         public bool IsStartEncoder { get; private set; }
 
@@ -28,7 +28,6 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
 
         private readonly IntPtr _handle;
         private readonly BitmapInfoHeader _bitmapInfoHeader;
-        private List<IObserver<VideoEncodedDataContext>> _observers;
         private DateTime _startEncoderTime;
         private int _bitmapInfoHeaderLength;
         private int _outputData = 0;
@@ -39,7 +38,6 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
         {
             _handle = VsNetVideoEncoderSdk.VideoEncoderEx_AllocInstance();
             _bitmapInfoHeader = new BitmapInfoHeader();
-            _observers = new List<IObserver<VideoEncodedDataContext>>();
         }
         public bool SetVideoSource(IVideoDevice videoDevice)
         {
@@ -65,16 +63,23 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
                 _startEncoderTime = DateTime.Now;
                 CurrentUseVideoDevice.OpenDevice();
                 IsStartEncoder = _setEncoderInfo(CurrentUseVideoDevice.DeviceBitmapInfoHeaderIntPtr, 1500, 1280, 720, _bitmapInfoHeader, ref _bitmapInfoHeaderLength);
-                unsubscriber = CurrentUseVideoDevice.Subscribe(this);
+                CurrentUseVideoDevice.PushingData += CurrentUseVideoDevice_PushingData;
             }
             return IsStartEncoder;
+        }
+
+        private void CurrentUseVideoDevice_PushingData(VideoDeviceDataContext value)
+        {
+            _startVideoEncoder(value.Data, value.DataLength, _getTimeStamp(), ref _outputData, ref _outputDataSize, ref _outputTimeStamp, ref _outputKeyFrame);
+            VideoEncodedDataContext videoEncodedDataContext = new VideoEncodedDataContext(_outputData, _outputDataSize, _outputTimeStamp, _outputKeyFrame);
+            Pushing(videoEncodedDataContext);
         }
 
         public bool StopVideoEncoder()
         {
             if (!IsStartEncoder) return true;
 
-            unsubscriber?.Dispose();
+            CurrentUseVideoDevice.PushingData -= CurrentUseVideoDevice_PushingData;
             IsStartEncoder = !(VsNetVideoEncoderSdk.VideoEncoderEx_StopEnc(_handle) == 0);
 
             return !IsStartEncoder;
@@ -94,45 +99,6 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
             return (int)ts.TotalMilliseconds;
         }
 
-        #region IObservable Support
-        public IDisposable Subscribe(IObserver<VideoEncodedDataContext> observer)
-        {
-            if (!_observers.Contains(observer))
-                _observers.Add(observer);
-            return new Unsubscriber<VideoEncodedDataContext>(_observers, observer, (observers) =>
-            {
-                if (!observers.Any())
-                {
-                    StopVideoEncoder();
-                }
-            });
-        }
-        #endregion
-
-        #region IObserver Support
-        public override void OnCompleted() { }
-
-        public override void OnError(Exception error) { }
-
-        public override void OnNext(VideoDeviceDataContext value)
-        {
-//#if DEBUG
-//            Debug.WriteLine("SourceDataLength:" + value.DataLength);
-//#endif
-
-            _startVideoEncoder(value.Data, value.DataLength, _getTimeStamp(), ref _outputData, ref _outputDataSize, ref _outputTimeStamp, ref _outputKeyFrame);
-            VideoEncodedDataContext videoEncodedDataContext = new VideoEncodedDataContext(_outputData, _outputDataSize, _outputTimeStamp, _outputKeyFrame);
-            foreach (var observer in _observers)
-            {
-//#if DEBUG
-//                Debug.WriteLine("EncodedDataLength:" + videoEncodedDataContext.DataLength);
-//#endif
-
-                observer.OnNext(videoEncodedDataContext);
-            }
-        }
-        #endregion
-
         #region IDisposable Support
         private bool disposedValue = false;
 
@@ -142,7 +108,6 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
             {
                 if (disposing)
                 {
-                    _observers.Clear();
                     StopVideoEncoder();
                 }
                 VsNetVideoEncoderSdk.VideoEncoderEx_FreeInstance(_handle);
@@ -158,6 +123,16 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected override void OnSubscribe()
+        {
+           
+        }
+
+        protected override void OnAllUnSubscribe()
+        {
+            
         }
         #endregion
     }

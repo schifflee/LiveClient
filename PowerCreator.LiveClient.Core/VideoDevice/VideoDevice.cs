@@ -12,9 +12,9 @@ using PowerCreator.LiveClient.VsNetSdk;
 
 namespace PowerCreator.LiveClient.Core.VideoDevice
 {
-    public class VideoDevice : IVideoDevice
+    public class VideoDevice : PushingDataEventBase<VideoDeviceDataContext>, IVideoDevice
     {
-        private readonly ILoggerFacade _logger;
+        
         public int ID { get; private set; }
 
         public string Name { get; private set; }
@@ -48,7 +48,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
                 return DeviceBitmapInfoHeaderIntPtr.ToInt32();
             }
         }
-        private List<IObserver<VideoDeviceDataContext>> _observers;
+        private readonly ILoggerFacade _logger;
         private readonly IntPtr _handle;
         private byte[] _buffer;
         private bool _isRuningPullDeviceData;
@@ -59,7 +59,6 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             ID = id;
             Name = videoDeviceName;
             _handle = VsNetCameraSdk.Camera_AllocInstance();
-            _observers = new List<IObserver<VideoDeviceDataContext>>();
             _setDeviceAvailableStatus();
         }
         public bool CloseDevice()
@@ -69,7 +68,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             _stopPullDeviceData();
             IsOpen = false;
             VsNetCameraSdk.Camera_CloseCamera(_handle);
-            
+
             return true;
         }
 
@@ -115,23 +114,19 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         {
             while (_isRuningPullDeviceData)
             {
-                _logger.Log(_isRuningPullDeviceData + ",1111" + Name,Category.Info,Priority.Low);
-                if (IsOpen) {
+                if (IsOpen)
+                {
                     _getDeviceData(ref _buffer);
                     if (_bufferHandle <= 0)
                     {
                         _bufferHandle = _buffer.ToIntHandle();
                     }
                     VideoDeviceDataContext videoDeviceData = new VideoDeviceDataContext(_bufferHandle, _buffer.Length);
-                    foreach (var observer in _observers)
-                    {
-                        observer.OnNext(videoDeviceData);
-                    }
+                    Pushing(videoDeviceData);
                 }
-                
+
                 Thread.Sleep(40);
             }
-            _logger.Log(_isRuningPullDeviceData + "," + Name, Category.Info, Priority.Low);
         }
 
         private void _getDeviceData(ref byte[] b)
@@ -148,8 +143,9 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         }
         private void _setDeviceAvailableStatus()
         {
-             IsAvailable = _openDevice();
-            if (IsAvailable) {
+            IsAvailable = _openDevice();
+            if (IsAvailable)
+            {
                 _closeDevice();
             }
         }
@@ -160,22 +156,20 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         private bool _openDevice()
         {
             return VsNetCameraSdk.Camera_OpenCamera(_handle, ID, false, 0, 0);
+
         }
-        #region IObservable Support
-        public IDisposable Subscribe(IObserver<VideoDeviceDataContext> observer)
+        protected override void OnSubscribe()
         {
-            if (!_observers.Contains(observer))
-                _observers.Add(observer);
-            return new Unsubscriber<VideoDeviceDataContext>(_observers, observer, (observers) =>
-            {
-                if (!observers.Any())
-                    CloseDevice();
-            });
+            OpenDevice();
         }
-        #endregion
+        protected override void OnAllUnSubscribe()
+        {
+            CloseDevice();
+        }
 
         #region IDisposable Support
         private bool disposedValue = false;
+
 
         protected virtual void Dispose(bool disposing)
         {
@@ -183,7 +177,6 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             {
                 if (disposing)
                 {
-                    _observers.Clear();
                     CloseDevice();
                     _buffer = null;
                 }

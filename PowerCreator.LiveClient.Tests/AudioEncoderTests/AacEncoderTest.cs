@@ -9,9 +9,8 @@ using System.Threading;
 namespace PowerCreator.LiveClient.Tests.AudioEncoderTests
 {
     [TestClass]
-    public class AacEncoderTest : TestBaseWithLocalIocManager, IObserver<AudioEncodedDataContext>
+    public class AacEncoderTest : TestBaseWithLocalIocManager
     {
-        protected IDisposable unsubscriber;
         [TestMethod]
         public void SourceAudioDataReceiveAndEncodedDataSend()
         {
@@ -20,30 +19,20 @@ namespace PowerCreator.LiveClient.Tests.AudioEncoderTests
             var audioDevice = audioDeviceManager.GetAudioDeviceById(0);
             Assert.IsTrue(aacEncoder.SetAudioDataSource(audioDevice));
             aacEncoder.StartAudioEncoder();
-            unsubscriber = aacEncoder.Subscribe(this);
+            aacEncoder.PushingData += AacEncoder_PushingData;
             Assert.IsTrue(aacEncoder.IsStartEncoder);
             Assert.IsTrue(audioDevice.IsOpen);
             Thread.Sleep(5000);
             aacEncoder.StopAudioEncoder();
             Assert.IsFalse(audioDevice.IsOpen);
             Assert.IsFalse(aacEncoder.IsStartEncoder);
-            unsubscriber.Dispose();
+            aacEncoder.PushingData -= AacEncoder_PushingData;
             aacEncoder.Dispose();
             audioDeviceManager.Dispose();
 
         }
 
-        public void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnError(Exception error)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnNext(AudioEncodedDataContext value)
+        private void AacEncoder_PushingData(AudioEncodedDataContext value)
         {
             Debug.WriteLine("AacEncoderTest:" + value.DataLength);
         }

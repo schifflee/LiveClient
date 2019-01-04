@@ -121,16 +121,19 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         {
             if (!_observers.Contains(observer))
                 _observers.Add(observer);
-            return new Unsubscriber<VideoDeviceDataContext>(_observers, observer, (observers) =>
+            return new Unsubscriber<VideoDeviceDataContext>(_observers, observer/*, (observers) =>
             {
                 if (!observers.Any())
                     CloseDevice();
-            });
+            }*/);
         }
         #endregion
 
         #region IDisposable Support
         private bool disposedValue = false;
+
+        public event Action<VideoDeviceDataContext> PublishingVideoData;
+        public event Action<VideoDeviceDataContext> PushingData;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -155,6 +158,16 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public void Subscribe(Action<VideoDeviceDataContext> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnSubscribe(Action<VideoDeviceDataContext> action)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

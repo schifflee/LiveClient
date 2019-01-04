@@ -16,7 +16,7 @@ using static PowerCreator.LiveClient.VsNetSdk.VsNetAACEncoder;
 
 namespace PowerCreator.LiveClient.Core.AudioEncoder
 {
-    public class AacEncoder : DevicDataRecipient<AudioDeviceDataContext>, IAacEncoder
+    public class AacEncoder : PushingDataEventBase<AudioEncodedDataContext>, IAacEncoder
     {
         public bool IsStartEncoder { get; private set; }
 
@@ -40,12 +40,10 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
         private readonly IntPtr _handle;
         private readonly WaveFormatEx _waveFormatEx;
         private readonly AudioDeviceDataCallBack _audioDeviceDataCallBack;
-        private List<IObserver<AudioEncodedDataContext>> _observers;
         public AacEncoder()
         {
             _handle = AACEncoder_AllocInstance();
             _audioDeviceDataCallBack = _audioDeviceData;
-            _observers = new List<IObserver<AudioEncodedDataContext>>();
             _waveFormatEx = new WaveFormatEx();
         }
 
@@ -72,18 +70,29 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
             if (!IsStartEncoder && CurrentUseAudioDevice != null)
             {
                 CurrentUseAudioDevice.OpenDevice();
-                unsubscriber = CurrentUseAudioDevice.Subscribe(this);
+                CurrentUseAudioDevice.PushingData += CurrentUseAudioDevice_PushingData;
 
                 IsStartEncoder = _startEncoder();
             }
             return IsStartEncoder;
         }
 
+        [HandleProcessCorruptedStateExceptions]
+        [SecurityCritical]
+        private void CurrentUseAudioDevice_PushingData(AudioDeviceDataContext value)
+        {
+            try
+            {
+                AACEncoder_EncData(_handle, value.Data, value.DataLength, (int)DateTime.Now.Ticks);
+            }
+            catch { }
+        }
+
         public bool StopAudioEncoder()
         {
             if (!IsStartEncoder) return true;
 
-            unsubscriber?.Dispose();
+            CurrentUseAudioDevice.PushingData -= CurrentUseAudioDevice_PushingData;
             IsStartEncoder = !(AACEncoder_StopEnc(_handle) == 0);
 
             return !IsStartEncoder;
@@ -96,50 +105,10 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
         }
         private void _audioDeviceData(ref DataHeader dataHeader, IntPtr pData, int pContext)
         {
-//#if DEBUG
-//            Debug.WriteLine("_audioDeviceData:" + dataHeader.DataSize);
-//#endif
             AudioEncodedDataContext audioEncodedDataContext = new AudioEncodedDataContext(pData, dataHeader.DataSize, (int)dataHeader.TimeStamp, Convert.ToBoolean(dataHeader.KeyFrame));
-            foreach (var observer in _observers)
-            {
-                observer.OnNext(audioEncodedDataContext);
-            }
+            Pushing(audioEncodedDataContext);
         }
-
-        #region DevicDataRecipient Support
-        public override void OnCompleted() { }
-
-        public override void OnError(Exception error) { }
-
-        [HandleProcessCorruptedStateExceptions]
-        [SecurityCritical]
-        public override void OnNext(AudioDeviceDataContext value)
-        {
-//#if DEBUG
-//            Debug.WriteLine("SourceAudioDataLength:" + value.DataLength);
-//#endif
-            try
-            {
-                AACEncoder_EncData(_handle, value.Data, value.DataLength, (int)DateTime.Now.Ticks);
-            }
-            catch { }
-        }
-        #endregion
-
-        #region IObservable Support
-        public IDisposable Subscribe(IObserver<AudioEncodedDataContext> observer)
-        {
-            if (!_observers.Contains(observer))
-                _observers.Add(observer);
-            return new Unsubscriber<AudioEncodedDataContext>(_observers, observer, (observers) =>
-            {
-                if (!observers.Any())
-                {
-                    StopAudioEncoder();
-                }
-            });
-        }
-        #endregion
+        
 
         #region IDisposable Support
         private bool disposedValue = false;
@@ -150,7 +119,6 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
             {
                 if (disposing)
                 {
-                    _observers.Clear();
                     StopAudioEncoder();
                 }
                 AACEncoder_FreeInstance(_handle);
@@ -166,6 +134,15 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected override void OnSubscribe()
+        {
+
+        }
+
+        protected override void OnAllUnSubscribe()
+        {
         }
         #endregion
 

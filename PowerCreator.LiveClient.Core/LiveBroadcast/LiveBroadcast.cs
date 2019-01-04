@@ -14,13 +14,11 @@ using PowerCreator.LiveClient.VsNetSdk;
 
 namespace PowerCreator.LiveClient.Core.LiveBroadcast
 {
-    public class LiveBroadcast : ILiveBroadcast, IObserver<AudioEncodedDataContext>, IObserver<VideoEncodedDataContext>
+    public class LiveBroadcast : ILiveBroadcast
     {
         public bool IsLive { get; private set; }
         public RecAndLiveState State { get; private set; }
 
-        protected IDisposable unsubscriberVideoData;
-        protected IDisposable unsubscriberAudioData;
         private readonly IntPtr _handle;
         private readonly IVideoEncoder _videoEncoder;
         private readonly IAacEncoder _aacEncoder;
@@ -79,8 +77,9 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
         private bool _stopLive()
         {
             //TODO  停止失败时会出现黑屏
-            unsubscriberAudioData.Dispose();
-            unsubscriberVideoData.Dispose();
+
+            _videoEncoder.PushingData -= _videoEncoder_PushingData;
+            _aacEncoder.PushingData -= _aacEncoder_PushingData;
             return VsNetRtmpSenderSdk.RtmpSender_EndWrite(_handle) == 0;
         }
         private bool _startLive()
@@ -89,20 +88,19 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
             _aacEncoder.StartAudioEncoder();
             if (_setLiveInfo())
             {
-                unsubscriberVideoData = _videoEncoder.Subscribe(this);
-                unsubscriberAudioData = _aacEncoder.Subscribe(this);
+                _videoEncoder.PushingData += _videoEncoder_PushingData;
+                _aacEncoder.PushingData += _aacEncoder_PushingData;
                 return true;
             }
             return false;
         }
-        private bool _setLiveInfo()
+
+        private void _aacEncoder_PushingData(AudioEncodedDataContext value)
         {
-            int r = VsNetRtmpSenderSdk.RtmpSender_BeginWrite(_handle, _liveServer, _liveServerPort, _liveChannel, _liveStreamName, _videoEncoder.IntBitmapInfoHeader, Marshal.SizeOf(new BitmapInfoHeader()), _aacEncoder.IntWaveFormatEx, Marshal.SizeOf(new WaveFormatEx()));
-            return r == 0;
+            VsNetRtmpSenderSdk.RtmpSender_WriteAudio(_handle, value.Data.ToInt32(), value.DataLength, value.TimeStamp);
         }
 
-        #region IObserver Support
-        public void OnNext(VideoEncodedDataContext value)
+        private void _videoEncoder_PushingData(VideoEncodedDataContext value)
         {
             if (value.DataLength <= 0) return;
 
@@ -133,15 +131,13 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
                 }
             }
 
+        }
 
-        }
-        public void OnNext(AudioEncodedDataContext value)
+        private bool _setLiveInfo()
         {
-            VsNetRtmpSenderSdk.RtmpSender_WriteAudio(_handle, value.Data.ToInt32(), value.DataLength, value.TimeStamp);
+            int r = VsNetRtmpSenderSdk.RtmpSender_BeginWrite(_handle, _liveServer, _liveServerPort, _liveChannel, _liveStreamName, _videoEncoder.IntBitmapInfoHeader, Marshal.SizeOf(new BitmapInfoHeader()), _aacEncoder.IntWaveFormatEx, Marshal.SizeOf(new WaveFormatEx()));
+            return r == 0;
         }
-        public void OnError(Exception error) { }
-        public void OnCompleted() { }
-        #endregion
 
         #region IDisposable Support
         private bool disposedValue = false;
