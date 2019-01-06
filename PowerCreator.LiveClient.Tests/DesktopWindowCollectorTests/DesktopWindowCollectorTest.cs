@@ -36,7 +36,7 @@ namespace PowerCreator.LiveClient.Tests.DesktopWindowCollectorTests
              IVideoDevice videoDevice = new DesktopWindowCollector(9999,"桌面采集器测试", windowList.First().HWD);
             videoEncoder.SetVideoSource(videoDevice);
 
-            var audioDevice = audioDeviceManager.GetAudioDeviceById(1);
+            var audioDevice = audioDeviceManager.GetAudioDeviceById(0);
             aacEncoder.SetAudioDataSource(audioDevice);
 
             Record record = new Record(videoEncoder, aacEncoder);

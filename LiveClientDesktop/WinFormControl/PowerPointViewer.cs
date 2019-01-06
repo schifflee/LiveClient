@@ -12,26 +12,28 @@ using POWERPOINT = Microsoft.Office.Interop.PowerPoint;
 using THREAD = System.Threading;
 using System.Runtime.InteropServices;
 using LiveClientDesktop.Services;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Prism.Events;
+using LiveClientDesktop.EventAggregations;
 
 namespace LiveClientDesktop.WinFormControl
 {
-    public partial class PowerPointViewer: UserControl
+    public partial class PowerPointViewer : UserControl
     {
-        POWERPOINT.Application objApp = null;
+        private POWERPOINT.Application objApp = null;
 
-        POWERPOINT.SlideShowSettings objSSS;
+        private POWERPOINT.SlideShowSettings objSSS;
 
-        POWERPOINT.SlideShowWindow objSSWs;
+        private POWERPOINT.SlideShowWindow objSSWs;
 
+        private IEventAggregator _eventAggregator;
         IntPtr pptIntPtr;
         private bool isManualClose;
-        private Action<bool> PPTViewClose;
 
         private THREAD.Timer _movePPTWindowTimer;
         public PowerPointViewer()
         {
             InitializeComponent();
-
             _movePPTWindowTimer = new THREAD.Timer((state) => moveWindow(), null, THREAD.Timeout.Infinite, THREAD.Timeout.Infinite);
         }
 
@@ -45,7 +47,7 @@ namespace LiveClientDesktop.WinFormControl
 
             try
             {
-                var objPresSet= PresentationInstanceRepository.Instance[filePath];
+                var objPresSet = PresentationInstanceRepository.Instance[filePath];
                 if (objPresSet == null)
                 {
                     objPresSet = objApp.Presentations.Open(filePath, OFFICECORE.MsoTriState.msoCTrue, OFFICECORE.MsoTriState.msoFalse, OFFICECORE.MsoTriState.msoFalse);
@@ -74,14 +76,30 @@ namespace LiveClientDesktop.WinFormControl
             }
         }
 
+        public void Close()
+        {
+            if (objApp != null)
+            {
+                foreach (var item in PresentationInstanceRepository.Instance.GetAll())
+                {
+                    item.Value.Close();
+                }
+                PresentationInstanceRepository.Instance.Clear();
+                objApp.Quit();
+            }
+        }
+        public void SetEventAggregator(IEventAggregator eventAggregator)
+        {
+            _eventAggregator = eventAggregator;
+        }
         private void Application_PresentationClose(POWERPOINT.Presentation Pres)
         {
-            throw new NotImplementedException();
+            //PresentationInstanceRepository.Instance[Pres.FullName] = null;
         }
 
         private void ObjApp_PresentationCloseFinal(POWERPOINT.Presentation Pres)
         {
-            throw new NotImplementedException();
+            _eventAggregator?.GetEvent<PPTClosedEvent>().Publish(isManualClose);
         }
 
         [DllImport("user32.dll")]
@@ -89,11 +107,6 @@ namespace LiveClientDesktop.WinFormControl
 
         [DllImport("user32.dll")]
         private static extern bool MoveWindow(IntPtr childIntPtr, int x, int y, int w, int h, bool b);
-
-        private void PPTViewer_Resize(object sender, EventArgs e)
-        {
-            moveWindow();
-        }
 
         private void moveWindow()
         {
@@ -104,6 +117,11 @@ namespace LiveClientDesktop.WinFormControl
             {
                 MoveWindow(pptIntPtr, 0, 0, this.Width, this.Height, true);
             }
+        }
+
+        private void PowerPointViewer_Resize(object sender, EventArgs e)
+        {
+            moveWindow();
         }
     }
 }

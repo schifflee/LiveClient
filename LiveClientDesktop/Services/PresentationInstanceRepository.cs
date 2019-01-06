@@ -21,5 +21,13 @@ namespace LiveClientDesktop.Services
             }
             set { _dictionary[name] = value; }
         }
+        public Dictionary<string, POWERPOINT.Presentation> GetAll()
+        {
+            return _dictionary;
+        }
+        public void Clear()
+        {
+            _dictionary.Clear();
+        }
     }
 }

@@ -3,7 +3,6 @@ using PowerCreator.LiveClient.Core.AudioEncoder;
 using PowerCreator.LiveClient.Core.LiveBroadcast;
 using PowerCreator.LiveClient.Core.VideoDevice;
 using PowerCreator.LiveClient.Core.VideoEncoder;
-using PowerCreatorSDK.Camera;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -99,6 +99,16 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
             return (int)ts.TotalMilliseconds;
         }
 
+        protected override void OnSubscribe()
+        {
+
+        }
+
+        protected override void OnAllUnSubscribe()
+        {
+            StopVideoEncoder();
+        }
+
         #region IDisposable Support
         private bool disposedValue = false;
 
@@ -123,16 +133,6 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        protected override void OnSubscribe()
-        {
-           
-        }
-
-        protected override void OnAllUnSubscribe()
-        {
-            
         }
         #endregion
     }

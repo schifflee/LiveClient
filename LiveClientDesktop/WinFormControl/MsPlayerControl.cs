@@ -39,7 +39,8 @@ namespace LiveClientDesktop.WinFormControl
         {
             lock (syncState)
             {
-                _currentVideoDevice.PushingData -= _videoDevice_PushData;
+                if (_currentVideoDevice != null)
+                    _currentVideoDevice.PushingData -= _videoDevice_PushData;
             }
         }
     }

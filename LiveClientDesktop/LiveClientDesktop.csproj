@@ -114,6 +114,7 @@
     <Compile Include="EventAggregations\EventSubscriptionManager.cs" />
     <Compile Include="EventAggregations\MicrophoneVolumeChangeEvent.cs" />
     <Compile Include="EventAggregations\PlayVolumeChangeEvent.cs" />
+    <Compile Include="EventAggregations\PPTClosedEvent.cs" />
     <Compile Include="EventAggregations\SwitchDemonstrationSceneEvent.cs" />
     <Compile Include="EventAggregations\SwitchingVideoDeviceEvent.cs" />
     <Compile Include="EventAggregations\ShutDownEvent.cs" />
@@ -202,6 +203,9 @@
     <EmbeddedResource Include="WinFormControl\MsPlayerControl.resx">
       <DependentUpon>MsPlayerControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WinFormControl\PowerPointViewer.resx">
+      <DependentUpon>PowerPointViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -249,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\SliderStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -386,6 +394,9 @@
     <Content Include="lib\YUVDraw.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\5.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\5.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

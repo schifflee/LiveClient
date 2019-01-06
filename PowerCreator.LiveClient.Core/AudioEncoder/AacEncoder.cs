@@ -108,7 +108,16 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
             AudioEncodedDataContext audioEncodedDataContext = new AudioEncodedDataContext(pData, dataHeader.DataSize, (int)dataHeader.TimeStamp, Convert.ToBoolean(dataHeader.KeyFrame));
             Pushing(audioEncodedDataContext);
         }
-        
+
+        protected override void OnSubscribe()
+        {
+
+        }
+
+        protected override void OnAllUnSubscribe()
+        {
+            StopAudioEncoder();
+        }
 
         #region IDisposable Support
         private bool disposedValue = false;
@@ -134,15 +143,6 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        protected override void OnSubscribe()
-        {
-
-        }
-
-        protected override void OnAllUnSubscribe()
-        {
         }
         #endregion
 

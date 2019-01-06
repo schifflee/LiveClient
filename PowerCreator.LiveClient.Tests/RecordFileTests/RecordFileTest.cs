@@ -28,7 +28,7 @@ namespace PowerCreator.LiveClient.Tests.RecordFileTests
             var videoDevice = videoDeviceManager.GetVideoDeviceById(0);
             videoEncoder.SetVideoSource(videoDevice);
 
-            var audioDevice = audioDeviceManager.GetAudioDeviceById(1);
+            var audioDevice = audioDeviceManager.GetAudioDeviceById(0);
             aacEncoder.SetAudioDataSource(audioDevice);
 
             Record record = new Record(videoEncoder, aacEncoder);
@@ -41,7 +41,7 @@ namespace PowerCreator.LiveClient.Tests.RecordFileTests
         {
             var videoDevice = videoDeviceManager.GetVideoDeviceById(0);
             videoEncoder.SetVideoSource(videoDevice);
-            var audioDevice = audioDeviceManager.GetAudioDeviceById(1);
+            var audioDevice = audioDeviceManager.GetAudioDeviceById(0);
             aacEncoder.SetAudioDataSource(audioDevice);
 
             Record record = new Record(videoEncoder, aacEncoder);

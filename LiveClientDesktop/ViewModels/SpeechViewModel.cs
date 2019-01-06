@@ -1,4 +1,5 @@
 ﻿using LiveClientDesktop.EventAggregations;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 
 namespace LiveClientDesktop.ViewModels
@@ -7,5 +8,8 @@ namespace LiveClientDesktop.ViewModels
     {
         [Dependency]
         public EventSubscriptionManager EventSubscriptionManager { get; set; }
+
+        [Dependency]
+        public IEventAggregator EventAggregator { get; set; }
     }
 }

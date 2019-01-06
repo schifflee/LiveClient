@@ -99,6 +99,10 @@
       <Project>{a564a8f2-0ee1-49cf-b62f-f1e3de10f2c7}</Project>
       <Name>PowerCreator.LiveClient.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PowerCreator.LiveClient.Log\PowerCreator.LiveClient.Log.csproj">
+      <Project>{55b61e6c-0a37-4fbb-91c4-ed3fc6fbc56b}</Project>
+      <Name>PowerCreator.LiveClient.Log</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\avcodec-58.dll">
