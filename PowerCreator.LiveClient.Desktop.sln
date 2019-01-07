@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCreatorSDK", "..\å¯†äº
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveClientDesktop", "LiveClientDesktop\LiveClientDesktop.csproj", "{FB781776-5665-4157-B257-14CF63D6C776}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renderer.YV12.Core", "Renderer.Core\Renderer.YV12.Core.csproj", "{E80B0A3B-C10D-4C1B-947F-47CACC6C7AAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{FB781776-5665-4157-B257-14CF63D6C776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB781776-5665-4157-B257-14CF63D6C776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB781776-5665-4157-B257-14CF63D6C776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E80B0A3B-C10D-4C1B-947F-47CACC6C7AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E80B0A3B-C10D-4C1B-947F-47CACC6C7AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E80B0A3B-C10D-4C1B-947F-47CACC6C7AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E80B0A3B-C10D-4C1B-947F-47CACC6C7AAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,8 +82,8 @@ Global
 		{875FCD19-1161-49D8-97AD-C24ECA1273DD} = {D5E9D0DC-D820-4A92-9AA2-68860317FFB3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
-		SolutionGuid = {2A1E9249-FE12-4DB8-A908-94A98406A458}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.2.1.505.2\lib\NET35
+		SolutionGuid = {2A1E9249-FE12-4DB8-A908-94A98406A458}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

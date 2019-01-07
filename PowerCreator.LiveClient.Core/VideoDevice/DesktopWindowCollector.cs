@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DirectShowLib;
@@ -12,7 +9,7 @@ using PowerCreator.LiveClient.VsNetSdk;
 
 namespace PowerCreator.LiveClient.Core.VideoDevice
 {
-    public class DesktopWindowCollector : IVideoDevice
+    public class DesktopWindowCollector : PushingDataEventBase<VideoDeviceDataContext>, IDesktopWindowCollector
     {
         public int ID { get; private set; }
 
@@ -45,21 +42,20 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         }
 
         private readonly BitmapInfoHeader _bitmapInfoHeader;
-        private List<IObserver<VideoDeviceDataContext>> _observers;
         private readonly IntPtr _handel;
-        private readonly IntPtr _windowHandle;
+        private IntPtr _windowHandle;
         private BitmapInfo _bitmapInfo;
         private int _width, _height, _bufferSize;
         private byte[] _sourceImageBuffer = new byte[1920 * 1080 * 4];
         private byte[] _newImageBuffer;
         private bool _isRuningCollect;
 
-        public DesktopWindowCollector(int Id, string name, IntPtr windowHandle)
+        public DesktopWindowCollector()
         {
+            Name = "桌面采集器";
+            ID = 999;
             IsAvailable = true;
             _handel = VsNetImgScalerExSdk.ImgScalerEx_AllocInstance();
-            _windowHandle = windowHandle;
-            _observers = new List<IObserver<VideoDeviceDataContext>>();
             _bitmapInfo = new BitmapInfo();
             _bitmapInfoHeader = new BitmapInfoHeader
             {
@@ -107,33 +103,27 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
                 }
                 VsNetGDI_CopyWndToBitmapSdk.GDI_CopyWndToBitmap(_windowHandle, ref _sourceImageBuffer[0], ref _bitmapInfo);
                 VsNetImgScalerExSdk.ImgScalerEx_Convert(_handel, ref _sourceImageBuffer[0], _sourceImageBuffer.Length, ref _newImageBuffer[0], _newImageBuffer.Length);
-                VideoDeviceDataContext videoDeviceData = new VideoDeviceDataContext(_newImageBuffer.ToIntHandle(), _newImageBuffer.Length);
-                foreach (var observer in _observers)
-                {
-                    observer.OnNext(videoDeviceData);
-                }
+                Pushing(new VideoDeviceDataContext(_newImageBuffer.ToIntHandle(), _newImageBuffer.Length));
                 Thread.Sleep(40);
             }
         }
-
-        #region IObservable Support
-        public IDisposable Subscribe(IObserver<VideoDeviceDataContext> observer)
+        public bool SetWindowHandle(IntPtr intPtr)
         {
-            if (!_observers.Contains(observer))
-                _observers.Add(observer);
-            return new Unsubscriber<VideoDeviceDataContext>(_observers, observer/*, (observers) =>
-            {
-                if (!observers.Any())
-                    CloseDevice();
-            }*/);
+            _windowHandle = intPtr;
+            return true;
         }
-        #endregion
+        protected override void OnSubscribe()
+        {
+            OpenDevice();
+        }
+
+        protected override void OnAllUnSubscribe()
+        {
+            CloseDevice();
+        }
 
         #region IDisposable Support
         private bool disposedValue = false;
-
-        public event Action<VideoDeviceDataContext> PublishingVideoData;
-        public event Action<VideoDeviceDataContext> PushingData;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -143,7 +133,6 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
                 {
                     _sourceImageBuffer = null;
                     _newImageBuffer = null;
-                    _observers.Clear();
                     CloseDevice();
                 }
                 VsNetImgScalerExSdk.ImgScalerEx_FreeInstance(_handel);
@@ -158,16 +147,6 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public void Subscribe(Action<VideoDeviceDataContext> action)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UnSubscribe(Action<VideoDeviceDataContext> action)
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

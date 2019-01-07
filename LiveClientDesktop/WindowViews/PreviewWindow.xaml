@@ -1,0 +1,102 @@
+﻿<Controls:MetroWindow  x:Class="LiveClientDesktop.WindowViews.PreviewWindow"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:customControls="clr-namespace:LiveClientDesktop.CustomControls"
+        mc:Ignorable="d"
+        ShowMaxRestoreButton="False"
+        ShowMinButton="False"
+        ResizeMode="NoResize"
+        Closed="MetroWindow_Closed"
+        Title="选择直播窗口" Height="520" Width="870" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ThumbImageItem">
+                <Grid Width="280" Height="160" ToolTip="{Binding Path=DataContext.FullPath}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <customControls:ThumbnailImage ThumbnailSource="{Binding PreviewWindowImagePath}" ToolTip="{Binding WindowTitle}" Width="280" Height="160" CacheEnable="True" AsyncEnable="True"  VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="None"/>
+                    <TextBlock Grid.Row="1" Text="{Binding WindowTitle}" ToolTip="{Binding WindowTitle}" FontSize="12" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    <!--<CheckBox VerticalAlignment="Top" HorizontalAlignment="Right" xly:ControlAttachProperty.FIconSize="20"/>-->
+                </Grid>
+            </DataTemplate>
+
+            <Style x:Key="ImageListViewItem" TargetType="{x:Type ListViewItem}">
+                <Setter Property="Foreground" Value="{StaticResource TextBackground}" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="Padding" Value="4,4,4,0"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="3 3 3 3" SnapsToDevicePixels="true" BorderThickness="2"
+                                BorderBrush="#AAA" Margin="{TemplateBinding Margin}">
+                                <ContentPresenter x:Name="contentPresenter" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <!--<Setter TargetName="Bd" Property="Background" Value="#80BA45" />
+                                    <Setter Property="Foreground" Value="{StaticResource ItemSelectedForeground}" />-->
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="#80BA45" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <!--<Setter TargetName="Bd" Property="Background" Value="{StaticResource ItemMouseOverBackground}" />-->
+                                    <!--<Setter Property="Foreground" Value="{StaticResource ItemMouseOverForeground}" />-->
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="#80BA45" />
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="true" />
+                                        <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <!--<Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="{StaticResource ItemSelectedForeground}" />
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource FocusBorderBrush}" />-->
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="5 0 0 0" Grid.Column="0" Text="* 请保证需要添加的窗口处于桌面状态，非最小化到任务栏" VerticalAlignment="Center" Foreground="Red"/>
+
+            <Button Content="刷新" Grid.Column="1" Background="#80BA45" BorderBrush="#80BA45" Height="25" x:Name="RefreshBtn" Click="RefreshBtn_Click" Margin="0 0 28 0" HorizontalAlignment="Right"/>
+        </Grid>
+        <ListView Grid.Row="1" x:Name="timgViewer" ItemsSource="{Binding WindowList, Mode=TwoWay}" AlternationCount="0" ScrollViewer.IsDeferredScrollingEnabled="True" SelectionMode="Single"
+                  ItemTemplate="{StaticResource ThumbImageItem}" ItemContainerStyle="{StaticResource ImageListViewItem}"  SelectedItem="{Binding SelectedWindow}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <customControls:VirtualizingWrapPanel  ItemHeight="200" ItemWidth="280" Orientation="Horizontal" 
+                                                VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                                CanVerticallyScroll="True" CanHorizontallyScroll="False" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+        <Border  Grid.Row="2" BorderBrush="#80BA45" BorderThickness="0 1 0 0" Background="LavenderBlush">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Width="100" HorizontalAlignment="Right" Content="确定" Height="30" Background="#80BA45" BorderBrush="#80BA45" x:Name="SelectedBtn" Click="SelectedBtn_Click"  Margin="0 0 10 0"/>
+                <Button Width="100" HorizontalAlignment="Right" Content="取消" Height="30"  Background="#80BA45" x:Name="CancelBtn" Click="CancelBtn_Click" BorderBrush="#80BA45"  Margin="0 0 10 0"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Controls:MetroWindow>

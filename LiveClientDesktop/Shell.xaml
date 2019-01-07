@@ -12,7 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="944*" MinWidth="944"/>
             <ColumnDefinition Width="3"/>
-            <ColumnDefinition Width="333" MinWidth="333"/>
+            <ColumnDefinition Width="333" MaxWidth="333"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <views:SpeechView DataContext="{Binding VMContext.SpeechViewModel}"/>
@@ -57,7 +57,7 @@
                             <ColumnDefinition Width=".01*"/>
                             <ColumnDefinition Width=".49*"/>
                         </Grid.ColumnDefinitions>
-                        <views:LiveControlView Grid.Column="0"/>
+                        <views:LiveControlView Grid.Column="0" DataContext="{Binding VMContext.LiveControlViewModel}"/>
                         <views:RecordingControlView Grid.Column="2"/>
                     </Grid>
                     <Grid Grid.Row="4">

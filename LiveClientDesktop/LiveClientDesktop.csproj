@@ -74,6 +74,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Utility, Version=3.0.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\System.Utility.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -107,25 +111,42 @@
     <Compile Include="CustomControls\FButton.xaml.cs">
       <DependentUpon>FButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\ImageThumbnailProvider.cs" />
+    <Compile Include="CustomControls\IThumbnailProvider.cs" />
+    <Compile Include="CustomControls\ThumbnailImage.cs" />
+    <Compile Include="CustomControls\ThumbnailProviderFactory.cs" />
+    <Compile Include="CustomControls\VirtualizingWrapPanel.cs" />
     <Compile Include="Enums\DemonstratioType.cs" />
     <Compile Include="Enums\DemoType.cs" />
+    <Compile Include="Enums\EnumThumbnail.cs" />
     <Compile Include="Enums\SceneType.cs" />
     <Compile Include="Enums\SwitchingVideoDeviceSourceEventType.cs" />
+    <Compile Include="Enums\VideoType.cs" />
     <Compile Include="EventAggregations\EventSubscriptionManager.cs" />
     <Compile Include="EventAggregations\MicrophoneVolumeChangeEvent.cs" />
+    <Compile Include="EventAggregations\OpenPrevireWindowEvent.cs" />
     <Compile Include="EventAggregations\PlayVolumeChangeEvent.cs" />
     <Compile Include="EventAggregations\PPTClosedEvent.cs" />
+    <Compile Include="EventAggregations\SelectedDemonstrationWindowEvent.cs" />
     <Compile Include="EventAggregations\SwitchDemonstrationSceneEvent.cs" />
     <Compile Include="EventAggregations\SwitchingVideoDeviceEvent.cs" />
     <Compile Include="EventAggregations\ShutDownEvent.cs" />
+    <Compile Include="Models\LiveStreamAddressInfo.cs" />
     <Compile Include="Models\PresentationInfo.cs" />
+    <Compile Include="Models\PreviewWindowInfo.cs" />
     <Compile Include="Models\SwitchDemonstrationSceneContext.cs" />
     <Compile Include="Models\VideoDeviceEventContext.cs" />
     <Compile Include="Models\VideoDeviceInfo.cs" />
     <Compile Include="PowerCreatorLiveClientBootstrapper.cs" />
     <Compile Include="Services\CameraDeviceService.cs" />
+    <Compile Include="Services\EnumerationWindowService.cs" />
+    <Compile Include="Services\ILiveStreamAddressProvider.cs" />
+    <Compile Include="Services\LocalLiveStreamProvider.cs" />
     <Compile Include="Services\PresentationInstanceRepository.cs" />
     <Compile Include="Services\PresentationsRepository.cs" />
+    <Compile Include="Services\SpeechVideoLiveAndRecordProvider.cs" />
+    <Compile Include="Services\TeacherVideoLiveAndRecordProvider.cs" />
+    <Compile Include="Services\VideoLiveAndRecordProvider.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -133,11 +154,13 @@
     <Compile Include="ViewModels\CameraDeviceItemViewModel.cs" />
     <Compile Include="ViewModels\CameraDeviceViewModel.cs" />
     <Compile Include="ViewModels\CourseContentsViewModel.cs" />
+    <Compile Include="ViewModels\LiveControlViewModel.cs" />
     <Compile Include="ViewModels\MicrophoneVolumeControlViewModel.cs" />
     <Compile Include="ViewModels\PlayVolumeControlViewModel.cs" />
     <Compile Include="ViewModels\PowerCreatorPlayerViewModel.cs" />
     <Compile Include="ViewModels\PresentationItemViewModel.cs" />
     <Compile Include="ViewModels\PresentationViewModel.cs" />
+    <Compile Include="ViewModels\PreviewWindowViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SpeechViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
@@ -167,6 +190,9 @@
     </Compile>
     <Compile Include="Views\SpeechView.xaml.cs">
       <DependentUpon>SpeechView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowViews\PreviewWindow.xaml.cs">
+      <DependentUpon>PreviewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WinFormControl\MsPlayerControl.cs">
       <SubType>UserControl</SubType>
@@ -234,6 +260,10 @@
       <Project>{55b61e6c-0a37-4fbb-91c4-ed3fc6fbc56b}</Project>
       <Name>PowerCreator.LiveClient.Log</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Renderer.Core\Renderer.YV12.Core.csproj">
+      <Project>{e80b0a3b-c10d-4c1b-947f-47cacc6c7aab}</Project>
+      <Name>Renderer.YV12.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="CustomControls\FButton.xaml">
@@ -293,6 +323,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SpeechView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowViews\PreviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -379,6 +413,7 @@
     <Content Include="lib\swscale-5.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="lib\System.Utility.dll" />
     <Content Include="lib\TestFreeType.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

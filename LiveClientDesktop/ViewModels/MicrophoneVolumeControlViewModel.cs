@@ -78,8 +78,8 @@ namespace LiveClientDesktop.ViewModels
             get { return microphoneVolume; }
             set
             {
-                microphoneVolume = value;
-                _eventAggregator.GetEvent<MicrophoneVolumeChangeEvent>().Publish(value);
+                microphoneVolume = value < 5 ? 0 : value;
+                _eventAggregator.GetEvent<MicrophoneVolumeChangeEvent>().Publish(microphoneVolume);
                 this.RaisePropertyChanged("MicrophoneVolume");
             }
         }

@@ -33,7 +33,8 @@ namespace PowerCreator.LiveClient.Tests.DesktopWindowCollectorTests
             IWindowEnumerator windowEnumerator = new WindowEnumerator();
             var windowList = windowEnumerator.GetWindowList();
 
-             IVideoDevice videoDevice = new DesktopWindowCollector(9999,"桌面采集器测试", windowList.First().HWD);
+            IDesktopWindowCollector videoDevice = new DesktopWindowCollector();
+            videoDevice.SetWindowHandle(windowList.First().HWD);
             videoEncoder.SetVideoSource(videoDevice);
 
             var audioDevice = audioDeviceManager.GetAudioDeviceById(0);

@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using LiveClientDesktop.Models;
+using Microsoft.Practices.Prism.Logging;
+using PowerCreator.LiveClient.Core.AudioDevice;
+
+namespace LiveClientDesktop.Services
+{
+    public class TeacherVideoLiveAndRecordProvider : VideoLiveAndRecordProvider
+    {
+        private readonly ILiveStreamAddressProvider _liveStreamAddressProvider;
+        public TeacherVideoLiveAndRecordProvider(SystemConfig config, ILoggerFacade logger, IAudioDeviceManager audioDeviceManager, ILiveStreamAddressProvider liveStreamAddressProvider)
+            : base(config, logger, audioDeviceManager)
+        {
+            _liveStreamAddressProvider = liveStreamAddressProvider;
+        }
+        protected override string Name
+        {
+            get
+            {
+                return "教师视频";
+            }
+        }
+        protected override LiveStreamAddressInfo GetliveStreamAddressInfo()
+        {
+            var liveStreamAddressInfos = _liveStreamAddressProvider.GetLiveStreamAddressList();
+            if (liveStreamAddressInfos.Count() == 2) return liveStreamAddressInfos.Last();
+            return null;
+        }
+    }
+}

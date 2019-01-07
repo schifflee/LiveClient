@@ -43,3 +43,5 @@
 /LiveClientDesktop/obj/Debug
 /LiveClientDesktop/bin/Release
 /PowerCreator.WebPlatform.Sdk/bin/Debug
+/Renderer.Core/bin
+/Renderer.Core/obj

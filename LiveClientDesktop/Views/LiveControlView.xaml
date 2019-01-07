@@ -8,7 +8,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -35,33 +35,33 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="开始上课">
+                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" IsEnabled="{Binding StartLiveBtnIsEnable}"
+                            ToolTip="开始上课" Command="{Binding StartLiveCommand}">
                         <materialDesign:PackIcon Kind="Play" Foreground="White"  Height="30" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" Foreground="#333" Text="立即上课" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1" Foreground="#333" Text="立即上课" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" IsEnabled="{Binding StartLiveBtnIsEnable}"/>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="课间休息">
+                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" IsEnabled="{Binding PauseLiveBtnIsEnable}"
+                            ToolTip="课间休息" Command="{Binding PauseLiveCommand}">
                         <materialDesign:PackIcon Kind="Pause" Foreground="White"  Height="30" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1"  Foreground="#333" Text="课间休息" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1"  Foreground="#333" Text="课间休息" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" IsEnabled="{Binding PauseLiveBtnIsEnable}"/>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="立即下课">
+                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" IsEnabled="{Binding StopLiveBtnIsEnable}"
+                            ToolTip="立即下课" Command="{Binding StopLiveCommand}">
                         <materialDesign:PackIcon Kind="Stop" Foreground="White"  Height="24" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1"  Foreground="#333" FontSize="12" Text="立即下课"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1"  Foreground="#333" FontSize="12" Text="立即下课"  HorizontalAlignment="Center" VerticalAlignment="Bottom" IsEnabled="{Binding StopLiveBtnIsEnable}"/>
                 </Grid>
 
             </Grid>

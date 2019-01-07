@@ -18,8 +18,10 @@ namespace LiveClientDesktop
             TempImageSavePath = AppDomain.CurrentDomain.BaseDirectory + "TempWindowImages";
             VideoVolume = 30;
             MicrophoneVolume = 50;
+            UseMicrophoneID = 0;
         }
 
+        public int UseMicrophoneID { get; set; }
         public int VideoVolume { get; set; }
 
         public int MicrophoneVolume { get; set; }

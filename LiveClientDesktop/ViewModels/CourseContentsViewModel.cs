@@ -14,13 +14,20 @@ namespace LiveClientDesktop.ViewModels
     {
 
         private readonly IEventAggregator _eventAggregator;
+        private readonly EventSubscriptionManager _eventSubscriptionManager;
 
-        public CourseContentsViewModel(CameraDeviceViewModel cameraDeviceViewModel, IEventAggregator eventAggregator)
+        public CourseContentsViewModel(CameraDeviceViewModel cameraDeviceViewModel, IEventAggregator eventAggregator, EventSubscriptionManager eventSubscriptionManager)
         {
             CameraDeviceViewModel = cameraDeviceViewModel;
             CameraDeviceViewModel.SetSelectCameraDevice(0);
             _eventAggregator = eventAggregator;
+            _eventSubscriptionManager = eventSubscriptionManager;
             SwitchDemonstrationSceneCommand = new DelegateCommand<string>(new Action<string>(SwitchScene));
+            OpenPreviewWindow = new DelegateCommand(() =>
+            {
+                _eventAggregator.GetEvent<OpenPrevireWindowEvent>().Publish(true);
+            });
+            _eventSubscriptionManager.Subscribe<SelectedDemonstrationWindowEvent, PreviewWindowInfo>(null, SelectedDemonstrationWindowEventHandler, null);
         }
 
         [Dependency]
@@ -30,6 +37,24 @@ namespace LiveClientDesktop.ViewModels
 
         public DelegateCommand<string> SwitchDemonstrationSceneCommand { get; set; }
 
+        public DelegateCommand OpenPreviewWindow { get; set; }
+
+        private PreviewWindowInfo selectedPreviewWindowInfo;
+
+        public PreviewWindowInfo SelectedPreviewWindowInfo
+        {
+            get { return selectedPreviewWindowInfo; }
+            set
+            {
+                selectedPreviewWindowInfo = value;
+                this.RaisePropertyChanged("SelectedPreviewWindowInfo");
+            }
+        }
+
+        private void SelectedDemonstrationWindowEventHandler(PreviewWindowInfo previewWindowInfo)
+        {
+            SelectedPreviewWindowInfo = previewWindowInfo;
+        }
         private void SwitchScene(string sceneType)
         {
 
@@ -38,8 +63,9 @@ namespace LiveClientDesktop.ViewModels
             switch ((SceneType)int.Parse(sceneType))
             {
                 case SceneType.PPT:
-                    if (PresentationViewModel.CurrentSelectedPresentation == null) {
-                        MessageBox.Show("请选择需要演示的文件","系统提示");
+                    if (PresentationViewModel.CurrentSelectedPresentation == null)
+                    {
+                        MessageBox.Show("请选择需要演示的文件", "系统提示");
                         return;
                     }
                     presentationInfo = PresentationViewModel.CurrentSelectedPresentation.Presentation;
@@ -47,7 +73,8 @@ namespace LiveClientDesktop.ViewModels
                     context.UseDevice = presentationInfo.FileFullPath;
                     break;
                 case SceneType.WarmVideo:
-                    if (PresentationViewModel.CurrentSelectedWarmVideo == null) {
+                    if (PresentationViewModel.CurrentSelectedWarmVideo == null)
+                    {
                         MessageBox.Show("请选择需要演示的文件", "系统提示");
                         return;
                     }
@@ -56,7 +83,8 @@ namespace LiveClientDesktop.ViewModels
                     context.UseDevice = presentationInfo.FileFullPath;
                     break;
                 case SceneType.VideoDevice:
-                    if (CameraDeviceViewModel.CurrentSelectedDevice == null) {
+                    if (CameraDeviceViewModel.CurrentSelectedDevice == null)
+                    {
                         MessageBox.Show("请选择需要播放的视频设备", "系统提示");
                         return;
                     }

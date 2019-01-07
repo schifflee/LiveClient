@@ -4,6 +4,7 @@ using LiveClientDesktop.Models;
 using LiveClientDesktop.ViewModels;
 using Microsoft.Practices.Prism.Events;
 using PowerCreator.LiveClient.Core.VideoDevice;
+using Renderer.Core;
 using System;
 using System.Threading;
 using System.Windows;
@@ -19,6 +20,7 @@ namespace LiveClientDesktop.Views
     public partial class SpeechView : UserControl
     {
         private EventSubscriptionManager _eventSubscriptionManager;
+        private IDesktopWindowCollector _desktopWindowCollector;
         private SubscriptionToken switchDemonstrationSceneEventSubscriptionToken;
         private SubscriptionToken systemCloseEventSubscriptionToken;
         private SubscriptionToken pptClosedEventSubscriptionToken;
@@ -30,6 +32,7 @@ namespace LiveClientDesktop.Views
         private string imagePath = string.Empty;
         private bool isPlayVideo;
         private object syncObj = new object();
+        private D3DImageSource d3dSource;
         public SpeechView()
         {
             InitializeComponent();
@@ -102,19 +105,67 @@ namespace LiveClientDesktop.Views
             var vm = this.DataContext as SpeechViewModel;
             if (vm != null)
             {
+
                 PPTViewer.SetEventAggregator(vm.EventAggregator);
+
                 _eventSubscriptionManager = vm.EventSubscriptionManager;
+                _desktopWindowCollector = vm.DesktopWindowCollector;
 
                 switchDemonstrationSceneEventSubscriptionToken = _eventSubscriptionManager.Subscribe<SwitchDemonstrationSceneEvent, SwitchDemonstrationSceneContext>(null, SwitchDemonstrationSceneEventHandler, null);
 
                 systemCloseEventSubscriptionToken = _eventSubscriptionManager.Subscribe<ShutDownEvent, bool>(null, SystemShutdownHandler, null);
 
                 pptClosedEventSubscriptionToken = _eventSubscriptionManager.Subscribe<PPTClosedEvent, bool>(null, PPTClosedEventHandler, null);
+
+                _eventSubscriptionManager.Subscribe<SelectedDemonstrationWindowEvent, PreviewWindowInfo>(null, SwitchPreviewWindowSceneHandler, null);
+
+                _eventSubscriptionManager.Subscribe<PlayVolumeChangeEvent, int>(null, (volume) => {
+                    player.Volume = (double)volume / 100;
+                }, null);
             }
             DefaultScene.Visibility = Visibility.Visible;
+            _desktopWindowCollector.SetWindowHandle(DefaultScene.Handle);
         }
+        private void SwitchPreviewWindowSceneHandler(PreviewWindowInfo previewWindowInfo)
+        {
+            AllSceneHidden();
+            player.Pause();
+            if (d3dSource == null)
+            {
+                try
+                {
+                    d3dSource = new D3DImageSource();
+
+                    if (d3dSource.SetupSurface(1280, 720, FrameFormat.YV12))
+                    {
+                        this.imageD3D.Source = this.d3dSource.ImageSource;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            _desktopWindowCollector.SetWindowHandle(previewWindowInfo.HWD);
+            _desktopWindowCollector.PushingData += _desktopWindowCollector_PushingData;
+            LiveWindowPreviewScene.Visibility = Visibility.Visible;
+        }
+
+        private void _desktopWindowCollector_PushingData(PowerCreator.LiveClient.Core.Models.VideoDeviceDataContext value)
+        {
+            try
+            {
+                this.d3dSource.Render((IntPtr)value.Data);
+            }
+            catch
+            {
+            }
+        }
+
         private void SwitchDemonstrationSceneEventHandler(SwitchDemonstrationSceneContext context)
         {
+            _desktopWindowCollector.PushingData -= _desktopWindowCollector_PushingData;
+
             switch (context.SceneType)
             {
                 case DemonstratioType.PPT:
@@ -122,12 +173,14 @@ namespace LiveClientDesktop.Views
                     player.Pause();
                     PPTViewer.OpenPPT(context.UseDevice.ToString());
                     DemonstrationPPTScene.Visibility = Visibility;
+                    _desktopWindowCollector.SetWindowHandle(DemonstrationPPTScene.Handle);
                     break;
                 case DemonstratioType.VideoDevice:
                     AllSceneHidden();
                     player.Pause();
                     DemonstrationVideoDeviceScene.Visibility = Visibility.Visible;
                     MsPlayer.OpenDevice(context.UseDevice as IVideoDevice);
+                    _desktopWindowCollector.SetWindowHandle(DemonstrationVideoDeviceScene.Handle);
                     break;
                 case DemonstratioType.Image:
                     player.Pause();
@@ -139,6 +192,7 @@ namespace LiveClientDesktop.Views
                         ImageControl.ImageSource = bitmap;
                     }
                     DefaultScene.Visibility = Visibility.Visible;
+                    _desktopWindowCollector.SetWindowHandle(DefaultScene.Handle);
                     break;
                 case DemonstratioType.Video:
                     if (context.UseDevice.ToString() != videoPath)
@@ -149,10 +203,12 @@ namespace LiveClientDesktop.Views
                     }
                     player.Play();
                     DemonstrationVideoScene.Visibility = Visibility.Visible;
+                    _desktopWindowCollector.SetWindowHandle(DemonstrationVideoScene.Handle);
                     break;
                 default:
                     AllSceneHidden();
                     DefaultScene.Visibility = Visibility.Visible;
+                    _desktopWindowCollector.SetWindowHandle(DefaultScene.Handle);
                     break;
             }
         }
@@ -162,6 +218,7 @@ namespace LiveClientDesktop.Views
             DemonstrationVideoDeviceScene.Visibility = Visibility.Hidden;
             DemonstrationPPTScene.Visibility = Visibility.Hidden;
             DemonstrationVideoScene.Visibility = Visibility.Hidden;
+            LiveWindowPreviewScene.Visibility = Visibility.Hidden;
         }
         private void SystemShutdownHandler(bool isClosed)
         {
@@ -180,6 +237,11 @@ namespace LiveClientDesktop.Views
             try
             {
                 PPTViewer.Close();
+            }
+            catch { }
+            try
+            {
+                _desktopWindowCollector.PushingData -= _desktopWindowCollector_PushingData;
             }
             catch { }
         }

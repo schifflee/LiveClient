@@ -67,8 +67,8 @@ namespace LiveClientDesktop.ViewModels
             get { return soundVolume; }
             set
             {
-                soundVolume = value;
-                _eventAggregator.GetEvent<PlayVolumeChangeEvent>().Publish(value);
+                soundVolume = value < 5 ? 0 : value;
+                _eventAggregator.GetEvent<PlayVolumeChangeEvent>().Publish(soundVolume);
                 this.RaisePropertyChanged("SoundVolume");
             }
         }

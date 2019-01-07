@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using LiveClientDesktop.EventAggregations;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace LiveClientDesktop.ViewModels
         {
             get; set;
         }
+        [Dependency]
+        public EventSubscriptionManager EventSubscriptionManager { get; set; }
     }
 }

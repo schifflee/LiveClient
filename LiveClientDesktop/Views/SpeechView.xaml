@@ -25,6 +25,11 @@
         <WindowsFormsHost x:Name="DemonstrationVideoDeviceScene" Visibility="Hidden">
             <winformControls:MsPlayerControl  x:Name="MsPlayer"/>
         </WindowsFormsHost>
+        <WindowsFormsHost x:Name="LiveWindowPreviewScene" Visibility="Hidden">
+            <ElementHost>
+                <Image Stretch="Fill" Name="imageD3D"  />
+            </ElementHost>
+        </WindowsFormsHost>
         <WindowsFormsHost x:Name="DemonstrationVideoScene" Visibility="Hidden">
             <ElementHost>
                 <Grid x:Name="PlayVideoArea" MouseLeave="PlayVideoArea_MouseLeave" MouseEnter="PlayVideoArea_MouseEnter">

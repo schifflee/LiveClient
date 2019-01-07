@@ -10,16 +10,11 @@ namespace LiveClientDesktop.ViewModels
     public class ViewModelContext
     {
         [Dependency]
-        public CameraDeviceViewModel CameraDeviceViewModel
-        {
-            get; set;
-        }
+        public CameraDeviceViewModel CameraDeviceViewModel { get; set; }
 
         [Dependency]
-        public CourseContentsViewModel CourseContentsViewModel
-        {
-            get; set;
-        }
+        public CourseContentsViewModel CourseContentsViewModel { get; set; }
+
         [Dependency]
         public PowerCreatorPlayerViewModel PowerCreatorPlayerViewModel { get; set; }
 
@@ -32,6 +27,8 @@ namespace LiveClientDesktop.ViewModels
         [Dependency]
         public SpeechViewModel SpeechViewModel { get; set; }
 
-        
+        [Dependency]
+        public LiveControlViewModel LiveControlViewModel { get; set; }
+
     }
 }

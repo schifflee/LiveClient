@@ -1,6 +1,7 @@
 ﻿using LiveClientDesktop.EventAggregations;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using PowerCreator.LiveClient.Core.VideoDevice;
 
 namespace LiveClientDesktop.ViewModels
 {
@@ -11,5 +12,8 @@ namespace LiveClientDesktop.ViewModels
 
         [Dependency]
         public IEventAggregator EventAggregator { get; set; }
+
+        [Dependency]
+        public IDesktopWindowCollector DesktopWindowCollector { get; set; }
     }
 }
