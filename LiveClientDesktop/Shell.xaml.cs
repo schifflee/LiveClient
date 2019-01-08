@@ -1,9 +1,13 @@
 ﻿using LiveClientDesktop.EventAggregations;
+using LiveClientDesktop.HttpServer;
 using LiveClientDesktop.ViewModels;
 using LiveClientDesktop.WindowViews;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using PowerCreator.LiveClient.Core;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace LiveClientDesktop
 {
@@ -27,7 +31,10 @@ namespace LiveClientDesktop
             {
                 shellViewModel.EventSubscriptionManager.Subscribe<OpenPrevireWindowEvent, bool>(null, ShowPrevireWindowView, null);
             }
-
+            Task.Run(() =>
+            {
+                new HttpService(5479).listen();
+            });
         }
         private void ShowPrevireWindowView(bool isOpen)
         {

@@ -60,7 +60,11 @@
     <Compile Include="EnumWindows\IWindowEnumerator.cs" />
     <Compile Include="EnumWindows\WindowEnumerator.cs" />
     <Compile Include="GDI32Api.cs" />
+    <Compile Include="ILiveStreamAddressInfo.cs" />
     <Compile Include="IPushingDataEventBase.cs" />
+    <Compile Include="ISetupVideoLiveAndRecordingDevices.cs" />
+    <Compile Include="IVideoLiveProvider.cs" />
+    <Compile Include="IVideoRecordingProvider.cs" />
     <Compile Include="PushingDataEventBase.cs" />
     <Compile Include="LiveBroadcast\ILiveBroadcast.cs" />
     <Compile Include="LiveBroadcast\LiveBroadcast.cs" />
@@ -83,6 +87,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VideoEncoder\H264VideoEncoder.cs" />
     <Compile Include="VideoEncoder\IVideoEncoder.cs" />
+    <Compile Include="VideoLiveAndRecordProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PowerCreator.LiveClient.Infrastructure\PowerCreator.LiveClient.Infrastructure.csproj">

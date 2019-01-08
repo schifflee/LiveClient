@@ -19,11 +19,13 @@ namespace LiveClientDesktop
             VideoVolume = 30;
             MicrophoneVolume = 50;
             UseMicrophoneID = 0;
+            RecordingStatusChangesAccordingToLiveBroadcastStatus = true;
         }
 
+        public bool RecordingStatusChangesAccordingToLiveBroadcastStatus { get; set; }
         public int UseMicrophoneID { get; set; }
         public int VideoVolume { get; set; }
-
         public int MicrophoneVolume { get; set; }
+        public int VideoIndex { get; set; }
     }
 }

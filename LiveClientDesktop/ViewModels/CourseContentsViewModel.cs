@@ -1,22 +1,25 @@
 ﻿using LiveClientDesktop.Enums;
 using LiveClientDesktop.EventAggregations;
+using LiveClientDesktop.HttpRequestHandler;
 using LiveClientDesktop.Models;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Unity;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace LiveClientDesktop.ViewModels
 {
-    public class CourseContentsViewModel : NotificationObject
+    public partial class CourseContentsViewModel : NotificationObject
     {
 
         private readonly IEventAggregator _eventAggregator;
         private readonly EventSubscriptionManager _eventSubscriptionManager;
 
-        public CourseContentsViewModel(CameraDeviceViewModel cameraDeviceViewModel, IEventAggregator eventAggregator, EventSubscriptionManager eventSubscriptionManager)
+        public CourseContentsViewModel(CameraDeviceViewModel cameraDeviceViewModel, IEventAggregator eventAggregator, EventSubscriptionManager eventSubscriptionManager) : this()
         {
             CameraDeviceViewModel = cameraDeviceViewModel;
             CameraDeviceViewModel.SetSelectCameraDevice(0);
@@ -27,7 +30,10 @@ namespace LiveClientDesktop.ViewModels
             {
                 _eventAggregator.GetEvent<OpenPrevireWindowEvent>().Publish(true);
             });
+
             _eventSubscriptionManager.Subscribe<SelectedDemonstrationWindowEvent, PreviewWindowInfo>(null, SelectedDemonstrationWindowEventHandler, null);
+
+
         }
 
         [Dependency]
@@ -57,7 +63,6 @@ namespace LiveClientDesktop.ViewModels
         }
         private void SwitchScene(string sceneType)
         {
-
             SwitchDemonstrationSceneContext context = new SwitchDemonstrationSceneContext() { SceneType = DemonstratioType.None };
             PresentationInfo presentationInfo;
             switch ((SceneType)int.Parse(sceneType))
@@ -94,5 +99,6 @@ namespace LiveClientDesktop.ViewModels
             }
             _eventAggregator.GetEvent<SwitchDemonstrationSceneEvent>().Publish(context);
         }
+
     }
 }

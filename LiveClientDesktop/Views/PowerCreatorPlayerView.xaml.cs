@@ -3,22 +3,10 @@ using LiveClientDesktop.EventAggregations;
 using LiveClientDesktop.Models;
 using LiveClientDesktop.ViewModels;
 using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Unity;
+using PowerCreator.LiveClient.Core;
 using PowerCreator.LiveClient.Core.VideoDevice;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LiveClientDesktop.Views
 {
@@ -28,13 +16,15 @@ namespace LiveClientDesktop.Views
     public partial class PowerCreatorPlayerView : UserControl
     {
         private EventSubscriptionManager _eventSubscriptionManager;
+        private IDesktopWindowCollector _desktopWindowCollector;
+        private ISetupVideoLiveAndRecordingDevices _setupVideoLiveAndRecordingDevices;
         private SubscriptionToken switchingVideoDeviceEventSubscriptionToken;
         private SubscriptionToken systemCloseEventSubscriptionToken;
         public PowerCreatorPlayerView()
         {
             InitializeComponent();
         }
-      
+
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -42,17 +32,24 @@ namespace LiveClientDesktop.Views
             if (vm != null)
             {
                 _eventSubscriptionManager = vm.EventSubscriptionManager;
+                _desktopWindowCollector = vm.DesktopWindowCollector;
+                _setupVideoLiveAndRecordingDevices = vm.SetupVideoLiveAndRecordingDevices;
 
                 switchingVideoDeviceEventSubscriptionToken = _eventSubscriptionManager.Subscribe<SwitchingVideoDeviceEvent, VideoDeviceEventContext>(null, SwitchingVideoDeviceEventHandler, EventFilter);
 
                 systemCloseEventSubscriptionToken = _eventSubscriptionManager.Subscribe<ShutDownEvent, bool>(null, SystemShutdown, null);
             }
+            DefaultScene.Visibility = Visibility.Visible;
+            _desktopWindowCollector?.SetWindowHandle(DefaultScene.Handle);
+            _setupVideoLiveAndRecordingDevices?.SetVideoDevice(_desktopWindowCollector);
         }
         private void SwitchingVideoDeviceEventHandler(VideoDeviceEventContext eventContext)
         {
             MsPlayerContainer.Visibility = Visibility.Visible;
 
             MsPlayer.OpenDevice(eventContext.OwnerVideoDevice);
+
+            _setupVideoLiveAndRecordingDevices?.SetVideoDevice(eventContext.OwnerVideoDevice);
         }
         private bool EventFilter(VideoDeviceEventContext eventContext)
         {

@@ -37,6 +37,7 @@ namespace LiveClientDesktop.Services
             {
                 presentations.Remove(presentations.Where(item => item.DemoType == presentationInfo.DemoType).OrderBy(item => item.CreateTime).First());
             }
+            presentationInfo.ID = Guid.NewGuid().ToString();
             presentations.Add(presentationInfo);
             return Save(presentations);
 

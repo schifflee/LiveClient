@@ -61,6 +61,9 @@
     <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -119,6 +122,8 @@
     <Compile Include="Enums\DemonstratioType.cs" />
     <Compile Include="Enums\DemoType.cs" />
     <Compile Include="Enums\EnumThumbnail.cs" />
+    <Compile Include="Enums\LiveAndRecordingOperateEventSourceType.cs" />
+    <Compile Include="Enums\LiveAndRecordingOperateEventType.cs" />
     <Compile Include="Enums\SceneType.cs" />
     <Compile Include="Enums\SwitchingVideoDeviceSourceEventType.cs" />
     <Compile Include="Enums\VideoType.cs" />
@@ -128,9 +133,16 @@
     <Compile Include="EventAggregations\PlayVolumeChangeEvent.cs" />
     <Compile Include="EventAggregations\PPTClosedEvent.cs" />
     <Compile Include="EventAggregations\SelectedDemonstrationWindowEvent.cs" />
+    <Compile Include="EventAggregations\LiveAndRecordingOperateEvent.cs" />
     <Compile Include="EventAggregations\SwitchDemonstrationSceneEvent.cs" />
     <Compile Include="EventAggregations\SwitchingVideoDeviceEvent.cs" />
     <Compile Include="EventAggregations\ShutDownEvent.cs" />
+    <Compile Include="HttpRequestHandler\HttpRequestHandleResultWarpper.cs" />
+    <Compile Include="HttpRequestHandler\HttpRequestHandlerManager.cs" />
+    <Compile Include="HttpServer\HttpProcessor.cs" />
+    <Compile Include="HttpServer\HttpServer.cs" />
+    <Compile Include="HttpServer\HttpService.cs" />
+    <Compile Include="Models\LiveAndRecordingOperateEventContext.cs" />
     <Compile Include="Models\LiveStreamAddressInfo.cs" />
     <Compile Include="Models\PresentationInfo.cs" />
     <Compile Include="Models\PreviewWindowInfo.cs" />
@@ -146,7 +158,6 @@
     <Compile Include="Services\PresentationsRepository.cs" />
     <Compile Include="Services\SpeechVideoLiveAndRecordProvider.cs" />
     <Compile Include="Services\TeacherVideoLiveAndRecordProvider.cs" />
-    <Compile Include="Services\VideoLiveAndRecordProvider.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -154,6 +165,9 @@
     <Compile Include="ViewModels\CameraDeviceItemViewModel.cs" />
     <Compile Include="ViewModels\CameraDeviceViewModel.cs" />
     <Compile Include="ViewModels\CourseContentsViewModel.cs" />
+    <Compile Include="ViewModels\HttpHandler\ControlLiveHandler.cs" />
+    <Compile Include="ViewModels\HttpHandler\ControlPlayCourseContentsHandler.cs" />
+    <Compile Include="ViewModels\HttpHandler\ControlRecordingHandler.cs" />
     <Compile Include="ViewModels\LiveControlViewModel.cs" />
     <Compile Include="ViewModels\MicrophoneVolumeControlViewModel.cs" />
     <Compile Include="ViewModels\PlayVolumeControlViewModel.cs" />
@@ -161,6 +175,7 @@
     <Compile Include="ViewModels\PresentationItemViewModel.cs" />
     <Compile Include="ViewModels\PresentationViewModel.cs" />
     <Compile Include="ViewModels\PreviewWindowViewModel.cs" />
+    <Compile Include="ViewModels\RecordingControlViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SpeechViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
@@ -464,5 +479,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

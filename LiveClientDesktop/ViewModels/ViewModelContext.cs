@@ -30,5 +30,8 @@ namespace LiveClientDesktop.ViewModels
         [Dependency]
         public LiveControlViewModel LiveControlViewModel { get; set; }
 
+        [Dependency]
+        public RecordingControlViewModel RecordingControlViewModel { get; set; }
+
     }
 }

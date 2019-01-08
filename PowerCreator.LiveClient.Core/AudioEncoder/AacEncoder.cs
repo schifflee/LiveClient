@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using DirectShowLib;
-using Microsoft.Practices.Prism.Logging;
 using PowerCreator.LiveClient.Core.AudioDevice;
 using PowerCreator.LiveClient.Core.Models;
 using PowerCreator.LiveClient.Infrastructure.Object;
@@ -16,7 +10,7 @@ using static PowerCreator.LiveClient.VsNetSdk.VsNetAACEncoder;
 
 namespace PowerCreator.LiveClient.Core.AudioEncoder
 {
-    public class AacEncoder : PushingDataEventBase<AudioEncodedDataContext>, IAacEncoder
+    internal class AacEncoder : PushingDataEventBase<AudioEncodedDataContext>, IAacEncoder
     {
         public bool IsStartEncoder { get; private set; }
 
@@ -43,7 +37,7 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
         public AacEncoder()
         {
             _handle = AACEncoder_AllocInstance();
-            _audioDeviceDataCallBack = _audioDeviceData;
+            _audioDeviceDataCallBack = AudioDeviceData;
             _waveFormatEx = new WaveFormatEx();
         }
 
@@ -72,7 +66,7 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
                 CurrentUseAudioDevice.OpenDevice();
                 CurrentUseAudioDevice.PushingData += CurrentUseAudioDevice_PushingData;
 
-                IsStartEncoder = _startEncoder();
+                IsStartEncoder = StartEncoder();
             }
             return IsStartEncoder;
         }
@@ -97,13 +91,13 @@ namespace PowerCreator.LiveClient.Core.AudioEncoder
 
             return !IsStartEncoder;
         }
-        private bool _startEncoder()
+        private bool StartEncoder()
         {
             AACEncoder_GenExtraData(_handle, CurrentUseAudioDevice.AudioDataFormat, _waveFormatEx);
             AACEncoder_SetDataCallFunc(_handle, _audioDeviceDataCallBack, 2018);
             return AACEncoder_StartEnc(_handle, CurrentUseAudioDevice.AudioDataFormat) == 0;
         }
-        private void _audioDeviceData(ref DataHeader dataHeader, IntPtr pData, int pContext)
+        private void AudioDeviceData(ref DataHeader dataHeader, IntPtr pData, int pContext)
         {
             AudioEncodedDataContext audioEncodedDataContext = new AudioEncodedDataContext(pData, dataHeader.DataSize, (int)dataHeader.TimeStamp, Convert.ToBoolean(dataHeader.KeyFrame));
             Pushing(audioEncodedDataContext);

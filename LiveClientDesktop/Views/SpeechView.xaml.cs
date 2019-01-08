@@ -3,6 +3,7 @@ using LiveClientDesktop.EventAggregations;
 using LiveClientDesktop.Models;
 using LiveClientDesktop.ViewModels;
 using Microsoft.Practices.Prism.Events;
+using PowerCreator.LiveClient.Core;
 using PowerCreator.LiveClient.Core.VideoDevice;
 using Renderer.Core;
 using System;
@@ -21,82 +22,83 @@ namespace LiveClientDesktop.Views
     {
         private EventSubscriptionManager _eventSubscriptionManager;
         private IDesktopWindowCollector _desktopWindowCollector;
-        private SubscriptionToken switchDemonstrationSceneEventSubscriptionToken;
-        private SubscriptionToken systemCloseEventSubscriptionToken;
-        private SubscriptionToken pptClosedEventSubscriptionToken;
-        private MediaPlayer player;
-        private VideoDrawing videoDrawing;
-        private DrawingBrush brush;
-        private Timer timer;
-        private string videoPath = string.Empty;
-        private string imagePath = string.Empty;
-        private bool isPlayVideo;
-        private object syncObj = new object();
-        private D3DImageSource d3dSource;
+        private ISetupVideoLiveAndRecordingDevices _setupVideoLiveAndRecordingDevices;
+        private SubscriptionToken _switchDemonstrationSceneEventSubscriptionToken;
+        private SubscriptionToken _systemCloseEventSubscriptionToken;
+        private SubscriptionToken _pptClosedEventSubscriptionToken;
+        private MediaPlayer _player;
+        private VideoDrawing _videoDrawing;
+        private DrawingBrush _brush;
+        private Timer _timer;
+        private string _videoPath = string.Empty;
+        private string _imagePath = string.Empty;
+        private bool _isPlayVideo;
+        private object _syncObj = new object();
+        private D3DImageSource _d3dSource;
         public SpeechView()
         {
             InitializeComponent();
-            player = new MediaPlayer();
-            videoDrawing = new VideoDrawing();
-            videoDrawing.Rect = new Rect(150, 0, 100, 100);
-            videoDrawing.Player = player;
-            brush = new DrawingBrush(videoDrawing);
-            PlayVideoArea.Background = brush;
-            player.MediaEnded += Player_MediaEnded; ;
-            player.MediaOpened += Player_MediaOpened;
-            timer = new Timer((state) => UpdatePlayTime(), null, Timeout.Infinite, Timeout.Infinite);
+            _player = new MediaPlayer();
+            _videoDrawing = new VideoDrawing();
+            _videoDrawing.Rect = new Rect(150, 0, 100, 100);
+            _videoDrawing.Player = _player;
+            _brush = new DrawingBrush(_videoDrawing);
+            PlayVideoArea.Background = _brush;
+            _player.MediaEnded += Player_MediaEnded; ;
+            _player.MediaOpened += Player_MediaOpened;
+            _timer = new Timer((state) => UpdatePlayTime(), null, Timeout.Infinite, Timeout.Infinite);
         }
 
         private void Player_MediaOpened(object sender, System.EventArgs e)
         {
-            string duration = player.NaturalDuration.TimeSpan.ToString();
+            string duration = _player.NaturalDuration.TimeSpan.ToString();
             Dispatcher.Invoke(() =>
             {
 
                 VideoDuration.Text = duration;
-                VideoPlayProgress.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
+                VideoPlayProgress.Maximum = _player.NaturalDuration.TimeSpan.TotalSeconds;
                 VideoPlayProgress.Value = 0;
                 syncVideoPlayState(true);
             });
         }
         private void syncVideoPlayState(bool state)
         {
-            lock (syncObj)
+            lock (_syncObj)
             {
-                isPlayVideo = state;
+                _isPlayVideo = state;
                 if (state)
                 {
-                    timer.Change(1000, 1000);
+                    _timer.Change(1000, 1000);
                 }
                 else
                 {
-                    timer.Change(Timeout.Infinite, Timeout.Infinite);
+                    _timer.Change(Timeout.Infinite, Timeout.Infinite);
                 }
             }
         }
 
         private void Player_MediaEnded(object sender, System.EventArgs e)
         {
-            player.Stop();
-            player.Play();
+            _player.Stop();
+            _player.Play();
         }
         private void UpdatePlayTime()
         {
-            timer.Change(Timeout.Infinite, Timeout.Infinite);
+            _timer.Change(Timeout.Infinite, Timeout.Infinite);
             try
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    TimeSpan timeSpan = player.Position;
+                    TimeSpan timeSpan = _player.Position;
                     VideoPlayProgress.Value = timeSpan.TotalSeconds;
                     PlayTimeText.Text = string.Format("{0:00}:{1:00}:{2:00}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
                 });
             }
             finally
             {
-                if (isPlayVideo)
+                if (_isPlayVideo)
                 {
-                    timer.Change(1000, 1000);
+                    _timer.Change(1000, 1000);
                 }
             }
         }
@@ -110,35 +112,38 @@ namespace LiveClientDesktop.Views
 
                 _eventSubscriptionManager = vm.EventSubscriptionManager;
                 _desktopWindowCollector = vm.DesktopWindowCollector;
+                _setupVideoLiveAndRecordingDevices = vm.SetupVideoLiveAndRecordingDevices;
 
-                switchDemonstrationSceneEventSubscriptionToken = _eventSubscriptionManager.Subscribe<SwitchDemonstrationSceneEvent, SwitchDemonstrationSceneContext>(null, SwitchDemonstrationSceneEventHandler, null);
+                _switchDemonstrationSceneEventSubscriptionToken = _eventSubscriptionManager.Subscribe<SwitchDemonstrationSceneEvent, SwitchDemonstrationSceneContext>(null, SwitchDemonstrationSceneEventHandler, null);
 
-                systemCloseEventSubscriptionToken = _eventSubscriptionManager.Subscribe<ShutDownEvent, bool>(null, SystemShutdownHandler, null);
+                _systemCloseEventSubscriptionToken = _eventSubscriptionManager.Subscribe<ShutDownEvent, bool>(null, SystemShutdownHandler, null);
 
-                pptClosedEventSubscriptionToken = _eventSubscriptionManager.Subscribe<PPTClosedEvent, bool>(null, PPTClosedEventHandler, null);
+                _pptClosedEventSubscriptionToken = _eventSubscriptionManager.Subscribe<PPTClosedEvent, bool>(null, PPTClosedEventHandler, null);
 
                 _eventSubscriptionManager.Subscribe<SelectedDemonstrationWindowEvent, PreviewWindowInfo>(null, SwitchPreviewWindowSceneHandler, null);
 
-                _eventSubscriptionManager.Subscribe<PlayVolumeChangeEvent, int>(null, (volume) => {
-                    player.Volume = (double)volume / 100;
+                _eventSubscriptionManager.Subscribe<PlayVolumeChangeEvent, int>(null, (volume) =>
+                {
+                    _player.Volume = (double)volume / 100;
                 }, null);
             }
             DefaultScene.Visibility = Visibility.Visible;
             _desktopWindowCollector.SetWindowHandle(DefaultScene.Handle);
+            _setupVideoLiveAndRecordingDevices?.SetVideoDevice(_desktopWindowCollector);
         }
         private void SwitchPreviewWindowSceneHandler(PreviewWindowInfo previewWindowInfo)
         {
             AllSceneHidden();
-            player.Pause();
-            if (d3dSource == null)
+            _player.Pause();
+            if (_d3dSource == null)
             {
                 try
                 {
-                    d3dSource = new D3DImageSource();
+                    _d3dSource = new D3DImageSource();
 
-                    if (d3dSource.SetupSurface(1280, 720, FrameFormat.YV12))
+                    if (_d3dSource.SetupSurface(1280, 720, FrameFormat.YV12))
                     {
-                        this.imageD3D.Source = this.d3dSource.ImageSource;
+                        this.imageD3D.Source = this._d3dSource.ImageSource;
                     }
                 }
                 catch (Exception ex)
@@ -155,7 +160,7 @@ namespace LiveClientDesktop.Views
         {
             try
             {
-                this.d3dSource.Render((IntPtr)value.Data);
+                this._d3dSource.Render((IntPtr)value.Data);
             }
             catch
             {
@@ -170,38 +175,38 @@ namespace LiveClientDesktop.Views
             {
                 case DemonstratioType.PPT:
                     AllSceneHidden();
-                    player.Pause();
+                    _player.Pause();
                     PPTViewer.OpenPPT(context.UseDevice.ToString());
                     DemonstrationPPTScene.Visibility = Visibility;
                     _desktopWindowCollector.SetWindowHandle(DemonstrationPPTScene.Handle);
                     break;
                 case DemonstratioType.VideoDevice:
                     AllSceneHidden();
-                    player.Pause();
+                    _player.Pause();
                     DemonstrationVideoDeviceScene.Visibility = Visibility.Visible;
                     MsPlayer.OpenDevice(context.UseDevice as IVideoDevice);
                     _desktopWindowCollector.SetWindowHandle(DemonstrationVideoDeviceScene.Handle);
                     break;
                 case DemonstratioType.Image:
-                    player.Pause();
-                    if (imagePath != context.UseDevice.ToString())
+                    _player.Pause();
+                    if (_imagePath != context.UseDevice.ToString())
                     {
                         AllSceneHidden();
-                        imagePath = context.UseDevice.ToString();
-                        BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
+                        _imagePath = context.UseDevice.ToString();
+                        BitmapImage bitmap = new BitmapImage(new Uri(_imagePath));
                         ImageControl.ImageSource = bitmap;
                     }
                     DefaultScene.Visibility = Visibility.Visible;
                     _desktopWindowCollector.SetWindowHandle(DefaultScene.Handle);
                     break;
                 case DemonstratioType.Video:
-                    if (context.UseDevice.ToString() != videoPath)
+                    if (context.UseDevice.ToString() != _videoPath)
                     {
-                        videoPath = context.UseDevice.ToString();
+                        _videoPath = context.UseDevice.ToString();
                         AllSceneHidden();
-                        player.Open(new Uri(videoPath));
+                        _player.Open(new Uri(_videoPath));
                     }
-                    player.Play();
+                    _player.Play();
                     DemonstrationVideoScene.Visibility = Visibility.Visible;
                     _desktopWindowCollector.SetWindowHandle(DemonstrationVideoScene.Handle);
                     break;
@@ -230,7 +235,7 @@ namespace LiveClientDesktop.Views
             try
             {
                 syncVideoPlayState(false);
-                player.Stop();
+                _player.Stop();
             }
             catch { }
 
@@ -264,16 +269,16 @@ namespace LiveClientDesktop.Views
 
         private void VideoPlayProgress_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            isPlayVideo = false;
-            timer.Change(Timeout.Infinite, Timeout.Infinite);
+            _isPlayVideo = false;
+            _timer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         private void VideoPlayProgress_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            isPlayVideo = true;
-            player.Position = new TimeSpan((long)(VideoPlayProgress.Value * 10000000));
-            timer.Change(1000, 1000);
-            player.Play();
+            _isPlayVideo = true;
+            _player.Position = new TimeSpan((long)(VideoPlayProgress.Value * 10000000));
+            _timer.Change(1000, 1000);
+            _player.Play();
         }
 
         private void VideoPlayProgress_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
@@ -287,14 +292,14 @@ namespace LiveClientDesktop.Views
         {
             if (PlayPauseIcon.Kind == MaterialDesignThemes.Wpf.PackIconKind.PauseCircleOutline)
             {
-                player.Pause();
+                _player.Pause();
                 PlayPauseIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.PlayCircleOutline;
                 PlayPauseBtn.ToolTip = "播放";
                 syncVideoPlayState(false);
             }
             else
             {
-                player.Play();
+                _player.Play();
                 PlayPauseIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.PauseCircleOutline;
                 PlayPauseBtn.ToolTip = "暂停";
                 syncVideoPlayState(true);

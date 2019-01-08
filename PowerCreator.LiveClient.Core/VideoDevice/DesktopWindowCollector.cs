@@ -52,8 +52,8 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
 
         public DesktopWindowCollector()
         {
-            Name = "桌面采集器";
-            ID = 999;
+            Name = "桌面窗口采集器";
+            ID = DateTime.Now.Millisecond;
             IsAvailable = true;
             _handel = VsNetImgScalerExSdk.ImgScalerEx_AllocInstance();
             _bitmapInfo = new BitmapInfo();
@@ -82,13 +82,13 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             _isRuningCollect = true;
             Task.Run(() =>
             {
-                _startCollectImage();
+                StartCollectImage();
             });
             IsOpen = true;
             return true;
         }
 
-        private void _startCollectImage()
+        private void StartCollectImage()
         {
             while (_isRuningCollect)
             {

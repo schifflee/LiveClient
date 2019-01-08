@@ -2,15 +2,12 @@
 using PowerCreator.LiveClient.Infrastructure.Object;
 using PowerCreator.LiveClient.VsNetSdk;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.AudioDevice
 {
-    public sealed class AudioDevice : PushingDataEventBase<AudioDeviceDataContext>, IAudioDevice
+    internal sealed class AudioDevice : PushingDataEventBase<AudioDeviceDataContext>, IAudioDevice
     {
         public string Name { get; private set; }
 
@@ -22,7 +19,7 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
             {
                 if (_audioDataFormat == IntPtr.Zero)
                 {
-                    _audioDataFormat = _getAudioDataFormat();
+                    _audioDataFormat = GetAudioDataFormat();
                 }
                 return _audioDataFormat;
             }
@@ -45,7 +42,7 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
             IsOpen = VsNetSoundRecorderSdk.SoundRecorder_OpenRecorder(_handle, ID, i) == 0;
             if (IsOpen)
             {
-                _startPullAudioData();
+                StartPullAudioData();
             }
             return IsOpen;
         }
@@ -59,38 +56,37 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
             IsOpen = !(VsNetSoundRecorderSdk.SoundRecorder_CloseRecorder(_handle) == 0);
             return !IsOpen;
         }
-        private void _startPullAudioData()
+        private void StartPullAudioData()
         {
             _isRuningPullAudioData = true;
             Task.Run(() =>
             {
-                _pullAudioData();
+                PullAudioData();
             });
         }
-        private void _pullAudioData()
+        private void PullAudioData()
         {
             while (_isRuningPullAudioData)
             {
-                _bufferSize = _getAudioDataSize();
+                _bufferSize = GetAudioDataSize();
                 if (_bufferSize != 0)
                 {
                     byte[] buffer = new byte[_bufferSize];
-                    _getAudioData(ref buffer[0], _bufferSize);
-                    AudioDeviceDataContext audioDeviceData = new AudioDeviceDataContext(buffer.ToIntHandle(), _bufferSize);
-                    Pushing(audioDeviceData);
+                    GetAudioData(ref buffer[0], _bufferSize);
+                    Pushing(new AudioDeviceDataContext(buffer.ToIntHandle(), _bufferSize));
                 }
                 Thread.Sleep(40);
             }
         }
-        private IntPtr _getAudioDataFormat()
+        private IntPtr GetAudioDataFormat()
         {
             return VsNetSoundRecorderSdk.SoundRecorder_GetFormat(_handle);
         }
-        private int _getAudioData(ref byte buff, int size)
+        private int GetAudioData(ref byte buff, int size)
         {
             return VsNetSoundRecorderSdk.SoundRecorder_GetData(_handle, ref buff, size);
         }
-        private int _getAudioDataSize()
+        private int GetAudioDataSize()
         {
             return VsNetSoundRecorderSdk.SoundRecorder_GetDataSize(_handle);
         }

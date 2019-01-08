@@ -14,7 +14,7 @@ using PowerCreator.LiveClient.VsNetSdk;
 
 namespace PowerCreator.LiveClient.Core.LiveBroadcast
 {
-    public class LiveBroadcast : ILiveBroadcast
+    internal class LiveBroadcast : ILiveBroadcast
     {
         public bool IsLive { get; private set; }
         public RecAndLiveState State { get; private set; }
@@ -40,12 +40,30 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
 
         public bool PauseLive()
         {
-            throw new NotImplementedException();
+            _videoEncoder.PushingData -= VideoEncoderPushingData;
+            _aacEncoder.PushingData -= AACEncoderPushingData;
+            bool success = VsNetRtmpSenderSdk.RtmpSender_EndWrite(_handle) == 0;
+            if (success)
+            {
+                State = RecAndLiveState.Pause;
+                IsLive = false;
+            }
+            else
+            {
+                _videoEncoder.PushingData += VideoEncoderPushingData;
+                _aacEncoder.PushingData += AACEncoderPushingData;
+            }
+            return success;
         }
 
         public bool ResumeLive()
         {
-            throw new NotImplementedException();
+            bool success = VsNetRtmpSenderSdk.RtmpSender_Resume(_handle) == 0;
+            if (success)
+            {
+                State = RecAndLiveState.Started;
+            }
+            return success;
         }
 
         public bool StartLive(string liveServer, int liveServerPort, string liveChannel, string liveStreamName)
@@ -56,10 +74,11 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
             _liveServerPort = liveServerPort;
             _liveChannel = liveChannel;
             _liveStreamName = liveStreamName;
-            if (_startLive())
+            if (StartLive())
             {
                 State = RecAndLiveState.Started;
                 IsLive = true;
+                return true;
             }
             return false;
         }
@@ -67,40 +86,40 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
         public bool StopLive()
         {
             if (!IsLive) return true;
-            if (_stopLive())
+            if (_StopLive())
             {
                 State = RecAndLiveState.NotStart;
                 return true;
             }
             return false;
         }
-        private bool _stopLive()
+        private bool _StopLive()
         {
             //TODO  停止失败时会出现黑屏
 
-            _videoEncoder.PushingData -= _videoEncoder_PushingData;
-            _aacEncoder.PushingData -= _aacEncoder_PushingData;
+            _videoEncoder.PushingData -= VideoEncoderPushingData;
+            _aacEncoder.PushingData -= AACEncoderPushingData;
             return VsNetRtmpSenderSdk.RtmpSender_EndWrite(_handle) == 0;
         }
-        private bool _startLive()
+        private bool StartLive()
         {
             _videoEncoder.StartVideoEncoder();
             _aacEncoder.StartAudioEncoder();
-            if (_setLiveInfo())
+            if (SetLiveInfo())
             {
-                _videoEncoder.PushingData += _videoEncoder_PushingData;
-                _aacEncoder.PushingData += _aacEncoder_PushingData;
+                _videoEncoder.PushingData += VideoEncoderPushingData;
+                _aacEncoder.PushingData += AACEncoderPushingData;
                 return true;
             }
             return false;
         }
 
-        private void _aacEncoder_PushingData(AudioEncodedDataContext value)
+        private void AACEncoderPushingData(AudioEncodedDataContext value)
         {
             VsNetRtmpSenderSdk.RtmpSender_WriteAudio(_handle, value.Data.ToInt32(), value.DataLength, value.TimeStamp);
         }
 
-        private void _videoEncoder_PushingData(VideoEncodedDataContext value)
+        private void VideoEncoderPushingData(VideoEncodedDataContext value)
         {
             if (value.DataLength <= 0) return;
 
@@ -115,9 +134,9 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
             {
                 while (true)
                 {
-                    _stopLive();
+                    _StopLive();
 
-                    bool reStartSuccess = _startLive();
+                    bool reStartSuccess = StartLive();
                     if (reStartSuccess)
                     {
                         //LogHelper.WriteLog(_name + "与服务器重连成功");
@@ -133,7 +152,7 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
 
         }
 
-        private bool _setLiveInfo()
+        private bool SetLiveInfo()
         {
             int r = VsNetRtmpSenderSdk.RtmpSender_BeginWrite(_handle, _liveServer, _liveServerPort, _liveChannel, _liveStreamName, _videoEncoder.IntBitmapInfoHeader, Marshal.SizeOf(new BitmapInfoHeader()), _aacEncoder.IntWaveFormatEx, Marshal.SizeOf(new WaveFormatEx()));
             return r == 0;

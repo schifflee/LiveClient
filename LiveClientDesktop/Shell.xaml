@@ -58,7 +58,7 @@
                             <ColumnDefinition Width=".49*"/>
                         </Grid.ColumnDefinitions>
                         <views:LiveControlView Grid.Column="0" DataContext="{Binding VMContext.LiveControlViewModel}"/>
-                        <views:RecordingControlView Grid.Column="2"/>
+                        <views:RecordingControlView Grid.Column="2" DataContext="{Binding VMContext.RecordingControlViewModel}"/>
                     </Grid>
                     <Grid Grid.Row="4">
                         <views:CourseContentsView DataContext="{Binding VMContext.CourseContentsViewModel}"/>

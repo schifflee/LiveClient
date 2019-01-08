@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LiveClientDesktop.Models;
+﻿using System.Linq;
 using Microsoft.Practices.Prism.Logging;
+using PowerCreator.LiveClient.Core;
 using PowerCreator.LiveClient.Core.AudioDevice;
 
 namespace LiveClientDesktop.Services
@@ -13,7 +9,7 @@ namespace LiveClientDesktop.Services
     {
         private readonly ILiveStreamAddressProvider _liveStreamAddressProvider;
         public SpeechVideoLiveAndRecordProvider(SystemConfig config, ILoggerFacade logger, IAudioDeviceManager audioDeviceManager, ILiveStreamAddressProvider liveStreamAddressProvider)
-            : base(config, logger, audioDeviceManager)
+            : base(logger, audioDeviceManager, config.UseMicrophoneID)
         {
             _liveStreamAddressProvider = liveStreamAddressProvider;
         }
@@ -26,7 +22,7 @@ namespace LiveClientDesktop.Services
             }
         }
 
-        protected override LiveStreamAddressInfo GetliveStreamAddressInfo()
+        protected override ILiveStreamAddressInfo GetliveStreamAddressInfo()
         {
             var liveStreamAddressInfos = _liveStreamAddressProvider.GetLiveStreamAddressList();
             if (liveStreamAddressInfos.Any()) return liveStreamAddressInfos.First();

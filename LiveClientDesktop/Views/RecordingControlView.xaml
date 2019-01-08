@@ -32,33 +32,33 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="开始录制">
+                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" IsEnabled="{Binding StartRecordingBtnIsEnable}"
+                            ToolTip="开始录制" Command="{Binding StartRecordingCommand}">
                         <materialDesign:PackIcon Kind="Play" Foreground="White"  Height="24" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="开始录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="开始录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom" IsEnabled="{Binding StartRecordingBtnIsEnable}"/>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="暂停录制">
+                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" IsEnabled="{Binding PauseRecordingBtnIsEnable}"
+                            ToolTip="暂停录制" Command="{Binding PauseRecordingCommand}">
                         <materialDesign:PackIcon Kind="Pause" Foreground="White"  Height="24" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="暂停录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="暂停录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom" IsEnabled="{Binding PauseRecordingBtnIsEnable}"/>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="停止录制">
+                    <Button Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" IsEnabled="{Binding StopRecordingBtnIsEnable}"
+                            ToolTip="停止录制" Command="{Binding StopRecordingCommand}">
                         <materialDesign:PackIcon Kind="Stop" Foreground="White"  Height="24" Width="30" />
                     </Button>
-                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="停止录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1" Foreground="#333" FontSize="12" Text="停止录制"  HorizontalAlignment="Center" VerticalAlignment="Bottom" IsEnabled="{Binding StopRecordingBtnIsEnable}"/>
                 </Grid>
             </Grid>
         </Grid>

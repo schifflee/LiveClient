@@ -10,6 +10,7 @@ namespace LiveClientDesktop.Models
 {
     public class PresentationInfo
     {
+        public string ID { get; set; }
         public string Name
         {
             get

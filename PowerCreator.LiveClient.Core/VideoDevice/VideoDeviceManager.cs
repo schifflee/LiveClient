@@ -20,11 +20,11 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         {
             _logger = logger;
             _handle = VsNetCameraSdk.Camera_AllocInstance();
-            _videoDeviceList = _getVideoDevices();
+            _videoDeviceList = GetVideoDeviceList();
         }
         public IEnumerable<IVideoDevice> GetVideoDevices()
         {
-            return _videoDeviceList == null ? _getVideoDevices() : _videoDeviceList;
+            return _videoDeviceList == null ? GetVideoDeviceList() : _videoDeviceList;
         }
 
         public IVideoDevice GetVideoDeviceById(int id)
@@ -32,22 +32,23 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             return _videoDeviceList?.FirstOrDefault(c => c.ID == id);
         }
 
-        private IEnumerable<IVideoDevice> _getVideoDevices()
+        private IEnumerable<IVideoDevice> GetVideoDeviceList()
         {
             ICollection<IVideoDevice> videoDeviceList = new List<IVideoDevice>();
-            for (int index = 0; index < _getVideoDeviceTotal(); index++)
+            int videoDeviceTotal = GetVideoDeviceTotal();
+            for (int index = 0; index < videoDeviceTotal; index++)
             {
-                videoDeviceList.Add(new VideoDevice(_getVideoDeviceName(index), index,_logger));
+                videoDeviceList.Add(new VideoDevice(GetVideoDeviceName(index), index,_logger));
             }
             return videoDeviceList;
         }
-        private string _getVideoDeviceName(int index)
+        private string GetVideoDeviceName(int index)
         {
             byte[] b = new byte[50];
             VsNetCameraSdk.Camera_GetName(_handle, index, ref b[0]);
             return b.GetString();
         }
-        private int _getVideoDeviceTotal()
+        private int GetVideoDeviceTotal()
         {
             return VsNetCameraSdk.Camera_GetCount(_handle);
         }

@@ -13,7 +13,7 @@ using PowerCreator.LiveClient.VsNetSdk;
 
 namespace PowerCreator.LiveClient.Core.Record
 {
-    public class Record : IRecord
+    internal class Record : IRecord
     {
         public RecAndLiveState State { get; private set; }
 
@@ -39,10 +39,10 @@ namespace PowerCreator.LiveClient.Core.Record
             _videoEncoder.StartVideoEncoder();
             _aacEncoder.StartAudioEncoder();
 
-            if (_setRecordInfo(recordFileSavePath))
+            if (SetRecordInfo(recordFileSavePath))
             {
-                _videoEncoder.PushingData += _videoEncoder_PushingData;
-                _aacEncoder.PushingData += _aacEncoder_PushingData;
+                _videoEncoder.PushingData += VideoEncoderPushingData;
+                _aacEncoder.PushingData += AACEncoderPushingData;
                 State = RecAndLiveState.Started;
                 IsRecord = true;
                 return true;
@@ -50,12 +50,12 @@ namespace PowerCreator.LiveClient.Core.Record
             return false;
         }
 
-        private void _aacEncoder_PushingData(AudioEncodedDataContext value)
+        private void AACEncoderPushingData(AudioEncodedDataContext value)
         {
             VsNetRecordSdk.FileMuxer_WriteAudio(_handle, value.Data.ToInt32(), value.DataLength, value.KeyFrame);
         }
 
-        private void _videoEncoder_PushingData(VideoEncodedDataContext value)
+        private void VideoEncoderPushingData(VideoEncodedDataContext value)
         {
             VsNetRecordSdk.FileMuxer_WriteVideo(_handle, value.Data, value.DataLength, value.KeyFrame, value.TimeStamp);
         }
@@ -64,8 +64,8 @@ namespace PowerCreator.LiveClient.Core.Record
         {
             if (!IsRecord) return true;
 
-            _videoEncoder.PushingData -= _videoEncoder_PushingData;
-            _aacEncoder.PushingData -= _aacEncoder_PushingData;
+            _videoEncoder.PushingData -= VideoEncoderPushingData;
+            _aacEncoder.PushingData -= AACEncoderPushingData;
             if (VsNetRecordSdk.FileMuxer_EndWrite(_handle) == 0)
             {
                 State = RecAndLiveState.NotStart;
@@ -94,7 +94,7 @@ namespace PowerCreator.LiveClient.Core.Record
             return false;
         }
 
-        private bool _setRecordInfo(string fileSavePath)
+        private bool SetRecordInfo(string fileSavePath)
         {
             return VsNetRecordSdk.FileMuxer_BeginWrite(_handle, fileSavePath, _videoEncoder.IntBitmapInfoHeader, Marshal.SizeOf(new BitmapInfoHeader()), _aacEncoder.IntWaveFormatEx, 2) == 0;
         }

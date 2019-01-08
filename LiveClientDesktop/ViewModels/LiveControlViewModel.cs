@@ -1,17 +1,26 @@
-﻿using Microsoft.Practices.Prism.Commands;
+﻿using LiveClientDesktop.Enums;
+using LiveClientDesktop.EventAggregations;
+using LiveClientDesktop.HttpRequestHandler;
+using LiveClientDesktop.Models;
+using LiveClientDesktop.Services;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.Unity;
+using PowerCreator.LiveClient.Core;
+using PowerCreator.LiveClient.Core.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace LiveClientDesktop.ViewModels
 {
-    public class LiveControlViewModel : NotificationObject
+    public partial class LiveControlViewModel : NotificationObject
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly IVideoLiveProvider _speechVideoLiveAndRecordProvider;
+        private readonly IVideoLiveProvider _teacherVideoLiveAndRecordProvider;
+        private object syncState = new object();
 
         public DelegateCommand StartLiveCommand { get; set; }
 
@@ -55,33 +64,111 @@ namespace LiveClientDesktop.ViewModels
             }
         }
 
-
-
-        public LiveControlViewModel(IEventAggregator eventAggregator)
+        public LiveControlViewModel(IEventAggregator eventAggregator, IUnityContainer container)
+            : this()
         {
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException("eventAggregator");
+            _speechVideoLiveAndRecordProvider = container.Resolve<SpeechVideoLiveAndRecordProvider>();
+            _teacherVideoLiveAndRecordProvider = container.Resolve<TeacherVideoLiveAndRecordProvider>();
 
             StartLiveBtnIsEnable = true;
-            StartLiveCommand = new DelegateCommand(new Action(_StartLive));
-            StopLiveCommand = new DelegateCommand(new Action(_StopLive));
-            PauseLiveCommand = new DelegateCommand(new Action(_PauseLive));
+            StartLiveCommand = new DelegateCommand(new Action(StartLive));
+            StopLiveCommand = new DelegateCommand(new Action(StopLive));
+            PauseLiveCommand = new DelegateCommand(new Action(PauseLive));
         }
 
-        private void _StartLive()
+        private void StartLive()
         {
-            StartLiveBtnIsEnable = false;
-            StopLiveBtnIsEnable = PauseLiveBtnIsEnable = true;
+            MessageBoxResult confirm = MessageBox.Show("确认开始直播？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (confirm == MessageBoxResult.Yes)
+            {
+                Tuple<bool, string> result = _StartLive();
+                if (!result.Item1)
+                {
+                    MessageBox.Show(result.Item2);
+                }
+            }
         }
-        private void _StopLive()
+        private Tuple<bool, string> _StartLive()
         {
-            StartLiveBtnIsEnable = true;
-            StopLiveBtnIsEnable = PauseLiveBtnIsEnable = false;
+            lock (syncState)
+            {
+                //TODO 需要同步直播状态
+                var state = _speechVideoLiveAndRecordProvider.LiveState;
+                Tuple<bool, string> result = _speechVideoLiveAndRecordProvider.StartLiving();
+                if (!result.Item1) return result;
+
+                result = _teacherVideoLiveAndRecordProvider.StartLiving();
+                if (!result.Item1)
+                {
+                    _speechVideoLiveAndRecordProvider.StopLiving();
+                    return result;
+                }
+
+                StartLiveBtnIsEnable = false;
+                StopLiveBtnIsEnable = PauseLiveBtnIsEnable = true;
+
+                if (state == RecAndLiveState.Pause)
+                    _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Live, LiveAndRecordingOperateEventType.Resume));
+                else
+                    _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Live, LiveAndRecordingOperateEventType.Start));
+
+                return result;
+            }
+        }
+        private void StopLive()
+        {
+            MessageBoxResult confirm = MessageBox.Show("是否关闭此直播？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (confirm == MessageBoxResult.Yes)
+            {
+                Tuple<bool, string> result = _StopLive();
+                if (!result.Item1)
+                {
+                    MessageBox.Show(result.Item2);
+                }
+            }
+        }
+        private Tuple<bool, string> _StopLive()
+        {
+            lock (syncState)
+            {
+                Tuple<bool, string> result = _speechVideoLiveAndRecordProvider.StopLiving();
+                if (!result.Item1) return result;
+
+                result = _teacherVideoLiveAndRecordProvider.StopLiving();
+                if (!result.Item1) return result;
+
+                StartLiveBtnIsEnable = true;
+                StopLiveBtnIsEnable = PauseLiveBtnIsEnable = false;
+
+                _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Live, LiveAndRecordingOperateEventType.Stop));
+
+                return result;
+            }
         }
 
-        private void _PauseLive()
+        private void PauseLive()
         {
-            StartLiveBtnIsEnable = StopLiveBtnIsEnable = true;
-            PauseLiveBtnIsEnable = false;
+            Tuple<bool, string> result = _PauseLive();
+            if (!result.Item1) MessageBox.Show(result.Item2);
+        }
+        private Tuple<bool, string> _PauseLive()
+        {
+            lock (syncState)
+            {
+                Tuple<bool, string> result = _speechVideoLiveAndRecordProvider.PauseLiving();
+                if (!result.Item1) return result;
+
+                result = _teacherVideoLiveAndRecordProvider.PauseLiving();
+                if (!result.Item1) return result;
+
+                StartLiveBtnIsEnable = StopLiveBtnIsEnable = true;
+                PauseLiveBtnIsEnable = false;
+
+                _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Live, LiveAndRecordingOperateEventType.Pause));
+
+                return result;
+            }
         }
     }
 }

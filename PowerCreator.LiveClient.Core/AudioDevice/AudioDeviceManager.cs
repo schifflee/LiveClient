@@ -28,17 +28,18 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
                 return _audioDevices;
 
             _audioDevices = new List<IAudioDevice>();
-            for (int i = 0; i < _getAudioDeviceTotal(); i++)
+            var audioDeviceTotal = GetAudioDeviceTotal();
+            for (int i = 0; i < audioDeviceTotal; i++)
             {
-                _audioDevices.Add(new AudioDevice(_getAudioDeviceName(i), i));
+                _audioDevices.Add(new AudioDevice(GetAudioDeviceName(i), i));
             }
             return _audioDevices;
         }
-        private string _getAudioDeviceName(int index)
+        private string GetAudioDeviceName(int index)
         {
             return Marshal.PtrToStringAnsi(VsNetSoundRecorderSdk.SoundRecorder_GetSoundRecordName(_handle, index));
         }
-        private int _getAudioDeviceTotal()
+        private int GetAudioDeviceTotal()
         {
             return VsNetSoundRecorderSdk.SoundRecorder_GetSoundRecordCount(_handle);
         }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Logging;
@@ -12,9 +9,8 @@ using PowerCreator.LiveClient.VsNetSdk;
 
 namespace PowerCreator.LiveClient.Core.VideoDevice
 {
-    public class VideoDevice : PushingDataEventBase<VideoDeviceDataContext>, IVideoDevice
+    internal class VideoDevice : PushingDataEventBase<VideoDeviceDataContext>, IVideoDevice
     {
-        
         public int ID { get; private set; }
 
         public string Name { get; private set; }
@@ -36,7 +32,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             {
                 if (_deviceBitmapInfoHeader == IntPtr.Zero && IsOpen)
                 {
-                    _deviceBitmapInfoHeader = _getDeviceBitmapInfoHeader();
+                    _deviceBitmapInfoHeader = GetDeviceBitmapInfoHeader();
                 }
                 return _deviceBitmapInfoHeader;
             }
@@ -55,17 +51,18 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         private int _bufferHandle;
         internal VideoDevice(string videoDeviceName, int id, ILoggerFacade logger)
         {
-            _logger = logger;
             ID = id;
             Name = videoDeviceName;
+
+            _logger = logger;
             _handle = VsNetCameraSdk.Camera_AllocInstance();
-            _setDeviceAvailableStatus();
+            SetDeviceAvailableStatus();
         }
         public bool CloseDevice()
         {
             if (!IsOpen) return true;
 
-            _stopPullDeviceData();
+            StopPullDeviceData();
             IsOpen = false;
             VsNetCameraSdk.Camera_CloseCamera(_handle);
 
@@ -76,7 +73,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         {
             if (IsOpen) return IsOpen;
 
-            IsOpen = _openDevice();
+            IsOpen = OpenVideoDevice();
             if (IsOpen)
             {
                 int width = 0, height = 0, format = 0;
@@ -85,9 +82,9 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
                 Height = height;
                 Format = (VideoDeviceDataFormat)format;
                 if (_buffer == null)
-                    _buffer = new byte[_getBufferSize()];
+                    _buffer = new byte[GetBufferSize()];
 
-                _startPullDeviceData();
+                StartPullDeviceData();
             }
             return IsOpen;
         }
@@ -98,62 +95,61 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         {
             return string.Format("Device:{0},DeviceID:{1}", Name, ID);
         }
-        private void _stopPullDeviceData()
+        private void StopPullDeviceData()
         {
             _isRuningPullDeviceData = false;
         }
-        private void _startPullDeviceData()
+        private void StartPullDeviceData()
         {
             _isRuningPullDeviceData = true;
             Task.Run(() =>
             {
-                _pullDeviceData();
+                PullDeviceData();
             });
         }
-        private void _pullDeviceData()
+        private void PullDeviceData()
         {
             while (_isRuningPullDeviceData)
             {
                 if (IsOpen)
                 {
-                    _getDeviceData(ref _buffer);
+                    GetDeviceData(ref _buffer);
                     if (_bufferHandle <= 0)
                     {
                         _bufferHandle = _buffer.ToIntHandle();
                     }
-                    VideoDeviceDataContext videoDeviceData = new VideoDeviceDataContext(_bufferHandle, _buffer.Length);
-                    Pushing(videoDeviceData);
+                    Pushing(new VideoDeviceDataContext(_bufferHandle, _buffer.Length));
                 }
 
                 Thread.Sleep(40);
             }
         }
 
-        private void _getDeviceData(ref byte[] b)
+        private void GetDeviceData(ref byte[] b)
         {
             VsNetCameraSdk.Camera_QueryFrame(_handle, ref b[0], b.Length);
         }
-        private IntPtr _getDeviceBitmapInfoHeader()
+        private IntPtr GetDeviceBitmapInfoHeader()
         {
             return VsNetCameraSdk.Camera_GetInfoEx(_handle);
         }
-        private int _getBufferSize()
+        private int GetBufferSize()
         {
             return Width * Height * 4;
         }
-        private void _setDeviceAvailableStatus()
+        private void SetDeviceAvailableStatus()
         {
-            IsAvailable = _openDevice();
+            IsAvailable = OpenVideoDevice();
             if (IsAvailable)
             {
-                _closeDevice();
+                CloseVideoDevice();
             }
         }
-        private void _closeDevice()
+        private void CloseVideoDevice()
         {
             VsNetCameraSdk.Camera_CloseCamera(_handle);
         }
-        private bool _openDevice()
+        private bool OpenVideoDevice()
         {
             return VsNetCameraSdk.Camera_OpenCamera(_handle, ID, false, 0, 0);
 

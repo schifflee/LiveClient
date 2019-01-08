@@ -4,15 +4,10 @@ using PowerCreator.LiveClient.Core.VideoDevice;
 using PowerCreator.LiveClient.Infrastructure.Object;
 using PowerCreator.LiveClient.VsNetSdk;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.VideoEncoder
 {
-    public class H264VideoEncoder : PushingDataEventBase<VideoEncodedDataContext>, IVideoEncoder
+    internal class H264VideoEncoder : PushingDataEventBase<VideoEncodedDataContext>, IVideoEncoder
     {
         public bool IsStartEncoder { get; private set; }
 
@@ -62,7 +57,7 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
             {
                 _startEncoderTime = DateTime.Now;
                 CurrentUseVideoDevice.OpenDevice();
-                IsStartEncoder = _setEncoderInfo(CurrentUseVideoDevice.DeviceBitmapInfoHeaderIntPtr, 1500, 1280, 720, _bitmapInfoHeader, ref _bitmapInfoHeaderLength);
+                IsStartEncoder = SetEncoderInfo(CurrentUseVideoDevice.DeviceBitmapInfoHeaderIntPtr, 1500, 1280, 720, _bitmapInfoHeader, ref _bitmapInfoHeaderLength);
                 CurrentUseVideoDevice.PushingData += CurrentUseVideoDevice_PushingData;
             }
             return IsStartEncoder;
@@ -70,7 +65,7 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
 
         private void CurrentUseVideoDevice_PushingData(VideoDeviceDataContext value)
         {
-            _startVideoEncoder(value.Data, value.DataLength, _getTimeStamp(), ref _outputData, ref _outputDataSize, ref _outputTimeStamp, ref _outputKeyFrame);
+            StartVideoEncoder(value.Data, value.DataLength, GetTimeStamp(), ref _outputData, ref _outputDataSize, ref _outputTimeStamp, ref _outputKeyFrame);
             VideoEncodedDataContext videoEncodedDataContext = new VideoEncodedDataContext(_outputData, _outputDataSize, _outputTimeStamp, _outputKeyFrame);
             Pushing(videoEncodedDataContext);
         }
@@ -85,15 +80,15 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
             return !IsStartEncoder;
 
         }
-        private bool _setEncoderInfo(IntPtr bitmapInfoHeader, int rate, int outputWidth, int outputHeight, BitmapInfoHeader outputBitmapInfoHeader, ref int headerSize)
+        private bool SetEncoderInfo(IntPtr bitmapInfoHeader, int rate, int outputWidth, int outputHeight, BitmapInfoHeader outputBitmapInfoHeader, ref int headerSize)
         {
             return VsNetVideoEncoderSdk.VideoEncoderEx_StartEnc(_handle, bitmapInfoHeader, rate, outputWidth, outputHeight, outputBitmapInfoHeader, ref headerSize) == 0;
         }
-        private int _startVideoEncoder(int inputData, int inputSize, int inputTimeStamp, ref int outputData, ref int outputDataSize, ref int outputTimeStamp, ref bool frameKey)
+        private int StartVideoEncoder(int inputData, int inputSize, int inputTimeStamp, ref int outputData, ref int outputDataSize, ref int outputTimeStamp, ref bool frameKey)
         {
             return VsNetVideoEncoderSdk.VideoEncoderEx_EncData(_handle, inputData, inputSize, inputTimeStamp, ref outputData, ref outputDataSize, ref outputTimeStamp, ref frameKey);
         }
-        private int _getTimeStamp()
+        private int GetTimeStamp()
         {
             TimeSpan ts = DateTime.Now - _startEncoderTime;
             return (int)ts.TotalMilliseconds;

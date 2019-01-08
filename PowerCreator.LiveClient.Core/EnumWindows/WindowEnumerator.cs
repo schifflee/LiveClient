@@ -22,15 +22,15 @@ namespace PowerCreator.LiveClient.Core.EnumWindows
         public ICollection<WindowInfo> GetWindowList()
         {
             _windowList.Clear();
-            _enumWindwos();
+            EnumWindwos();
             return _windowList;
         }
-        private void _enumWindwos()
+        private void EnumWindwos()
         {
-            EnumWindowsProc eunmWindows = new EnumWindowsProc(_startEnumWindows);
+            EnumWindowsProc eunmWindows = new EnumWindowsProc(StartEnumWindows);
             User32Sdk.EnumWindows(eunmWindows, 0);
         }
-        private bool _startEnumWindows(IntPtr p_Handle, int p_Param)
+        private bool StartEnumWindows(IntPtr p_Handle, int p_Param)
         {
             if (!IsWindowVisible(p_Handle) || GetParent(p_Handle.ToInt32()) != 0) return true;
 
