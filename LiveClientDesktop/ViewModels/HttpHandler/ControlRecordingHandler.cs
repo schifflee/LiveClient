@@ -1,9 +1,6 @@
 ﻿using LiveClientDesktop.HttpRequestHandler;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveClientDesktop.ViewModels
 {
@@ -14,29 +11,26 @@ namespace LiveClientDesktop.ViewModels
 
             HttpRequestHandlerManager.Instance.AddHandler("StartRecord", new Func<IDictionary<string, string>, string>((dic) =>
             {
-                string msg = string.Empty;
-                Tuple<bool, string> result = _StartRecording();
-                return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
+                return Processor(_StartRecording);
             }));
             HttpRequestHandlerManager.Instance.AddHandler("ResumeRecord", new Func<IDictionary<string, string>, string>((dic) =>
             {
-                string msg = string.Empty;
-                Tuple<bool, string> result = _StartRecording();
-                return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
+                return Processor(_StartRecording);
             }));
             HttpRequestHandlerManager.Instance.AddHandler("PauseRecord", new Func<IDictionary<string, string>, string>((dic) =>
             {
-                string msg = string.Empty;
-                Tuple<bool, string> result = _PauseRecording();
-                return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
+                return Processor(_PauseRecording);
             }));
 
             HttpRequestHandlerManager.Instance.AddHandler("StopRecord", new Func<IDictionary<string, string>, string>((dic) =>
             {
-                string msg = string.Empty;
-                Tuple<bool, string> result = _StopRecording();
-                return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
+                return Processor(_StopRecording);
             }));
+        }
+        private string Processor(Func<Tuple<bool, string>> handler)
+        {
+            Tuple<bool, string> result = handler.Invoke();
+            return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
         }
     }
 }

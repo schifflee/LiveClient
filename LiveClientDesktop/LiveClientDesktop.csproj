@@ -176,6 +176,7 @@
     <Compile Include="ViewModels\PresentationViewModel.cs" />
     <Compile Include="ViewModels\PreviewWindowViewModel.cs" />
     <Compile Include="ViewModels\RecordingControlViewModel.cs" />
+    <Compile Include="ViewModels\RecordingTimeViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SpeechViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
@@ -202,6 +203,9 @@
     </Compile>
     <Compile Include="Views\RecordingControlView.xaml.cs">
       <DependentUpon>RecordingControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecordingTimeView.xaml.cs">
+      <DependentUpon>RecordingTimeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SpeechView.xaml.cs">
       <DependentUpon>SpeechView.xaml</DependentUpon>
@@ -334,6 +338,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RecordingControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecordingTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

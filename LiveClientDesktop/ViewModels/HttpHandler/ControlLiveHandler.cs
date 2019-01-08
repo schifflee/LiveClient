@@ -10,22 +10,21 @@ namespace LiveClientDesktop.ViewModels
         {
             HttpRequestHandlerManager.Instance.AddHandler("StartLive", new Func<IDictionary<string, string>, string>((dic) =>
             {
-                string msg = string.Empty;
-                Tuple<bool, string> result = _StartLive();
-                return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
+                return Processor(_StartLive);
             }));
             HttpRequestHandlerManager.Instance.AddHandler("PauseLive", new Func<IDictionary<string, string>, string>((dic) =>
             {
-                string msg = string.Empty;
-                Tuple<bool, string> result = _PauseLive();
-                return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
+                return Processor(_PauseLive);
             }));
             HttpRequestHandlerManager.Instance.AddHandler("StopLive", new Func<IDictionary<string, string>, string>((dic) =>
             {
-                string msg = string.Empty;
-                Tuple<bool, string> result = _StopLive();
-                return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
+                return Processor(_StopLive);
             }));
+        }
+        private string Processor(Func<Tuple<bool,string>> handler)
+        {
+            Tuple<bool, string> result = handler.Invoke();
+            return HttpRequestHandleResultWarpper.WriteResult(result.Item1, result.Item2);
         }
     }
 }
