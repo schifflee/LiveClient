@@ -165,9 +165,9 @@
     <Compile Include="ViewModels\CameraDeviceItemViewModel.cs" />
     <Compile Include="ViewModels\CameraDeviceViewModel.cs" />
     <Compile Include="ViewModels\CourseContentsViewModel.cs" />
-    <Compile Include="ViewModels\HttpHandler\ControlLiveHandler.cs" />
-    <Compile Include="ViewModels\HttpHandler\ControlPlayCourseContentsHandler.cs" />
-    <Compile Include="ViewModels\HttpHandler\ControlRecordingHandler.cs" />
+    <Compile Include="ViewModels\HttpHandler\WebPlatformControlLiveHandler.cs" />
+    <Compile Include="ViewModels\HttpHandler\WebPlatformControlPlayCourseContentsHandler.cs" />
+    <Compile Include="ViewModels\HttpHandler\WebPlatformControlRecordingHandler.cs" />
     <Compile Include="ViewModels\LiveControlViewModel.cs" />
     <Compile Include="ViewModels\LivingTimeViewModel.cs" />
     <Compile Include="ViewModels\MicrophoneVolumeControlViewModel.cs" />
