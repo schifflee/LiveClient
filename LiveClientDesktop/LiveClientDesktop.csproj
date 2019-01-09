@@ -169,6 +169,7 @@
     <Compile Include="ViewModels\HttpHandler\ControlPlayCourseContentsHandler.cs" />
     <Compile Include="ViewModels\HttpHandler\ControlRecordingHandler.cs" />
     <Compile Include="ViewModels\LiveControlViewModel.cs" />
+    <Compile Include="ViewModels\LivingTimeViewModel.cs" />
     <Compile Include="ViewModels\MicrophoneVolumeControlViewModel.cs" />
     <Compile Include="ViewModels\PlayVolumeControlViewModel.cs" />
     <Compile Include="ViewModels\PowerCreatorPlayerViewModel.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="ViewModels\RecordingTimeViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SpeechViewModel.cs" />
+    <Compile Include="ViewModels\TimeRecorderViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
     <Compile Include="Views\CameraDeviceView.xaml.cs">
       <DependentUpon>CameraDeviceView.xaml</DependentUpon>
@@ -191,6 +193,9 @@
     </Compile>
     <Compile Include="Views\LiveControlView.xaml.cs">
       <DependentUpon>LiveControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LivingTimeView.xaml.cs">
+      <DependentUpon>LivingTimeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MicrophoneVolumeControlView.xaml.cs">
       <DependentUpon>MicrophoneVolumeControlView.xaml</DependentUpon>
@@ -322,6 +327,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LiveControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LivingTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,7 +8,7 @@ namespace PowerCreator.LiveClient.Core
 {
     public interface ILiveStreamAddressInfo
     {
-        string DominName { get; }
+        string Host { get; }
         int Port { get; }
         string AppName { get; }
         string StreamName { get; }

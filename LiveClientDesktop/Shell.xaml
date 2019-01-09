@@ -5,9 +5,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:LiveClientDesktop.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Title="密云直播客户端"
-        Closing="MetroWindow_Closing"
+        Closing="MetroWindow_Closing" TitlebarHeight="35"
         MinHeight="720" MinWidth="1280" Height="720" Width="1280">
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands ShowLastSeparator="False">
+            <views:LivingTimeView DataContext="{Binding VMContext.LivingTimeViewModel}"/>
+            <views:RecordingTimeView DataContext="{Binding VMContext.RecordingTimeViewModel}"/>
+            <ToggleButton ToolTip="设置">
+                <materialDesign:PackIcon Kind="Settings" />
+            </ToggleButton>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="944*" MinWidth="944"/>

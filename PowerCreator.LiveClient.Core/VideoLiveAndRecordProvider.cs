@@ -116,7 +116,7 @@ namespace PowerCreator.LiveClient.Core
             }
             if (_videoLiveBroadcast.State == RecAndLiveState.NotStart || _videoLiveBroadcast.State == RecAndLiveState.Pause)
             {
-                isSuccess = _videoLiveBroadcast.StartLive(liveStreamAddressInfo.DominName, liveStreamAddressInfo.Port, liveStreamAddressInfo.AppName, liveStreamAddressInfo.StreamName);
+                isSuccess = _videoLiveBroadcast.StartLive(liveStreamAddressInfo.Host, liveStreamAddressInfo.Port, liveStreamAddressInfo.AppName, liveStreamAddressInfo.StreamName);
                 if (!isSuccess)
                 {
                     _logger.Info(liveStreamAddressInfo.ToString());

@@ -14,8 +14,8 @@ namespace LiveClientDesktop.Services
         public LocalLiveStreamProvider()
         {
             _liveStreamAddressInfos = new List<ILiveStreamAddressInfo>() {
-                new LiveStreamAddressInfo { AppName = "live", DominName = "127.0.0.1", Port = 1935, StreamName = "test" },
-                new LiveStreamAddressInfo { AppName = "live", DominName = "127.0.0.1", Port = 1935, StreamName = "test1" }
+                new LiveStreamAddressInfo { AppName = "live", Host = "127.0.0.1", Port = 1935, StreamName = "test" },
+                new LiveStreamAddressInfo { AppName = "live", Host = "127.0.0.1", Port = 1935, StreamName = "test1" }
             };
         }
 

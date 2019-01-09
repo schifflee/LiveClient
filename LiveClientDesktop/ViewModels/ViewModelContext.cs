@@ -33,5 +33,10 @@ namespace LiveClientDesktop.ViewModels
         [Dependency]
         public RecordingControlViewModel RecordingControlViewModel { get; set; }
 
+        [Dependency]
+        public RecordingTimeViewModel RecordingTimeViewModel { get; set; }
+
+        [Dependency]
+        public LivingTimeViewModel LivingTimeViewModel { get; set; }
     }
 }

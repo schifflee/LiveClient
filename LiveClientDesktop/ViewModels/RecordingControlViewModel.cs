@@ -193,7 +193,7 @@ namespace LiveClientDesktop.ViewModels
                 PauseRecordingBtnIsEnable = false;
                 StopRecordingBtnIsEnable = StartRecordingBtnIsEnable = true;
 
-                _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Recording, LiveAndRecordingOperateEventType.Stop));
+                _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Recording, LiveAndRecordingOperateEventType.Pause));
 
                 return result;
             }

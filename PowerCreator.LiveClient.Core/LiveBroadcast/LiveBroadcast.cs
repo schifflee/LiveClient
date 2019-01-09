@@ -89,6 +89,7 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
             if (_StopLive())
             {
                 State = RecAndLiveState.NotStart;
+                IsLive = false;
                 return true;
             }
             return false;

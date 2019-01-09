@@ -1,15 +1,10 @@
 ﻿using PowerCreator.LiveClient.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveClientDesktop.Models
 {
     public class LiveStreamAddressInfo : ILiveStreamAddressInfo
     {
-        public string DominName { get; set; }
+        public string Host { get; set; }
         public int Port { get; set; }
         public string AppName { get; set; }
         public string StreamName { get; set; }
@@ -17,7 +12,7 @@ namespace LiveClientDesktop.Models
 
         public override string ToString()
         {
-            return $"{DominName}:{Port}/{AppName}/{StreamName}/{Type}";
+            return $"{Host}:{Port}/{AppName}/{StreamName}/{Type}";
         }
     }
 }

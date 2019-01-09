@@ -69,6 +69,7 @@ namespace PowerCreator.LiveClient.Core.Record
             if (VsNetRecordSdk.FileMuxer_EndWrite(_handle) == 0)
             {
                 State = RecAndLiveState.NotStart;
+                IsRecord = false;
                 return true;
             }
             return false;

@@ -33,7 +33,6 @@ namespace LiveClientDesktop.ViewModels
 
             _eventSubscriptionManager.Subscribe<SelectedDemonstrationWindowEvent, PreviewWindowInfo>(null, SelectedDemonstrationWindowEventHandler, null);
 
-
         }
 
         [Dependency]

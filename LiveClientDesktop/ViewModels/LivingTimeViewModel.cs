@@ -4,15 +4,15 @@ using LiveClientDesktop.Models;
 
 namespace LiveClientDesktop.ViewModels
 {
-    public class RecordingTimeViewModel : TimeRecorderViewModel
+    public class LivingTimeViewModel : TimeRecorderViewModel
     {
-        public RecordingTimeViewModel(EventSubscriptionManager eventSubscriptionManager)
+        public LivingTimeViewModel(EventSubscriptionManager eventSubscriptionManager)
             : base(eventSubscriptionManager)
         {
         }
         public override bool EventFilter(LiveAndRecordingOperateEventContext context)
         {
-            return context.EventSource == LiveAndRecordingOperateEventSourceType.Recording;
+            return context.EventSource == LiveAndRecordingOperateEventSourceType.Live;
         }
     }
 }
