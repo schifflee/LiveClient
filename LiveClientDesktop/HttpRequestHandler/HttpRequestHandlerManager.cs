@@ -5,6 +5,7 @@ namespace LiveClientDesktop.HttpRequestHandler
 {
     public class HttpRequestHandlerManager
     {
+        //TODO 客户端使用不方便需要重构
         public static HttpRequestHandlerManager Instance { get; } = new HttpRequestHandlerManager();
         public IDictionary<String, Func<IDictionary<String, String>, String>> HandlerList { get; private set; }
         private HttpRequestHandlerManager()
