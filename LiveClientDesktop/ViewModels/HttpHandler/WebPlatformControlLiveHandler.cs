@@ -8,15 +8,15 @@ namespace LiveClientDesktop.ViewModels
     {
         public LiveControlViewModel()
         {
-            HttpRequestHandlerManager.Instance.AddHandler("StartLive", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("StartLive", new Func<IDictionary<string, string>, string>((dic) =>
             {
                 return Processor(_StartLive);
             }));
-            HttpRequestHandlerManager.Instance.AddHandler("PauseLive", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("PauseLive", new Func<IDictionary<string, string>, string>((dic) =>
             {
                 return Processor(_PauseLive);
             }));
-            HttpRequestHandlerManager.Instance.AddHandler("StopLive", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("StopLive", new Func<IDictionary<string, string>, string>((dic) =>
             {
                 return Processor(_StopLive);
             }));

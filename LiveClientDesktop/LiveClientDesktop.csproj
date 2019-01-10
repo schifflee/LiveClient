@@ -284,6 +284,14 @@
       <Project>{55b61e6c-0a37-4fbb-91c4-ed3fc6fbc56b}</Project>
       <Name>PowerCreator.LiveClient.Log</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PowerCreator.WebPlatform.Sdk\PowerCreator.WebPlatform.Sdk.csproj">
+      <Project>{cc075e42-2be2-4eaa-acfd-508b445db652}</Project>
+      <Name>PowerCreator.WebPlatform.Sdk</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PowerCreatorDotCom.Sdk.Core\PowerCreatorDotCom.Sdk.Core.csproj">
+      <Project>{c2623236-d836-4725-baef-b7f03db1f32b}</Project>
+      <Name>PowerCreatorDotCom.Sdk.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Renderer.Core\Renderer.YV12.Core.csproj">
       <Project>{e80b0a3b-c10d-4c1b-947f-47cacc6c7aab}</Project>
       <Name>Renderer.YV12.Core</Name>

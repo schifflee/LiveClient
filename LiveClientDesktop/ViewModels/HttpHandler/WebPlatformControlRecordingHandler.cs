@@ -9,20 +9,20 @@ namespace LiveClientDesktop.ViewModels
         public RecordingControlViewModel()
         {
 
-            HttpRequestHandlerManager.Instance.AddHandler("StartRecord", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("StartRecord", new Func<IDictionary<string, string>, string>((dic) =>
             {
                 return Processor(_StartRecording);
             }));
-            HttpRequestHandlerManager.Instance.AddHandler("ResumeRecord", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("ResumeRecord", new Func<IDictionary<string, string>, string>((dic) =>
             {
                 return Processor(_StartRecording);
             }));
-            HttpRequestHandlerManager.Instance.AddHandler("PauseRecord", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("PauseRecord", new Func<IDictionary<string, string>, string>((dic) =>
             {
                 return Processor(_PauseRecording);
             }));
 
-            HttpRequestHandlerManager.Instance.AddHandler("StopRecord", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("StopRecord", new Func<IDictionary<string, string>, string>((dic) =>
             {
                 return Processor(_StopRecording);
             }));

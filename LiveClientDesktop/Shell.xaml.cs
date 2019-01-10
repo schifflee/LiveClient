@@ -6,6 +6,7 @@ using MahApps.Metro.Controls;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using PowerCreator.LiveClient.Core;
+using PowerCreator.WebPlatform.Sdk;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -35,6 +36,8 @@ namespace LiveClientDesktop
             {
                 new HttpService(5479).listen();
             });
+            CreateUploadVideoRequest createUploadVideoRequest = new CreateUploadVideoRequest("192.168.0.202");
+            createUploadVideoRequest.ConstructRequest();
         }
         private void ShowPrevireWindowView(bool isOpen)
         {

@@ -40,10 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IServiceClient.cs" />
+    <Compile Include="CreateUploadVideoRequest.cs" />
+    <Compile Include="CreateUploadVideoResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceResponse.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PowerCreatorDotCom.Sdk.Core\PowerCreatorDotCom.Sdk.Core.csproj">
+      <Project>{c2623236-d836-4725-baef-b7f03db1f32b}</Project>
+      <Name>PowerCreatorDotCom.Sdk.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -47,12 +47,12 @@ namespace LiveClientDesktop.HttpServer
                     }
                 }
             }
-            if (HttpRequestHandlerManager.Instance.HandlerList.ContainsKey(actionName))
+            if (HttpRequestHandleManager.Instance.HandlerList.ContainsKey(actionName))
             {
                 p.httpHeaders.Add("Copyright", "PowerCreator");
                 p.httpHeaders.Add("Access-Control-Allow-Origin", "*");
                 p.writeSuccess();
-                p.outputStream.WriteLine(HttpRequestHandlerManager.Instance.HandlerList[actionName](urlParams));
+                p.outputStream.WriteLine(HttpRequestHandleManager.Instance.HandlerList[actionName](urlParams));
             }
             else
             {

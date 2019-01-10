@@ -27,6 +27,22 @@ namespace PowerCreatorDotCom.Sdk.Core.Utils
             return "application/octet-stream";
         }
 
+        public static FormatType? StingToFormatType(string format)
+        {
+            if (format.ToLower().Equals("application/xml") || format.ToLower().Equals("text/xml"))
+            {
+                return FormatType.XML;
+            }
+            if (format.ToLower().Equals("application/json"))
+            {
+                return FormatType.JSON;
+            }
+            if (format.ToLower().Equals("application/x-www-form-urlencoded"))
+            {
+                return FormatType.FORM;
+            }
+            return FormatType.RAW;
+        }
         public static MethodType? StringToMethodType(string method)
         {
             method = (method.ToUpper());

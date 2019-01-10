@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.WebPlatform.Sdk
 {
-    public interface IServiceClient
+    public class CreateUploadVideoResponse
     {
     }
 }

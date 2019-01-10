@@ -9,7 +9,7 @@ namespace LiveClientDesktop.ViewModels
     {
         public CourseContentsViewModel()
         {
-            HttpRequestHandlerManager.Instance.AddHandler("PlayScreenVideo", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("PlayScreenVideo", new Func<IDictionary<string, string>, string>((dic) =>
             {
 
                 return Processor(PresentationViewModel.PresentationList,
@@ -22,7 +22,7 @@ namespace LiveClientDesktop.ViewModels
                     });
             }));
 
-            HttpRequestHandlerManager.Instance.AddHandler("PlayStreamVideo", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("PlayStreamVideo", new Func<IDictionary<string, string>, string>((dic) =>
             {
 
                 return Processor(PresentationViewModel.WarmVideoList,
@@ -35,7 +35,7 @@ namespace LiveClientDesktop.ViewModels
                      });
             }));
 
-            HttpRequestHandlerManager.Instance.AddHandler("PlayCameraVideo", new Func<IDictionary<string, string>, string>((dic) =>
+            HttpRequestHandleManager.Instance.AddHandler("PlayCameraVideo", new Func<IDictionary<string, string>, string>((dic) =>
             {
                 return Processor(CameraDeviceViewModel.CameraDeviceList,
                     (item) => item.OwnerVideoDevice.ID == int.Parse(dic["sourceID"]),
