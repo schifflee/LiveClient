@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.WebPlatform.Sdk
 {
-    public class CreateUploadVideoResponse
+    public static class ControllerNames
     {
+        public const string LiveController = "Live";
+        public const string LiveClientLoginController = "MiYun";
     }
 }

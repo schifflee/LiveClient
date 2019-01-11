@@ -8,9 +8,14 @@ namespace LiveClientDesktop
 {
     public partial class Bootstrapper : UnityBootstrapper
     {
+        private readonly string _startParams;
+        public Bootstrapper(string startParams) : base()
+        {
+            _startParams = startParams;
+        }
         protected override DependencyObject CreateShell()
         {
-            return this.Container.Resolve<Shell>();
+            return this.Container.Resolve<Login>();
         }
         protected override void ConfigureModuleCatalog()
         {

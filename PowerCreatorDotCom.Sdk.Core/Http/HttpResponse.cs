@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PowerCreatorDotCom.Sdk.Core.Http
 {
@@ -14,8 +11,8 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
         private static int _timeout = 100000; // No effect
         private static int bufferLength = 1024;
 
-        public int Status { get; set; }
-
+        public int Status { get;  set; }
+        public Exception Error { get;  set; }
         public HttpResponse() { }
         public HttpResponse(string strUrl)
             : base(strUrl) { }
@@ -48,29 +45,25 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
 
         public static byte[] ReadContent(HttpResponse response, HttpWebResponse rsp)
         {
-
-            MemoryStream ms = new MemoryStream();
-            byte[] buffer = new byte[bufferLength];
-            Stream stream = rsp.GetResponseStream();
-
-            while (true)
+            using (MemoryStream ms = new MemoryStream())
             {
-                int length = stream.Read(buffer, 0, bufferLength);
-                if (length == 0)
-                {
-                    break;
-                }
-                ms.Write(buffer, 0, length);
-            }
-            ms.Seek(0, SeekOrigin.Begin);
-            byte[] bytes = new byte[ms.Length];
-            ms.Read(bytes, 0, bytes.Length);
+                byte[] buffer = new byte[bufferLength];
+                Stream stream = rsp.GetResponseStream();
 
-            ms.Close();
-            ms.Dispose();
-            stream.Close();
-            stream.Dispose();
-            return bytes;
+                while (true)
+                {
+                    int length = stream.Read(buffer, 0, bufferLength);
+                    if (length == 0)
+                    {
+                        break;
+                    }
+                    ms.Write(buffer, 0, length);
+                }
+                ms.Seek(0, SeekOrigin.Begin);
+                byte[] bytes = new byte[ms.Length];
+                ms.Read(bytes, 0, bytes.Length);
+                return bytes;
+            }
         }
 
         public static HttpResponse GetResponse(HttpRequest request, int? timeout = null)
@@ -148,12 +141,12 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
             return httpWebRequest;
         }
 
-        public bool isSuccess()
+        public bool IsSuccess
         {
-            if (200 <= this.Status &&
-                    300 > this.Status)
-                return true;
-            return false;
+            get
+            {
+                return 200 <= this.Status && 300 > this.Status;
+            }
         }
     }
 }

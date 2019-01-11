@@ -5,10 +5,9 @@ using LiveClientDesktop.WindowViews;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
-using PowerCreator.LiveClient.Core;
-using PowerCreator.WebPlatform.Sdk;
+using PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls;
+using PowerCreatorDotCom.Sdk.Core;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace LiveClientDesktop
 {
@@ -36,8 +35,14 @@ namespace LiveClientDesktop
             {
                 new HttpService(5479).listen();
             });
-            CreateUploadVideoRequest createUploadVideoRequest = new CreateUploadVideoRequest("192.168.0.202");
-            createUploadVideoRequest.ConstructRequest();
+            LiveClientLoginRequest liveClientLoginRequest = new LiveClientLoginRequest("miyun.smartclass.cn");
+            liveClientLoginRequest.AccessToken = "4d9ed79703004af4929467b68e92bf44";
+            ServiceClient serviceClient = new ServiceClient();
+            var s = serviceClient.GetResponse(liveClientLoginRequest);
+            var sss = s.HttpResponse.Headers["Set-Cookie"];
+            GetLiveInfoRequest getLiveInfoRequest = new GetLiveInfoRequest("miyun.smartclass.cn") { LiveID=609};
+            getLiveInfoRequest.Headers.Add("Cookie",sss);
+           var sssss= serviceClient.GetResponse(getLiveInfoRequest); ;
         }
         private void ShowPrevireWindowView(bool isOpen)
         {

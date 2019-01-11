@@ -1,4 +1,4 @@
-﻿using PowerCreator.LiveClient.Core.VideoDevice;
+﻿using Microsoft.Practices.Unity;
 using System.Windows;
 
 namespace LiveClientDesktop
@@ -8,11 +8,10 @@ namespace LiveClientDesktop
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs args)
+        protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(args);
-            //VideoDeviceManager.Instance.GetVideoDevices();
-            Bootstrapper bootstrapper = new Bootstrapper();
+            base.OnStartup(e);
+            Bootstrapper bootstrapper = new Bootstrapper("sssssss");
             bootstrapper.Run();
         }
     }

@@ -142,6 +142,9 @@
     <Compile Include="HttpServer\HttpProcessor.cs" />
     <Compile Include="HttpServer\HttpServer.cs" />
     <Compile Include="HttpServer\HttpService.cs" />
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\LiveAndRecordingOperateEventContext.cs" />
     <Compile Include="Models\LiveStreamAddressInfo.cs" />
     <Compile Include="Models\PresentationInfo.cs" />
@@ -150,6 +153,7 @@
     <Compile Include="Models\VideoDeviceEventContext.cs" />
     <Compile Include="Models\VideoDeviceInfo.cs" />
     <Compile Include="PowerCreatorLiveClientBootstrapper.cs" />
+    <Compile Include="Services\AutoLoginService.cs" />
     <Compile Include="Services\CameraDeviceService.cs" />
     <Compile Include="Services\EnumerationWindowService.cs" />
     <Compile Include="Services\ILiveStreamAddressProvider.cs" />
@@ -161,6 +165,7 @@
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StartupParameters.cs" />
     <Compile Include="SystemConfig.cs" />
     <Compile Include="ViewModels\CameraDeviceItemViewModel.cs" />
     <Compile Include="ViewModels\CameraDeviceViewModel.cs" />
@@ -299,6 +304,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CustomControls\FButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
