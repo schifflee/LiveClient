@@ -2,12 +2,11 @@
 
 namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
 {
-    public class GetLiveInfoRequest : ServiceRequest<GetLiveInfoResponse>
+    public class PauseLiveRequest : ServiceRequest<PauseLiveResponse>
     {
-        public GetLiveInfoRequest(string domain)
-            : base(domain, null, ControllerNames.LiveController, "GetLiveInfo")
+        public PauseLiveRequest(string domain)
+            : base(domain, null, ControllerNames.LiveController, "PauseLive")
         {
-
         }
         private string liveId;
 

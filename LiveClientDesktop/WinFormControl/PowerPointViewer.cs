@@ -66,7 +66,7 @@ namespace LiveClientDesktop.WinFormControl
                 isManualClose = true;
                 _movePPTWindowTimer.Change(300, 300);
             }
-            catch (Exception ex)
+            catch
             {
                 try
                 {

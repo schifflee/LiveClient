@@ -168,5 +168,10 @@ namespace PowerCreatorDotCom.Sdk.Core
                 };
             }
         }
+
+        protected TObject JsonToObject<TObject>(string inputJson)
+        {
+            return JsonConvert.DeserializeObject<TObject>(inputJson);
+        }
     }
 }

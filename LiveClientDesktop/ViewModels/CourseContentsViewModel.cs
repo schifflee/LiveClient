@@ -1,14 +1,11 @@
 ﻿using LiveClientDesktop.Enums;
 using LiveClientDesktop.EventAggregations;
-using LiveClientDesktop.HttpRequestHandler;
 using LiveClientDesktop.Models;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 namespace LiveClientDesktop.ViewModels

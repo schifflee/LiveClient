@@ -64,7 +64,7 @@ namespace LiveClientDesktop.HttpServer
                     handlePOSTRequest();
                 }
             }
-            catch (Exception e)
+            catch
             {
                 writeFailure();
             }
@@ -72,7 +72,7 @@ namespace LiveClientDesktop.HttpServer
             {
                 outputStream.Flush();
             }
-            catch (Exception ex)
+            catch
             {
             }
             finally

@@ -23,7 +23,7 @@ namespace LiveClientDesktop.Services
         {
             get
             {
-                return "本地直播流提供程序";
+                return "Local";
             }
         }
 

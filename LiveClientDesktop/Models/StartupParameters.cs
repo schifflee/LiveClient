@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LiveClientDesktop
+﻿namespace LiveClientDesktop
 {
     public class StartupParameters
     {
@@ -12,13 +6,15 @@ namespace LiveClientDesktop
 
         public string Guid { get; set; }
         public string Domain { get; set; }
-        public string Cookie { get; set; }
+        public string UserIdentity { get; set; }
+        public int HttpServerPort { get; private set; }
 
-        public StartupParameters(string liveId, string guid, string domain)
+        public StartupParameters(string liveId, string guid, string domain,int httpServerPort)
         {
             LiveId = liveId;
             Guid = guid;
             Domain = domain;
+            HttpServerPort = httpServerPort;
         }
     }
 }

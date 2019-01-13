@@ -1,6 +1,8 @@
-﻿using LiveClientDesktop.EventAggregations;
+﻿using LiveClientDesktop.Enums;
+using LiveClientDesktop.EventAggregations;
 using LiveClientDesktop.HttpServer;
 using LiveClientDesktop.ViewModels;
+using LiveClientDesktop.Views;
 using LiveClientDesktop.WindowViews;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.Prism.Events;
@@ -30,27 +32,29 @@ namespace LiveClientDesktop
             if (shellViewModel != null)
             {
                 shellViewModel.EventSubscriptionManager.Subscribe<OpenPrevireWindowEvent, bool>(null, ShowPrevireWindowView, null);
+                shellViewModel.EventSubscriptionManager.Subscribe<ShowClassRoomTeachingWindowEvent, ClassRoomTeachingWindowType>(null, show, null);
             }
             Task.Run(() =>
             {
                 new HttpService(5479).listen();
             });
-            LiveClientLoginRequest liveClientLoginRequest = new LiveClientLoginRequest("miyun.smartclass.cn");
-            liveClientLoginRequest.AccessToken = "4d9ed79703004af4929467b68e92bf44";
-            ServiceClient serviceClient = new ServiceClient();
-            var s = serviceClient.GetResponse(liveClientLoginRequest);
-            var sss = s.HttpResponse.Headers["Set-Cookie"];
-            GetLiveInfoRequest getLiveInfoRequest = new GetLiveInfoRequest("miyun.smartclass.cn") { LiveID=609};
-            getLiveInfoRequest.Headers.Add("Cookie",sss);
-           var sssss= serviceClient.GetResponse(getLiveInfoRequest); ;
+        }
+        private void show(ClassRoomTeachingWindowType windowType)
+        {
+            switch (windowType) {
+                case ClassRoomTeachingWindowType.Sigin:
+                    ShowDialogWindow<SignInWindow>();
+                    break;
+            }
+           
         }
         private void ShowPrevireWindowView(bool isOpen)
         {
             ShowDialogWindow<PreviewWindow>();
         }
-        private void ShowDialogWindow<T>() where T : MetroWindow, new()
+        private void ShowDialogWindow<T>() where T : MetroWindow
         {
-            _dialogWindow = _container.Resolve<PreviewWindow>();
+            _dialogWindow = _container.Resolve<T>();
             _dialogWindow.Owner = this;
             _dialogWindow.Closed += (o, args) => _dialogWindow = null;
             _dialogWindow.ShowDialog();

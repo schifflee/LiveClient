@@ -46,6 +46,14 @@
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginResponse.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveInfoRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveInfoResponse.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\PauseLiveRequest.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\PauseLiveResponse.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\SetVideoClientInfoRequest.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\SetVideoClientInfoResponse.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\StartLiveRequest.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\StartLiveResponse.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\StopLiveRequest.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\StopLiveResponse.cs" />
     <Compile Include="WebPlatform\Moedls\Live\TeacherInfo.cs" />
   </ItemGroup>
   <ItemGroup>

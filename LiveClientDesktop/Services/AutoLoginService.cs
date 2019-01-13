@@ -1,36 +1,70 @@
 ﻿using PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls;
 using PowerCreatorDotCom.Sdk.Core;
+using PowerCreatorDotCom.Sdk.Core.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Sockets;
 
 namespace LiveClientDesktop.Services
 {
-    public class AutoLoginService
+    public class AutoLoginService : ILoginService
     {
         private readonly IServiceClient _serviceClient;
+        private readonly WebPlatformApiFactory _webPlatformApi;
         private readonly StartupParameters _startupParameters;
-        public AutoLoginService(IServiceClient serviceClient, StartupParameters startupParameters)
+        public AutoLoginService(IServiceClient serviceClient, WebPlatformApiFactory webPlatformApi, StartupParameters startupParameters)
         {
             _serviceClient = serviceClient;
+            _webPlatformApi = webPlatformApi;
             _startupParameters = startupParameters;
         }
         public Tuple<bool, string> Login()
         {
-            LiveClientLoginRequest liveClientLoginRequest = new LiveClientLoginRequest("miyun.smartclass.cn");
-            liveClientLoginRequest.AccessToken = "4d9ed79703004af4929467b68e92bf44";
-            var response = _serviceClient.GetResponse(liveClientLoginRequest);
-            if (response == null)
+
+            var loginServiceRsp = _serviceClient.GetResponse(_webPlatformApi.CreateLiveClientLoginRequest());
+            if (loginServiceRsp == null)
             {
-                return new Tuple<bool, string>(false, "登录失败.");
+                return ResultWarpper(false, "登录失败");
             }
-            if (response.Success)
+            if (!loginServiceRsp.Success)
             {
-                _startupParameters.Cookie = response.HttpResponse.Headers["Set-Cookie"];
+                return ResultWarpper(loginServiceRsp.Success, loginServiceRsp.Message);
             }
-            return new Tuple<bool, string>(response.Success, response.Message);
+
+            _startupParameters.UserIdentity = loginServiceRsp.HttpResponse.Headers["Set-Cookie"];
+
+            var setClientInfoServiceRsp = _serviceClient.GetResponse(_webPlatformApi.CreateSetVideoClientInfoRequest(GetLocalIP()));
+            if (!setClientInfoServiceRsp.Success)
+            {
+
+                return ResultWarpper(setClientInfoServiceRsp.Success, setClientInfoServiceRsp.Message);
+            }
+
+            return ResultWarpper(loginServiceRsp.Success, loginServiceRsp.Message);
         }
+
+        public ServiceResponseResult<GetLiveInfoResponse> GetLiveInfo()
+        {
+            return _serviceClient.GetResponse(_webPlatformApi.CreateLiveInfoRequest());
+        }
+        private Tuple<bool, string> ResultWarpper(bool isSuccess, string message)
+        {
+            return new Tuple<bool, string>(isSuccess, message);
+        }
+        private string GetLocalIP()
+        {
+            string name = Dns.GetHostName();
+            IPAddress[] ipadrlist = Dns.GetHostAddresses(name);
+            string ip = string.Empty;
+            foreach (IPAddress ipa in ipadrlist)
+            {
+                if (ipa.AddressFamily == AddressFamily.InterNetwork)
+                    ip = ipa.ToString();
+
+            }
+            return ip;
+        }
+
+
     }
 }

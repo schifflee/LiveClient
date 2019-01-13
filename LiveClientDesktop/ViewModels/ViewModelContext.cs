@@ -22,6 +22,9 @@ namespace LiveClientDesktop.ViewModels
         public PlayVolumeControlViewModel PlayVolumeControlViewModel { get; set; }
 
         [Dependency]
+        public ClassRoomTeachingViewModel ClassRoomTeachingViewModel { get; set; }
+
+        [Dependency]
         public MicrophoneVolumeControlViewModel MicrophoneVolumeControlViewModel { get; set; }
 
         [Dependency]
@@ -38,5 +41,8 @@ namespace LiveClientDesktop.ViewModels
 
         [Dependency]
         public LivingTimeViewModel LivingTimeViewModel { get; set; }
+
+        [Dependency]
+        public WelcomeViewModel WelcomeViewModel  { get; set; }
     }
 }

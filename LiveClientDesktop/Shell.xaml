@@ -13,6 +13,7 @@
         <Controls:WindowCommands ShowLastSeparator="False">
             <views:LivingTimeView DataContext="{Binding VMContext.LivingTimeViewModel}"/>
             <views:RecordingTimeView DataContext="{Binding VMContext.RecordingTimeViewModel}"/>
+            <views:WelcomeView DataContext="{Binding VMContext.WelcomeViewModel}"/>
             <ToggleButton ToolTip="设置">
                 <materialDesign:PackIcon Kind="Settings" />
             </ToggleButton>
@@ -59,7 +60,7 @@
                         <RowDefinition Height="180"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="1">
-                        <views:ClassRoomTeachingView/>
+                        <views:ClassRoomTeachingView DataContext="{Binding VMContext.ClassRoomTeachingViewModel}"/>
                     </Grid>
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
@@ -74,13 +75,6 @@
                         <views:CourseContentsView DataContext="{Binding VMContext.CourseContentsViewModel}"/>
                     </Grid>
                 </Grid>
-
-                <!--<Controls:Flyout Header="课堂互动" Visibility="Hidden" Width="333" Background="#474747" Position="Right" IsOpen="True">
-                    <StackPanel
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal">
-                    </StackPanel>
-                </Controls:Flyout>-->
             </Grid>
         </Grid>
 

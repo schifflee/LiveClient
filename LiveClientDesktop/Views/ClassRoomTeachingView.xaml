@@ -30,7 +30,7 @@
                 </Grid.RowDefinitions>
 
                 <Button  Grid.Row="0"  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="签到">
+                            ToolTip="签到" Command="{Binding ShowPanelCommand}" CommandParameter="1">
                     <materialDesign:PackIcon Kind="CalendarCheck" Foreground="White" Height="24" Width="24"/>
                 </Button>
                 <TextBlock Grid.Row="1" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="签到"/>
@@ -41,7 +41,7 @@
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0"  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="测验">
+                            ToolTip="测验" Command="{Binding ShowPanelCommand}" CommandParameter="0">
                     <materialDesign:PackIcon Kind="Alphabetical" Foreground="White" Height="24" Width="24"/>
                 </Button>
                 <TextBlock Grid.Row="1"  Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="测验"/>
@@ -52,7 +52,7 @@
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0"  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                            ToolTip="提问">
+                            ToolTip="提问" Command="{Binding ShowPanelCommand}" CommandParameter="2">
                     <materialDesign:PackIcon Kind="Help" Foreground="White" Height="24" Width="24"/>
                 </Button>
                 <TextBlock Grid.Row="1"  Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="提问"/>

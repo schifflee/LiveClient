@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="LiveClientDesktop.Views.WebPageViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid x:Name="MainGrid">
+            <ProgressBar x:Name="LoaddingBar" Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             
+                             IsIndeterminate="True" Width="50" Height="50" Foreground="#80BA45"/>
+        </Grid>
+    </Grid>
+</UserControl>

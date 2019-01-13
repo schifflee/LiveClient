@@ -9,6 +9,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Unity;
 using PowerCreator.LiveClient.Core;
 using PowerCreator.LiveClient.Core.Enums;
+using PowerCreatorDotCom.Sdk.Core;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -20,6 +21,8 @@ namespace LiveClientDesktop.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IVideoLiveProvider _speechVideoLiveAndRecordProvider;
         private readonly IVideoLiveProvider _teacherVideoLiveAndRecordProvider;
+        private readonly IServiceClient _serviceClient;
+        private readonly WebPlatformApiFactory _webPlatformApiFactory;
         private object syncState = new object();
 
         public DelegateCommand StartLiveCommand { get; set; }
@@ -67,6 +70,8 @@ namespace LiveClientDesktop.ViewModels
         public LiveControlViewModel(IEventAggregator eventAggregator, IUnityContainer container)
             : this()
         {
+            _serviceClient = container.Resolve<IServiceClient>();
+            _webPlatformApiFactory = container.Resolve<WebPlatformApiFactory>();
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException("eventAggregator");
             _speechVideoLiveAndRecordProvider = container.Resolve<SpeechVideoLiveAndRecordProvider>();
             _teacherVideoLiveAndRecordProvider = container.Resolve<TeacherVideoLiveAndRecordProvider>();
@@ -93,6 +98,11 @@ namespace LiveClientDesktop.ViewModels
         {
             lock (syncState)
             {
+
+                var rsp = _serviceClient.GetResponse(_webPlatformApiFactory.CreateStartLiveRequest());
+                if (!rsp.Success) return new Tuple<bool, string>(rsp.Success, rsp.Message);
+
+
                 //TODO 需要同步直播状态
                 var state = _speechVideoLiveAndRecordProvider.LiveState;
                 Tuple<bool, string> result = _speechVideoLiveAndRecordProvider.StartLiving();

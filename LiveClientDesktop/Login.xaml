@@ -6,6 +6,7 @@
         Background="{x:Null}"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
         Title="自动登录" Height="100" Width="100">
     <Grid>
         <Border Background="Aqua" CornerRadius="15">

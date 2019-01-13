@@ -72,7 +72,7 @@ namespace LiveClientDesktop.Services
                 bmp.Save(Path.Combine(_tempImageSavePath, fileName), ImageFormat.Jpeg);
                 bmp.Dispose();
             }
-            catch (Exception e) { }
+            catch { }
 
         }
         private void CaptureWindow(IntPtr handle, string fileName)

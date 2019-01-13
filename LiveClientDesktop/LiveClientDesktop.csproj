@@ -81,6 +81,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\System.Utility.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -119,6 +120,7 @@
     <Compile Include="CustomControls\ThumbnailImage.cs" />
     <Compile Include="CustomControls\ThumbnailProviderFactory.cs" />
     <Compile Include="CustomControls\VirtualizingWrapPanel.cs" />
+    <Compile Include="Enums\ClassRoomTeachingWindowType.cs" />
     <Compile Include="Enums\DemonstratioType.cs" />
     <Compile Include="Enums\DemoType.cs" />
     <Compile Include="Enums\EnumThumbnail.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="EventAggregations\PPTClosedEvent.cs" />
     <Compile Include="EventAggregations\SelectedDemonstrationWindowEvent.cs" />
     <Compile Include="EventAggregations\LiveAndRecordingOperateEvent.cs" />
+    <Compile Include="EventAggregations\ShowClassRoomTeachingWindowEvent.cs" />
     <Compile Include="EventAggregations\SwitchDemonstrationSceneEvent.cs" />
     <Compile Include="EventAggregations\SwitchingVideoDeviceEvent.cs" />
     <Compile Include="EventAggregations\ShutDownEvent.cs" />
@@ -146,6 +149,7 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\LiveAndRecordingOperateEventContext.cs" />
+    <Compile Include="Models\LiveInfo.cs" />
     <Compile Include="Models\LiveStreamAddressInfo.cs" />
     <Compile Include="Models\PresentationInfo.cs" />
     <Compile Include="Models\PreviewWindowInfo.cs" />
@@ -153,22 +157,27 @@
     <Compile Include="Models\VideoDeviceEventContext.cs" />
     <Compile Include="Models\VideoDeviceInfo.cs" />
     <Compile Include="PowerCreatorLiveClientBootstrapper.cs" />
+    <Compile Include="ServiceIntefaces\ILoginService.cs" />
+    <Compile Include="Services\AliyunLiveStreamProvider.cs" />
     <Compile Include="Services\AutoLoginService.cs" />
     <Compile Include="Services\CameraDeviceService.cs" />
     <Compile Include="Services\EnumerationWindowService.cs" />
-    <Compile Include="Services\ILiveStreamAddressProvider.cs" />
+    <Compile Include="ServiceIntefaces\ILiveStreamAddressProvider.cs" />
     <Compile Include="Services\LocalLiveStreamProvider.cs" />
     <Compile Include="Services\PresentationInstanceRepository.cs" />
     <Compile Include="Services\PresentationsRepository.cs" />
     <Compile Include="Services\SpeechVideoLiveAndRecordProvider.cs" />
     <Compile Include="Services\TeacherVideoLiveAndRecordProvider.cs" />
+    <Compile Include="Services\WebPlatformApiFactory.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StartupParameters.cs" />
-    <Compile Include="SystemConfig.cs" />
+    <Compile Include="Models\StartupParameters.cs" />
+    <Compile Include="Models\SystemConfig.cs" />
+    <Compile Include="StatusReporting\LiveStatusReporting.cs" />
     <Compile Include="ViewModels\CameraDeviceItemViewModel.cs" />
     <Compile Include="ViewModels\CameraDeviceViewModel.cs" />
+    <Compile Include="ViewModels\ClassRoomTeachingViewModel.cs" />
     <Compile Include="ViewModels\CourseContentsViewModel.cs" />
     <Compile Include="ViewModels\HttpHandler\WebPlatformControlLiveHandler.cs" />
     <Compile Include="ViewModels\HttpHandler\WebPlatformControlPlayCourseContentsHandler.cs" />
@@ -187,6 +196,7 @@
     <Compile Include="ViewModels\SpeechViewModel.cs" />
     <Compile Include="ViewModels\TimeRecorderViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
+    <Compile Include="ViewModels\WelcomeViewModel.cs" />
     <Compile Include="Views\CameraDeviceView.xaml.cs">
       <DependentUpon>CameraDeviceView.xaml</DependentUpon>
     </Compile>
@@ -217,11 +227,26 @@
     <Compile Include="Views\RecordingTimeView.xaml.cs">
       <DependentUpon>RecordingTimeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SignInView.xaml.cs">
+      <DependentUpon>SignInView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SpeechView.xaml.cs">
       <DependentUpon>SpeechView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WebPageViewer.xaml.cs">
+      <DependentUpon>WebPageViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WelcomeView.xaml.cs">
+      <DependentUpon>WelcomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowViews\AskAQuestionWindow.xaml.cs">
+      <DependentUpon>AskAQuestionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowViews\PreviewWindow.xaml.cs">
       <DependentUpon>PreviewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowViews\SignInWindow.xaml.cs">
+      <DependentUpon>SignInWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WinFormControl\MsPlayerControl.cs">
       <SubType>UserControl</SubType>
@@ -371,11 +396,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SignInView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SpeechView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\WebPageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WelcomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowViews\AskAQuestionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowViews\PreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowViews\SignInWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
