@@ -34,20 +34,24 @@ namespace LiveClientDesktop.ViewModels
         {
             OpenSelectFileDialog("PPT File(*.ppt;*.pptx;*.doc;*.docx;*.mp4;*.jpg;*.png;*.bmp;*.txt;*.zip;*.rar)|*.ppt;*.pptx;*.doc;*.docx;*.mp4;*.jpg;*.png;*.bmp;*.txt;*.zip;*.rar", (fileName) =>
             {
-                Task.Run(() =>
+                try
                 {
-                    using (var fs = File.Open(fileName, FileMode.Open))
+                    Task.Run(() =>
                     {
-                        var request = _webPlatformApiFactory.CreateUploadDocumentRequest(
-                            Path.GetFileName(fileName),
-                            _liveInfo.TeacherList.Where(item => item.IsMajor).First().TeacherName,
-                            Path.GetExtension(fileName),
-                            fs);
-                        request.StreamTransferProgress += StreamTransferProgress;
-                        _serviceClient.GetResponse(request);
-                    }
+                        using (var fs = File.Open(fileName, FileMode.Open))
+                        {
+                            var request = _webPlatformApiFactory.CreateUploadDocumentRequest(
+                                Path.GetFileName(fileName),
+                                _liveInfo.TeacherList.Where(item => item.IsMajor).First().TeacherName,
+                                Path.GetExtension(fileName),
+                                fs);
+                            request.StreamTransferProgress += StreamTransferProgress;
+                            _serviceClient.GetResponse(request);
+                        }
 
-                });
+                    });
+                }
+                catch { }
             });
         }
         private void StreamTransferProgress(object sender, StreamTransferProgressArgs args)
