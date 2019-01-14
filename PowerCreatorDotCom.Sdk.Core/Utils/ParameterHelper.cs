@@ -24,6 +24,10 @@ namespace PowerCreatorDotCom.Sdk.Core.Utils
             {
                 return "application/x-www-form-urlencoded";
             }
+            if (FormatType.MultipartFormData == formatType)
+            {
+                return "multipart/form-data; boundary=" + DateTime.Now.Ticks.ToString("x");
+            }
             return "application/octet-stream";
         }
 

@@ -1,6 +1,8 @@
-﻿using PowerCreatorDotCom.Sdk.Core.Utils;
+﻿using PowerCreatorDotCom.Sdk.Core.Models;
+using PowerCreatorDotCom.Sdk.Core.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace PowerCreatorDotCom.Sdk.Core.Http
 {
@@ -10,8 +12,11 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
         public String Url { get; set; }
         public MethodType? Method { get; set; }
         public FormatType? ContentType { get; set; }
-        public byte[] Content { get; set; }
+        public Stream BodyContent { get; set; }
         public String Encoding { get; set; }
+
+        public EventHandler<StreamTransferProgressArgs> StreamTransferProgress { get; set; }
+        public bool UseChunkedEncoding { get; set; }
 
         private int timeoutInMilliSeconds = 100000;
 
@@ -28,14 +33,14 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
             if (null != temHeaders) Headers = temHeaders;
         }
 
-        public void SetContent(byte[] content, String encoding, FormatType? format)
+        public void SetContent(Stream content, FormatType? format)
         {
             if (null == content)
             {
                 Headers.Remove("Content-Length");
                 Headers.Remove("Content-Type");
                 ContentType = null;
-                Content = null;
+                BodyContent = null;
                 Encoding = null;
                 return;
             }
@@ -47,13 +52,15 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
                 type = format;
             }
 
-            this.Headers.Remove("Content-Length");
-            this.Headers.Remove("Content-Type");
-            this.Headers.Add("Content-Length", contentLen);
-            this.Headers.Add("Content-Type", ParameterHelper.FormatTypeToString(type));
+            if (Method == MethodType.POST || Method == MethodType.PUT)
+            {
+                this.Headers.Remove("Content-Length");
+                this.Headers.Remove("Content-Type");
+                this.Headers.Add("Content-Length", contentLen);
+                this.Headers.Add("Content-Type", ParameterHelper.FormatTypeToString(type));
+            }
 
-            this.Content = content;
-            this.Encoding = encoding;
+            this.BodyContent = content;
         }
 
         public int TimeoutInMilliSeconds

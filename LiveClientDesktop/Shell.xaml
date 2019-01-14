@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:LiveClientDesktop.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Loaded="MetroWindow_Loaded"
         mc:Ignorable="d" Title="密云直播客户端"
         Closing="MetroWindow_Closing" TitlebarHeight="35"
         MinHeight="720" MinWidth="1280" Height="720" Width="1280">
@@ -19,17 +20,75 @@
             </ToggleButton>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
-    <Grid>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MetroTabItem" TargetType="TabItem">
+                <Setter Property="Foreground" Value="Aqua"></Setter>
+            </Style>
+            <Style x:Key="GridSplitterPreviewStyle">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle Fill="#80000000"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="GridSplitterStyle1" TargetType="{x:Type GridSplitter}">
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type GridSplitter}">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <Grid>
+                                    <!--<Label Background="Blue" Height="50" VerticalAlignment="Center" Foreground="White" Margin="0" Padding="0" FontSize="14" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">></Label>-->
+                                    <Button Name="btnExpend" FontSize="10" Padding="0" Background="#80BA45" BorderBrush="#80BA45"   HorizontalContentAlignment="Left" Content=">" VerticalAlignment="Center" Height="80" Panel.ZIndex="0" Cursor="Hand">
+
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type Controls:MetroTabItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
+                            <Grid>
+                                <Border Name="Border" Background="#F2F2F2"  BorderThickness="0 1 0 0" >
+                                    <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center"  HorizontalAlignment="Center" ContentSource="Header" Margin="12,5,12,5"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#80BA45" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="#F2F2F2" />
+                                    <Setter Property="Foreground" Value="#333"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="grdWorkbench">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="944*" MinWidth="944"/>
-            <ColumnDefinition Width="3"/>
-            <ColumnDefinition Width="333" MaxWidth="333"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="330" MaxWidth="330"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <views:SpeechView DataContext="{Binding VMContext.SpeechViewModel}"/>
         </Grid>
-        <GridSplitter  x:Name="gsSplitterr" Grid.Column="1"  HorizontalAlignment="Stretch" Background="#FF9F9F9F"></GridSplitter>
-        <Grid Grid.Column="2">
+        <GridSplitter  x:Name="gsSplitterr" Grid.Column="1"  HorizontalAlignment="Stretch" Background="#FF9F9F9F" Style="{DynamicResource GridSplitterStyle1}"></GridSplitter>
+        <Grid Grid.Column="2"  Width="330" Background="#f2f2f2" x:Name="righta">
             <Grid.RowDefinitions>
                 <RowDefinition Height="225"/>
                 <RowDefinition Height="30"/>
@@ -50,32 +109,51 @@
                 <views:PlayVolumeControlView Grid.Column="2" DataContext="{Binding VMContext.PlayVolumeControlViewModel}" />
                 <views:CameraDeviceView Grid.Column="4" DataContext="{Binding VMContext.CameraDeviceViewModel}"/>
             </Grid>
-            <Grid Grid.Row="2">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="180"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="1">
-                        <views:ClassRoomTeachingView DataContext="{Binding VMContext.ClassRoomTeachingViewModel}"/>
+            <Controls:MetroTabControl Grid.Row="2"  
+                                              Controls:TabControlHelper.Underlined="TabPanel"
+                                              Controls:TabControlHelper.UnderlineSelectedBrush="#80BA45"
+                                              Controls:TabControlHelper.UnderlineMouseOverBrush="#80BA45"
+                                              Controls:TabControlHelper.IsUnderlined="False"
+                                              Controls:TabControlHelper.UnderlineBrush="#80BA45"
+                                              Controls:TabControlHelper.UnderlineMouseOverSelectedBrush="#80BA45"
+                                              TabStripPlacement="Bottom">
+                <Controls:MetroTabItem Header="直播互动" Controls:ControlsHelper.HeaderFontSize="16">
+                    <Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="180"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="1">
+                                <views:ClassRoomTeachingView DataContext="{Binding VMContext.ClassRoomTeachingViewModel}"/>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".49*"/>
+                                    <ColumnDefinition Width=".01*"/>
+                                    <ColumnDefinition Width=".49*"/>
+                                </Grid.ColumnDefinitions>
+                                <views:LiveControlView Grid.Column="0" DataContext="{Binding VMContext.LiveControlViewModel}"/>
+                                <views:RecordingControlView Grid.Column="2" DataContext="{Binding VMContext.RecordingControlViewModel}"/>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <views:CourseContentsView DataContext="{Binding VMContext.CourseContentsViewModel}"/>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                    <Grid Grid.Row="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".49*"/>
-                            <ColumnDefinition Width=".01*"/>
-                            <ColumnDefinition Width=".49*"/>
-                        </Grid.ColumnDefinitions>
-                        <views:LiveControlView Grid.Column="0" DataContext="{Binding VMContext.LiveControlViewModel}"/>
-                        <views:RecordingControlView Grid.Column="2" DataContext="{Binding VMContext.RecordingControlViewModel}"/>
-                    </Grid>
-                    <Grid Grid.Row="4">
-                        <views:CourseContentsView DataContext="{Binding VMContext.CourseContentsViewModel}"/>
-                    </Grid>
-                </Grid>
-            </Grid>
+                </Controls:MetroTabItem>
+
+                <Controls:MetroTabItem Header="资料上传" Controls:ControlsHelper.HeaderFontSize="16">
+                    <views:UploadDocumentView/>
+                </Controls:MetroTabItem>
+                <Controls:MetroTabItem Header="课件上传" Controls:ControlsHelper.HeaderFontSize="16">
+
+                </Controls:MetroTabItem>
+            </Controls:MetroTabControl>
+           
         </Grid>
 
     </Grid>

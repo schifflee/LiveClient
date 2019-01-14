@@ -13,14 +13,13 @@ namespace PowerCreatorDotCom.Sdk.Core
         {
             return DoAction(request, autoRetry, maxRetryNumber);
         }
-
         public HttpResponse DoAction<T>(ServiceRequest<T> request, bool autoRetry, int maxRetryCounts) where T : ServiceResponse
         {
             bool shouldRetry = true;
             for (int retryTimes = 0; shouldRetry; retryTimes++)
             {
                 shouldRetry = autoRetry && retryTimes < maxRetryNumber;
-                HttpRequest httpRequest = request.ConstructRequest();
+                HttpRequest httpRequest = request.BuildRequestUri();
                 HttpResponse response;
                 try
                 {
@@ -69,6 +68,7 @@ namespace PowerCreatorDotCom.Sdk.Core
             return ParseResponse(request, httpResponse);
         }
 
+        
 
         private ServiceResponseResult<T> ParseResponse<T>(ServiceRequest<T> request, HttpResponse httpResponse) where T : ServiceResponse
         {

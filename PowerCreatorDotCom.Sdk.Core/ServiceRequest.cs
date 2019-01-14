@@ -3,6 +3,7 @@ using PowerCreatorDotCom.Sdk.Core.Http;
 using PowerCreatorDotCom.Sdk.Core.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -44,9 +45,7 @@ namespace PowerCreatorDotCom.Sdk.Core
 
         public Dictionary<String, IEnumerable<string>> QueryParameters { get; private set; }
 
-        public Dictionary<String, String> DomainParameters { get; private set; }
 
-        public Dictionary<String, String> BodyParameters { get; private set; }
         public ServiceRequest(String domain)
             : base(null)
         {
@@ -70,6 +69,7 @@ namespace PowerCreatorDotCom.Sdk.Core
         {
             Controller = controller;
         }
+        
         private void Initialize()
         {
             Method = MethodType.GET;
@@ -119,7 +119,7 @@ namespace PowerCreatorDotCom.Sdk.Core
             }
             QueryParameters.Add(key, values);
         }
-        public HttpRequest ConstructRequest()
+        public HttpRequest BuildRequestUri()
         {
             StringBuilder urlBuilder = new StringBuilder("");
             if (!Domian.Contains("http"))

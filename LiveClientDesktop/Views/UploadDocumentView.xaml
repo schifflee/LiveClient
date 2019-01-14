@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="LiveClientDesktop.Views.UploadDocumentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:linkBtn="clr-namespace:LiveClientDesktop.CustomControls">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <ListView ItemsSource="{Binding DocumentList}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="{Binding ElementName=Column1,Path=ActualWidth}" Header="文档" />
+                        <GridViewColumn  Width="{Binding ElementName=Column2,Path=ActualWidth}" Header="操作">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <linkBtn:FButton Foreground="#80BA45" 
+                                                         Command="{Binding Path=DataContext.DownLoadCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}}" 
+                                                         CommandParameter="{Binding ID}" 
+                                                         Style="{StaticResource FButton_LinkButton}"
+                                                         ToolTip="{Binding DownloadBtnShowContent}"
+                                                         Content="{Binding DownloadBtnShowContent}"
+                                                         IsEnabled="{Binding DownloadBtnIsEnabled}"/>
+                                        <linkBtn:FButton IsEnabled="{Binding DeleteBtnIsEnabled}"
+                                                         Foreground="#80BA45" 
+                                                         Style="{StaticResource FButton_LinkButton}"
+                                                         Content="{Binding DeleteBtnShowContent}"
+                                                         Command="{Binding Path=DataContext.DeleteCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}}" 
+                                                         CommandParameter="{Binding ID}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <!--<Button  Grid.Row="1" Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                        materialDesign:ButtonProgressAssist.Value="90" 
+                 materialDesign:ButtonProgressAssist.IndicatorForeground="Aqua"
+                        Content="{materialDesign:PackIcon Upload}" Background="#80BA45" BorderBrush="#80BA45" />-->
+        <Button Grid.Row="1" Command="{Binding OpenFileDialog}" Background="#80BA45" BorderBrush="#80BA45"
+                            materialDesign:ButtonProgressAssist.Value="{Binding ProgressValue}">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Upload" />
+                <TextBlock>文档上传</TextBlock>
+            </StackPanel>
+        </Button>
+        
+    </Grid>
+</UserControl>

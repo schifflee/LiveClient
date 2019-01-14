@@ -10,5 +10,6 @@ namespace PowerCreator.WebPlatform.Sdk
     {
         public const string LiveController = "Live";
         public const string LiveClientLoginController = "MiYun";
+        public const string UploadController = "Upload";
     }
 }

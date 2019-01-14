@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ControllerNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceResponseValue.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginRequest.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginResponse.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveInfoRequest.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="WebPlatform\Moedls\Live\StopLiveRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\StopLiveResponse.cs" />
     <Compile Include="WebPlatform\Moedls\Live\TeacherInfo.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\UploadDocumentRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PowerCreatorDotCom.Sdk.Core\PowerCreatorDotCom.Sdk.Core.csproj">

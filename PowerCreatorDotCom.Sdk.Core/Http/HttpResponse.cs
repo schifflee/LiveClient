@@ -11,8 +11,9 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
         private static int _timeout = 100000; // No effect
         private static int bufferLength = 1024;
 
-        public int Status { get;  set; }
-        public Exception Error { get;  set; }
+        public int Status { get; set; }
+        public byte[] Content { get; set; }
+        public Exception Error { get; set; }
         public HttpResponse() { }
         public HttpResponse(string strUrl)
             : base(strUrl) { }
@@ -103,7 +104,19 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
             httpWebRequest.Method = request.Method.ToString();
             httpWebRequest.KeepAlive = true;
             httpWebRequest.Timeout = _timeout;
+            httpWebRequest.SendChunked = request.UseChunkedEncoding;
+            if (!request.UseChunkedEncoding)
+            {
+                httpWebRequest.AllowWriteStreamBuffering = false;
+            }
+            var originalStream = request.BodyContent;
+            var callback = request.StreamTransferProgress;
+            if (callback != null)
+            {
+                originalStream = StreamEventUtils.SetupProgressListeners(originalStream, originalStream.Length, 0, 200, request, callback);
+                request.BodyContent = originalStream;
 
+            }
             if (request.Headers.ContainsKey("Accept"))
             {
                 httpWebRequest.Accept = DictionaryUtil.Pop(request.Headers, "Accept");
@@ -129,11 +142,15 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
                 httpWebRequest.Headers.Add(header.Key, header.Value);
             }
 
-            if ((request.Method == MethodType.POST || request.Method == MethodType.PUT) && request.Content != null)
+            if ((request.Method == MethodType.POST || request.Method == MethodType.PUT) && request.BodyContent != null)
             {
+
                 using (Stream stream = httpWebRequest.GetRequestStream())
                 {
-                    stream.Write(request.Content, 0, request.Content.Length);
+                    if (httpWebRequest.SendChunked)
+                        IOUtils.WriteTo(request.BodyContent, stream, request.BodyContent.Length);
+                    else
+                        IOUtils.WriteTo(request.BodyContent, stream);
                 }
             }
 

@@ -45,5 +45,10 @@ namespace PowerCreator.LiveClient.Core
 
         [DllImport("user32")]
         public static extern int GetParent(int hwnd);
+
+        [DllImport("user32")]
+        public static extern int SetForegroundWindow(IntPtr hwnd);
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
     }
 }

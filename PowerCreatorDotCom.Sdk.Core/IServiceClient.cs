@@ -10,5 +10,6 @@ namespace PowerCreatorDotCom.Sdk.Core
 
         HttpResponse DoAction<T>(ServiceRequest<T> request) where T : ServiceResponse;
         HttpResponse DoAction<T>(ServiceRequest<T> request, bool autoRetry, int maxRetryCounts) where T : ServiceResponse;
+        
     }
 }

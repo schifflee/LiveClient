@@ -5,6 +5,7 @@
         XML,
         JSON,
         FORM,
+        MultipartFormData,
         RAW
     }
 }

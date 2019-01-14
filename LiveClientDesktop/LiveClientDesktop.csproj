@@ -195,6 +195,7 @@
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SpeechViewModel.cs" />
     <Compile Include="ViewModels\TimeRecorderViewModel.cs" />
+    <Compile Include="ViewModels\UploadDocumentViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
     <Compile Include="Views\CameraDeviceView.xaml.cs">
@@ -233,6 +234,9 @@
     <Compile Include="Views\SpeechView.xaml.cs">
       <DependentUpon>SpeechView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UploadDocumentView.xaml.cs">
+      <DependentUpon>UploadDocumentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WebPageViewer.xaml.cs">
       <DependentUpon>WebPageViewer.xaml</DependentUpon>
     </Compile>
@@ -247,6 +251,9 @@
     </Compile>
     <Compile Include="WindowViews\SignInWindow.xaml.cs">
       <DependentUpon>SignInWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowViews\TestWindow.xaml.cs">
+      <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WinFormControl\MsPlayerControl.cs">
       <SubType>UserControl</SubType>
@@ -404,6 +411,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UploadDocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WebPageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -421,6 +432,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowViews\SignInWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowViews\TestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

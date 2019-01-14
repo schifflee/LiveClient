@@ -1,9 +1,13 @@
 ﻿using LiveClientDesktop.Models;
 using LiveClientDesktop.Services;
 using Microsoft.Practices.Unity;
+using PowerCreator.WebPlatform.Sdk;
 using PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls;
+using PowerCreatorDotCom.Sdk.Core;
+using PowerCreatorDotCom.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -34,8 +38,10 @@ namespace LiveClientDesktop
             _autoLoginService = container.Resolve<AutoLoginService>();
             _liveInfo = container.Resolve<LiveInfo>();
             _container = container;
-        }
 
+            
+
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Task.Run(() =>
@@ -49,6 +55,18 @@ namespace LiveClientDesktop
                 if (!getLiveInfoResult.Success) ShowMsgAndCloseThisWindow(getLiveInfoResult.Message);
 
                 SetLiveInfo(getLiveInfoResult.Value);
+
+                //var service = _container.Resolve<IServiceClient>();
+                //var start = _container.Resolve<StartupParameters>();
+                //using (var fs = File.Open(@"E:\密云直播课堂方案0613.pptx", FileMode.Open))
+                //{
+                //    UploadDocument uploadDocument = new UploadDocument("47.93.38.164", "613", "密云直播课堂方案0613", "张老师", ".pptx", fs);
+                //    uploadDocument.UseChunkedEncoding = true;
+                //    uploadDocument.StreamTransferProgress += streamProgressCallback;
+                //    uploadDocument.Headers.Add("Cookie", start.UserIdentity);
+                //    var s = service.GetResponse(uploadDocument);
+                //}
+
 
                 Dispatcher.Invoke(() =>
                 {

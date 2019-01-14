@@ -1,5 +1,6 @@
 ﻿using PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls;
 using PowerCreatorDotCom.Sdk.Core.Http;
+using System.IO;
 
 namespace LiveClientDesktop.Services
 {
@@ -57,6 +58,16 @@ namespace LiveClientDesktop.Services
                 LiveID = _startupParameters.LiveId
             });
         }
+
+        public UploadDocumentRequest CreateUploadDocumentRequest(string title, string author, string ext, Stream stream)
+        {
+            return SetRequestCookie(
+                new UploadDocumentRequest(
+                    _startupParameters.Domain,
+                    _startupParameters.LiveId,
+                    title, author, ext, stream));
+        }
+
 
         private T SetRequestCookie<T>(T request) where T : HttpRequest
         {
