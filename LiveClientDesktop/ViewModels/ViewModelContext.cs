@@ -44,5 +44,13 @@ namespace LiveClientDesktop.ViewModels
 
         [Dependency]
         public WelcomeViewModel WelcomeViewModel  { get; set; }
+
+        [Dependency]
+        public UploadDocumentViewModel UploadDocumentViewModel { get; set; }
+
+        [Dependency]
+        public UploadCoursewareViewModel UploadCoursewareViewModel { get; set; }
+
+        
     }
 }

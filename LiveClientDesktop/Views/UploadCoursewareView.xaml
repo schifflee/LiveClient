@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="LiveClientDesktop.Views.UploadCoursewareView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ListView ItemsSource="{Binding UploadFiles}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="100" Header="课件标题" />
+                    <GridViewColumn DisplayMemberBinding="{Binding TargetVodServer}" Width="100" Header="目标存储" />
+                    <GridViewColumn DisplayMemberBinding="{Binding PercentDone}" Width="100" Header="上传状态" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

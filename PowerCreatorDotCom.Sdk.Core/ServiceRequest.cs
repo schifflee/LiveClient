@@ -69,7 +69,7 @@ namespace PowerCreatorDotCom.Sdk.Core
         {
             Controller = controller;
         }
-        
+
         private void Initialize()
         {
             Method = MethodType.GET;
@@ -161,14 +161,9 @@ namespace PowerCreatorDotCom.Sdk.Core
             }
             catch (Exception ex)
             {
-                return new ServiceResponseResult<T>
-                {
-                    Message = ex.Message,
-                    Success = false
-                };
+                return new ServiceResponseResult<T> { Success = false, Message = ex.Message };
             }
         }
-
         protected TObject JsonToObject<TObject>(string inputJson)
         {
             return JsonConvert.DeserializeObject<TObject>(inputJson);

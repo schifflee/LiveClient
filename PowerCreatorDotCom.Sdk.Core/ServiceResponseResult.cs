@@ -1,4 +1,6 @@
-﻿namespace PowerCreatorDotCom.Sdk.Core
+﻿using PowerCreatorDotCom.Sdk.Core.Http;
+
+namespace PowerCreatorDotCom.Sdk.Core
 {
     public class ServiceResponseResult<T> : ServiceResponse
     {
@@ -7,5 +9,9 @@
         public string Message { get; set; }
 
         public T Value { get; set; }
+        public override string ToString()
+        {
+            return $"{Success},{Message}";
+        }
     }
 }

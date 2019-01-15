@@ -16,10 +16,14 @@ namespace LiveClientDesktop.ViewModels
     public partial class RecordingControlViewModel : NotificationObject
     {
         private readonly SystemConfig _config;
+        private readonly LiveInfo _liveInfo;
         private readonly IEventAggregator _eventAggregator;
         private readonly EventSubscriptionManager _eventSubscriptionManager;
         private readonly IVideoRecordingProvider _speechVideoLiveAndRecordProvider;
         private readonly IVideoRecordingProvider _teacherVideoLiveAndRecordProvider;
+        private RecordingFileInfo _speechVideoRecordingInfo;
+        private RecordingFileInfo _teacherVideoRecordingInfo;
+        private DateTime _startRecTime;
         private object syncState = new object();
         public DelegateCommand StartRecordingCommand { get; set; }
 
@@ -66,11 +70,13 @@ namespace LiveClientDesktop.ViewModels
             SystemConfig config,
             IEventAggregator eventAggregator,
             IUnityContainer container,
-            EventSubscriptionManager eventSubscriptionManager) : this()
+            EventSubscriptionManager eventSubscriptionManager)
+            : this()
         {
             _config = config;
             _eventAggregator = eventAggregator;
             _eventSubscriptionManager = eventSubscriptionManager;
+            _liveInfo = container.Resolve<LiveInfo>();
             _speechVideoLiveAndRecordProvider = container.Resolve<SpeechVideoLiveAndRecordProvider>();
             _teacherVideoLiveAndRecordProvider = container.Resolve<TeacherVideoLiveAndRecordProvider>();
 
@@ -118,12 +124,18 @@ namespace LiveClientDesktop.ViewModels
         {
             lock (syncState)
             {
+
                 int index = _config.VideoIndex;
                 var state = _speechVideoLiveAndRecordProvider.RecordState;
-                Tuple<bool, string> result = _speechVideoLiveAndRecordProvider.StartRecording(_config.RecFileSavePath, index);
+                if (state == RecAndLiveState.NotStart)
+                {
+                    _speechVideoRecordingInfo = CreateRecordingFileInfo(VideoType.VGA);
+                    _teacherVideoRecordingInfo = CreateRecordingFileInfo(VideoType.Video1);
+                }
+                Tuple<bool, string> result = _speechVideoLiveAndRecordProvider.StartRecording(_config.RecFileSavePath, _speechVideoRecordingInfo.FileName);
                 if (!result.Item1) return result;
 
-                result = _teacherVideoLiveAndRecordProvider.StartRecording(_config.RecFileSavePath, index);
+                result = _teacherVideoLiveAndRecordProvider.StartRecording(_config.RecFileSavePath, _teacherVideoRecordingInfo.FileName);
 
                 if (!result.Item1)
                 {
@@ -139,8 +151,23 @@ namespace LiveClientDesktop.ViewModels
                 else
                     _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Recording, LiveAndRecordingOperateEventType.Start));
 
+
                 return result;
             }
+        }
+
+        private RecordingFileInfo CreateRecordingFileInfo(VideoType videoType)
+        {
+            return new RecordingFileInfo()
+            {
+                FileSavePath = _config.RecFileSavePath,
+                FileName = string.Format("{0}{1:yyMMddHHmmss}-{2}.mp4", _liveInfo.Title, DateTime.Now, _config.VideoIndex),
+                StartRecordingTime = DateTime.Now,
+                Index = _config.VideoIndex,
+                ScheduleId = _liveInfo.ScheduleID,
+                Title = _liveInfo.Title,
+                VideoType = videoType
+            };
         }
 
         private void StopRecording()
@@ -167,6 +194,13 @@ namespace LiveClientDesktop.ViewModels
 
                 _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Recording, LiveAndRecordingOperateEventType.Stop));
 
+                _speechVideoRecordingInfo.StopRecordingTime = DateTime.Now;
+                _teacherVideoRecordingInfo.StopRecordingTime = DateTime.Now;
+                _eventAggregator.GetEvent<RecordCompletedEvent>().Publish(new RecordCompletedEventContext
+                {
+                    Vga = _speechVideoRecordingInfo,
+                    Video1 = _teacherVideoRecordingInfo
+                });
                 return result;
             }
         }

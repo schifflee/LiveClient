@@ -134,6 +134,7 @@
     <Compile Include="EventAggregations\OpenPrevireWindowEvent.cs" />
     <Compile Include="EventAggregations\PlayVolumeChangeEvent.cs" />
     <Compile Include="EventAggregations\PPTClosedEvent.cs" />
+    <Compile Include="EventAggregations\RecordCompletedEvent.cs" />
     <Compile Include="EventAggregations\SelectedDemonstrationWindowEvent.cs" />
     <Compile Include="EventAggregations\LiveAndRecordingOperateEvent.cs" />
     <Compile Include="EventAggregations\ShowClassRoomTeachingWindowEvent.cs" />
@@ -153,14 +154,20 @@
     <Compile Include="Models\LiveStreamAddressInfo.cs" />
     <Compile Include="Models\PresentationInfo.cs" />
     <Compile Include="Models\PreviewWindowInfo.cs" />
+    <Compile Include="Models\RecordCompletedEventContext.cs" />
+    <Compile Include="Models\RecordingFileInfo.cs" />
     <Compile Include="Models\SwitchDemonstrationSceneContext.cs" />
+    <Compile Include="Models\UploadFileInfo.cs" />
+    <Compile Include="Models\UploadTaskInfo.cs" />
     <Compile Include="Models\VideoDeviceEventContext.cs" />
     <Compile Include="Models\VideoDeviceInfo.cs" />
     <Compile Include="PowerCreatorLiveClientBootstrapper.cs" />
     <Compile Include="ServiceIntefaces\ILoginService.cs" />
+    <Compile Include="ServiceIntefaces\IStorageService.cs" />
     <Compile Include="Services\AliyunLiveStreamProvider.cs" />
     <Compile Include="Services\AutoLoginService.cs" />
     <Compile Include="Services\CameraDeviceService.cs" />
+    <Compile Include="Services\DocumentService.cs" />
     <Compile Include="Services\EnumerationWindowService.cs" />
     <Compile Include="ServiceIntefaces\ILiveStreamAddressProvider.cs" />
     <Compile Include="Services\LocalLiveStreamProvider.cs" />
@@ -168,6 +175,7 @@
     <Compile Include="Services\PresentationsRepository.cs" />
     <Compile Include="Services\SpeechVideoLiveAndRecordProvider.cs" />
     <Compile Include="Services\TeacherVideoLiveAndRecordProvider.cs" />
+    <Compile Include="Services\UploadCoursewareService.cs" />
     <Compile Include="Services\WebPlatformApiFactory.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
@@ -179,6 +187,7 @@
     <Compile Include="ViewModels\CameraDeviceViewModel.cs" />
     <Compile Include="ViewModels\ClassRoomTeachingViewModel.cs" />
     <Compile Include="ViewModels\CourseContentsViewModel.cs" />
+    <Compile Include="ViewModels\DocumentItemViewModel.cs" />
     <Compile Include="ViewModels\HttpHandler\WebPlatformControlLiveHandler.cs" />
     <Compile Include="ViewModels\HttpHandler\WebPlatformControlPlayCourseContentsHandler.cs" />
     <Compile Include="ViewModels\HttpHandler\WebPlatformControlRecordingHandler.cs" />
@@ -195,6 +204,7 @@
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SpeechViewModel.cs" />
     <Compile Include="ViewModels\TimeRecorderViewModel.cs" />
+    <Compile Include="ViewModels\UploadCoursewareViewModel.cs" />
     <Compile Include="ViewModels\UploadDocumentViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
@@ -233,6 +243,9 @@
     </Compile>
     <Compile Include="Views\SpeechView.xaml.cs">
       <DependentUpon>SpeechView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UploadCoursewareView.xaml.cs">
+      <DependentUpon>UploadCoursewareView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UploadDocumentView.xaml.cs">
       <DependentUpon>UploadDocumentView.xaml</DependentUpon>
@@ -303,6 +316,7 @@
     </Resource>
     <None Include="unity.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -408,6 +422,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SpeechView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UploadCoursewareView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

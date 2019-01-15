@@ -68,6 +68,14 @@ namespace LiveClientDesktop.Services
                     title, author, ext, stream));
         }
 
+        public GetLiveDocumentsRequest CreateGetLiveDocumentsRequest()
+        {
+            return SetRequestCookie(new GetLiveDocumentsRequest(_startupParameters.Domain, _startupParameters.LiveId));
+        }
+        public DeleteLiveDocumentRequest CreateDeleteLiveDocumentRequest(string documentId)
+        {
+            return SetRequestCookie(new DeleteLiveDocumentRequest(_startupParameters.Domain, _startupParameters.LiveId, documentId));
+        }
 
         private T SetRequestCookie<T>(T request) where T : HttpRequest
         {

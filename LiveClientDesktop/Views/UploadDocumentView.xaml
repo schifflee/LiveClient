@@ -6,10 +6,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid>
-            <ListView ItemsSource="{Binding DocumentList}">
+            <ListView ItemsSource="{Binding Documents}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="{Binding ElementName=Column1,Path=ActualWidth}" Header="文档" />
@@ -18,18 +19,18 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" >
                                         <linkBtn:FButton Foreground="#80BA45" 
-                                                         Command="{Binding Path=DataContext.DownLoadCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}}" 
-                                                         CommandParameter="{Binding ID}" 
+                                                         Command="{Binding Path=DataContext.DownloadDocumentCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}}" 
+                                                         CommandParameter="{Binding Id}" 
                                                          Style="{StaticResource FButton_LinkButton}"
-                                                         ToolTip="{Binding DownloadBtnShowContent}"
-                                                         Content="{Binding DownloadBtnShowContent}"
+                                                         ToolTip="{Binding DownloadBtnContent}"
+                                                         Content="{Binding DownloadBtnContent}"
                                                          IsEnabled="{Binding DownloadBtnIsEnabled}"/>
                                         <linkBtn:FButton IsEnabled="{Binding DeleteBtnIsEnabled}"
                                                          Foreground="#80BA45" 
                                                          Style="{StaticResource FButton_LinkButton}"
-                                                         Content="{Binding DeleteBtnShowContent}"
-                                                         Command="{Binding Path=DataContext.DeleteCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}}" 
-                                                         CommandParameter="{Binding ID}"/>
+                                                         Content="{Binding DeleteBtnContent}"
+                                                         Command="{Binding Path=DataContext.DeleteDocumentCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}}" 
+                                                         CommandParameter="{Binding Id}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -38,19 +39,40 @@
                 </ListView.View>
             </ListView>
         </Grid>
-
-        <!--<Button  Grid.Row="1" Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+        <Button Grid.Row="1" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" 
+                        Command="{Binding OpenSelectUploadFileWindow}"
+                        materialDesign:ButtonProgressAssist.Value="{Binding UplodingProgressValue}" 
                         materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                        materialDesign:ButtonProgressAssist.Value="90" 
-                 materialDesign:ButtonProgressAssist.IndicatorForeground="Aqua"
-                        Content="{materialDesign:PackIcon Upload}" Background="#80BA45" BorderBrush="#80BA45" />-->
-        <Button Grid.Row="1" Command="{Binding OpenFileDialog}" Background="#80BA45" BorderBrush="#80BA45"
-                            materialDesign:ButtonProgressAssist.Value="{Binding ProgressValue}">
-            <StackPanel Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="Upload" />
-                <TextBlock>文档上传</TextBlock>
-            </StackPanel>
+                        materialDesign:ButtonProgressAssist.IndicatorBackground="#FFCC80"
+                        materialDesign:ButtonProgressAssist.IndicatorForeground="Red"
+                        Background="#80BA45" BorderBrush="#80BA45">
+            <materialDesign:PackIcon Height="24" Width="24">
+                <materialDesign:PackIcon.Style>
+                    <Style TargetType="materialDesign:PackIcon" BasedOn="{StaticResource {x:Type materialDesign:PackIcon}}">
+                        <Setter Property="Kind" Value="Upload" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsUploadCompleted}" Value="True">
+                                <Setter Property="Kind" Value="Check" />
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.8" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:PackIcon.Style>
+            </materialDesign:PackIcon>
         </Button>
-        
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" x:Name="Column1"></Grid>
+            <Grid Grid.Column="1" x:Name="Column2"></Grid>
+        </Grid>
     </Grid>
 </UserControl>

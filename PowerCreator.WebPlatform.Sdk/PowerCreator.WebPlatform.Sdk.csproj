@@ -45,6 +45,10 @@
     <Compile Include="ServiceResponseValue.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginRequest.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginResponse.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\DeleteLiveDocumentRequest.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\DocumentInfo.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\GetLiveDocumentsRequest.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\GetLiveDocumentsResponse.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveInfoRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveInfoResponse.cs" />
     <Compile Include="WebPlatform\Moedls\Live\PauseLiveRequest.cs" />

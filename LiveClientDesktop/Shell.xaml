@@ -147,10 +147,10 @@
                 </Controls:MetroTabItem>
 
                 <Controls:MetroTabItem Header="资料上传" Controls:ControlsHelper.HeaderFontSize="16">
-                    <views:UploadDocumentView/>
+                    <views:UploadDocumentView DataContext="{Binding VMContext.UploadDocumentViewModel}"/> 
                 </Controls:MetroTabItem>
                 <Controls:MetroTabItem Header="课件上传" Controls:ControlsHelper.HeaderFontSize="16">
-
+                    <views:UploadCoursewareView DataContext="{Binding VMContext.UploadCoursewareViewModel}"/>
                 </Controls:MetroTabItem>
             </Controls:MetroTabControl>
            

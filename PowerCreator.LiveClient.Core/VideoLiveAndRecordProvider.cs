@@ -23,7 +23,6 @@ namespace PowerCreator.LiveClient.Core
         private IVideoEncoder _videoEncoder;
         private readonly ILoggerFacade _logger;
         private readonly IAudioDeviceManager _audioDeviceManager;
-        private string _recFileName;
         protected abstract string Name { get; }
         public RecAndLiveState LiveState
         {
@@ -58,12 +57,11 @@ namespace PowerCreator.LiveClient.Core
         }
 
         #region 录制操作
-        public Tuple<bool, string> StartRecording(string recFileSavePath, int videoIndex = 0)
+        public Tuple<bool, string> StartRecording(string recFileSavePath, string fileName)
         {
             Tuple<bool, string> result = Valid();
             if (!result.Item1) return result;
 
-            _recFileName = string.Format("{0}{1:yyyyMMddHHmmss}-{2}.mp4", Name, DateTime.Now, videoIndex);
             bool isSuccess = false;
             switch (_videoRecord.State)
             {
@@ -72,7 +70,7 @@ namespace PowerCreator.LiveClient.Core
                     if (!Directory.Exists(recFileSavePath))
                         Directory.CreateDirectory(recFileSavePath);
 
-                    isSuccess = _videoRecord.StartRecord(Path.Combine(recFileSavePath, _recFileName));
+                    isSuccess = _videoRecord.StartRecord(Path.Combine(recFileSavePath, fileName));
                     return OperationResult(isSuccess, $"{Name}开始录制失败");
                 case RecAndLiveState.Pause:
                     isSuccess = _videoRecord.ResumeRecord();
