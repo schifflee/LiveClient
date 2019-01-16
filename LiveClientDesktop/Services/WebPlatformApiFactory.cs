@@ -1,6 +1,10 @@
-﻿using PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls;
+﻿using LiveClientDesktop.Models;
+using Newtonsoft.Json;
+using PowerCreator.WebPlatform.Sdk.Vod.Models;
+using PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls;
 using PowerCreatorDotCom.Sdk.Core.Http;
 using System.IO;
+using System.Text;
 
 namespace LiveClientDesktop.Services
 {
@@ -76,6 +80,33 @@ namespace LiveClientDesktop.Services
         {
             return SetRequestCookie(new DeleteLiveDocumentRequest(_startupParameters.Domain, _startupParameters.LiveId, documentId));
         }
+        public GetStoragesRequest CreateGetStoragesRequest(int scheduleId)
+        {
+            return SetRequestCookie(new GetStoragesRequest(_startupParameters.Domain, scheduleId));
+        }
+
+        public CreateTempFileRequest CreateTempFileRequest(string domain, string fileName)
+        {
+            return SetRequestCookie(new CreateTempFileRequest(domain, fileName));
+        }
+        public AppendFileContentRequest CreateAppendFileContentRequest(string domain, string tempFileId, Stream stream)
+        {
+            return SetRequestCookie(new AppendFileContentRequest(domain, tempFileId, stream));
+        }
+        public CreateFromTempFileRequest CreateFromTempFileRequest(string domain, int scheduleId, int videoIndex, string storageName, string[] fileId)
+        {
+            return SetRequestCookie(new CreateFromTempFileRequest(domain, scheduleId, videoIndex, storageName, fileId));
+        }
+        public VideoUploadCompletedRequest CreateVideoUploadCompletedRequest(NotifyVideoUploadCompletedForm notifyVideoUploadCompletedForm)
+        {
+            var buffer = Encoding.GetEncoding("utf-8").GetBytes(JsonConvert.SerializeObject(notifyVideoUploadCompletedForm));
+            Stream content = new MemoryStream();
+            content.Write(buffer, 0, buffer.Length);
+            content.Flush();
+            content.Seek(0, SeekOrigin.Begin);
+            return SetRequestCookie(new VideoUploadCompletedRequest(_startupParameters.Domain, content));
+        }
+
 
         private T SetRequestCookie<T>(T request) where T : HttpRequest
         {

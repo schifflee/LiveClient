@@ -43,8 +43,17 @@
     <Compile Include="ControllerNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceResponseValue.cs" />
+    <Compile Include="Vod\Models\TempFile\AppendFileContentRequest.cs" />
+    <Compile Include="Vod\Models\TempFile\CreateTempFileRequest.cs" />
+    <Compile Include="Vod\Models\TempFile\CreateTempFileResponse.cs" />
+    <Compile Include="Vod\Models\Video\CreateFromTempFileRequest.cs" />
+    <Compile Include="Vod\Models\Video\CreateFromTempFileResponse.cs" />
+    <Compile Include="WebPlatform\Moedls\LiveClient\GetStoragesRequest.cs" />
+    <Compile Include="WebPlatform\Moedls\LiveClient\GetStoragesResponse.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginRequest.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginResponse.cs" />
+    <Compile Include="WebPlatform\Moedls\LiveClient\StorageInfo.cs" />
+    <Compile Include="WebPlatform\Moedls\LiveClient\VideoUploadCompletedRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\DeleteLiveDocumentRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\DocumentInfo.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveDocumentsRequest.cs" />
@@ -68,8 +77,6 @@
       <Name>PowerCreatorDotCom.Sdk.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Vod\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

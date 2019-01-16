@@ -149,21 +149,26 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlibabaVodStorageInfo.cs" />
+    <Compile Include="Models\CreateFormTempFileResult.cs" />
     <Compile Include="Models\LiveAndRecordingOperateEventContext.cs" />
     <Compile Include="Models\LiveInfo.cs" />
     <Compile Include="Models\LiveStreamAddressInfo.cs" />
+    <Compile Include="Models\NotifyVideoUploadCompletedForm.cs" />
     <Compile Include="Models\PresentationInfo.cs" />
     <Compile Include="Models\PreviewWindowInfo.cs" />
-    <Compile Include="Models\RecordCompletedEventContext.cs" />
-    <Compile Include="Models\RecordingFileInfo.cs" />
+    <Compile Include="Models\RecordInfo.cs" />
+    <Compile Include="Models\RecordVideoInfo.cs" />
     <Compile Include="Models\SwitchDemonstrationSceneContext.cs" />
-    <Compile Include="Models\UploadFileInfo.cs" />
     <Compile Include="Models\UploadTaskInfo.cs" />
     <Compile Include="Models\VideoDeviceEventContext.cs" />
     <Compile Include="Models\VideoDeviceInfo.cs" />
+    <Compile Include="Models\VodStorageInfo.cs" />
     <Compile Include="PowerCreatorLiveClientBootstrapper.cs" />
     <Compile Include="ServiceIntefaces\ILoginService.cs" />
-    <Compile Include="ServiceIntefaces\IStorageService.cs" />
+    <Compile Include="ServiceIntefaces\IStorageInfo.cs" />
+    <Compile Include="ServiceIntefaces\IStorage.cs" />
+    <Compile Include="Services\AlibabaOssStorage.cs" />
     <Compile Include="Services\AliyunLiveStreamProvider.cs" />
     <Compile Include="Services\AutoLoginService.cs" />
     <Compile Include="Services\CameraDeviceService.cs" />
@@ -174,8 +179,10 @@
     <Compile Include="Services\PresentationInstanceRepository.cs" />
     <Compile Include="Services\PresentationsRepository.cs" />
     <Compile Include="Services\SpeechVideoLiveAndRecordProvider.cs" />
+    <Compile Include="Services\StorageProvider.cs" />
     <Compile Include="Services\TeacherVideoLiveAndRecordProvider.cs" />
     <Compile Include="Services\UploadCoursewareService.cs" />
+    <Compile Include="Services\VodStorage.cs" />
     <Compile Include="Services\WebPlatformApiFactory.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>

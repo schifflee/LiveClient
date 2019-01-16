@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PowerCreator.WebPlatform.Sdk
+﻿namespace PowerCreator.WebPlatform.Sdk
 {
     public static class ControllerNames
     {
         public const string LiveController = "Live";
         public const string LiveClientLoginController = "MiYun";
+        public const string LiveClient = "LiveClient";
         public const string UploadController = "Upload";
+        public const string TempFile = "TempFile";
+        public const string VodVideo = "Video";
     }
 }

@@ -1,5 +1,4 @@
-﻿using LiveClientDesktop.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace LiveClientDesktop.ServiceIntefaces
 {
-    public interface IStorageService
+    public interface IStorageInfo
     {
-        
-        
-        void UploadFile(List<UploadFileInfo> uploadList);
+        string Name { get; }
+        int ID { get; }
     }
 }

@@ -20,10 +20,10 @@ namespace PowerCreatorDotCom.Sdk.Core
             {
                 shouldRetry = autoRetry && retryTimes < maxRetryNumber;
                 HttpRequest httpRequest = request.BuildRequestUri();
-                HttpResponse response;
+                HttpResponse response=new HttpResponse();
                 try
                 {
-                    response = HttpResponse.GetResponse(httpRequest);
+                    response = response.GetResponse(httpRequest);
                     if (response.Content == null)
                     {
                         if (shouldRetry)

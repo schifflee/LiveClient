@@ -18,7 +18,7 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
         public HttpResponse(string strUrl)
             : base(strUrl) { }
 
-        private static void PasrseHttpResponse(HttpResponse httpResponse, HttpWebResponse httpWebResponse)
+        private  void PasrseHttpResponse(HttpResponse httpResponse, HttpWebResponse httpWebResponse)
         {
             httpResponse.Content = ReadContent(httpResponse, httpWebResponse);
             httpResponse.Status = (int)httpWebResponse.StatusCode;
@@ -44,7 +44,7 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
             }
         }
 
-        public static byte[] ReadContent(HttpResponse response, HttpWebResponse rsp)
+        public  byte[] ReadContent(HttpResponse response, HttpWebResponse rsp)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -67,7 +67,7 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
             }
         }
 
-        public static HttpResponse GetResponse(HttpRequest request, int? timeout = null)
+        public  HttpResponse GetResponse(HttpRequest request, int? timeout = null)
         {
             HttpWebRequest httpWebRequest = GetWebRequest(request);
             if (timeout != null)
@@ -97,7 +97,7 @@ namespace PowerCreatorDotCom.Sdk.Core.Http
             return httpResponse;
         }
 
-        public static HttpWebRequest GetWebRequest(HttpRequest request)
+        public  HttpWebRequest GetWebRequest(HttpRequest request)
         {
             HttpWebRequest httpWebRequest = null;
             httpWebRequest = (HttpWebRequest)WebRequest.Create(request.Url);

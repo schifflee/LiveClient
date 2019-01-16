@@ -20,6 +20,7 @@ namespace LiveClientDesktop
             MicrophoneVolume = 50;
             UseMicrophoneID = 0;
             RecordingStatusChangesAccordingToLiveBroadcastStatus = false;
+            IsAutoUpload = true;
         }
 
         public bool RecordingStatusChangesAccordingToLiveBroadcastStatus { get; set; }
@@ -27,5 +28,6 @@ namespace LiveClientDesktop
         public int VideoVolume { get; set; }
         public int MicrophoneVolume { get; set; }
         public int VideoIndex { get; set; }
+        public bool IsAutoUpload { get; set; }
     }
 }

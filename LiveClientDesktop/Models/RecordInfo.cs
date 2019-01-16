@@ -1,26 +1,17 @@
 ﻿using LiveClientDesktop.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace LiveClientDesktop.Models
 {
-    public class RecordingFileInfo
+    public class RecordInfo
     {
-        private string fileName;
-        public string FileName
+        public RecordInfo()
         {
-            get
-            {
-                return string.Format("{0}{1}", VideoType, fileName);
-            }
-            set
-            {
-                fileName = value;
-            }
+            VideoFiles = new List<RecordVideoInfo>();
         }
-        public string FileSavePath { get; set; }
-
+        public List<RecordVideoInfo> VideoFiles { get; set; }
         public int ScheduleId { get; set; }
-
         public double Duration
         {
             get
@@ -30,9 +21,7 @@ namespace LiveClientDesktop.Models
                 return (StopRecordingTime - StartRecordingTime).TotalSeconds;
             }
         }
-
         public int Index { get; set; }
-        public VideoType VideoType { get; set; }
 
         public string Title { get; set; }
 
@@ -41,8 +30,7 @@ namespace LiveClientDesktop.Models
 
         public override string ToString()
         {
-            return $"{Title},{VideoType.ToString()},{FileSavePath}/{FileName}";
+            return $"{Index},{Title}";
         }
-
     }
 }

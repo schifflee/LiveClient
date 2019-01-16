@@ -3,7 +3,7 @@ using Microsoft.Practices.Prism.Events;
 
 namespace LiveClientDesktop.EventAggregations
 {
-    public class RecordCompletedEvent : CompositePresentationEvent<RecordCompletedEventContext>
+    public class RecordCompletedEvent : CompositePresentationEvent<RecordInfo>
     {
     }
 }

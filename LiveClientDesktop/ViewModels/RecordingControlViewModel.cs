@@ -21,8 +21,9 @@ namespace LiveClientDesktop.ViewModels
         private readonly EventSubscriptionManager _eventSubscriptionManager;
         private readonly IVideoRecordingProvider _speechVideoLiveAndRecordProvider;
         private readonly IVideoRecordingProvider _teacherVideoLiveAndRecordProvider;
-        private RecordingFileInfo _speechVideoRecordingInfo;
-        private RecordingFileInfo _teacherVideoRecordingInfo;
+        private RecordVideoInfo _speechVideoRecordingInfo;
+        private RecordVideoInfo _teacherVideoRecordingInfo;
+        private RecordInfo _recordInfo;
         private DateTime _startRecTime;
         private object syncState = new object();
         public DelegateCommand StartRecordingCommand { get; set; }
@@ -131,6 +132,9 @@ namespace LiveClientDesktop.ViewModels
                 {
                     _speechVideoRecordingInfo = CreateRecordingFileInfo(VideoType.VGA);
                     _teacherVideoRecordingInfo = CreateRecordingFileInfo(VideoType.Video1);
+                    _recordInfo = new RecordInfo { Index = index, ScheduleId = _liveInfo.ScheduleID, StartRecordingTime = DateTime.Now, Title = _liveInfo.Title };
+                    _recordInfo.VideoFiles.Add(_speechVideoRecordingInfo);
+                    _recordInfo.VideoFiles.Add(_teacherVideoRecordingInfo);
                 }
                 Tuple<bool, string> result = _speechVideoLiveAndRecordProvider.StartRecording(_config.RecFileSavePath, _speechVideoRecordingInfo.FileName);
                 if (!result.Item1) return result;
@@ -156,16 +160,12 @@ namespace LiveClientDesktop.ViewModels
             }
         }
 
-        private RecordingFileInfo CreateRecordingFileInfo(VideoType videoType)
+        private RecordVideoInfo CreateRecordingFileInfo(VideoType videoType)
         {
-            return new RecordingFileInfo()
+            return new RecordVideoInfo()
             {
                 FileSavePath = _config.RecFileSavePath,
                 FileName = string.Format("{0}{1:yyMMddHHmmss}-{2}.mp4", _liveInfo.Title, DateTime.Now, _config.VideoIndex),
-                StartRecordingTime = DateTime.Now,
-                Index = _config.VideoIndex,
-                ScheduleId = _liveInfo.ScheduleID,
-                Title = _liveInfo.Title,
                 VideoType = videoType
             };
         }
@@ -194,13 +194,9 @@ namespace LiveClientDesktop.ViewModels
 
                 _eventAggregator.GetEvent<LiveAndRecordingOperateEvent>().Publish(new LiveAndRecordingOperateEventContext(LiveAndRecordingOperateEventSourceType.Recording, LiveAndRecordingOperateEventType.Stop));
 
-                _speechVideoRecordingInfo.StopRecordingTime = DateTime.Now;
-                _teacherVideoRecordingInfo.StopRecordingTime = DateTime.Now;
-                _eventAggregator.GetEvent<RecordCompletedEvent>().Publish(new RecordCompletedEventContext
-                {
-                    Vga = _speechVideoRecordingInfo,
-                    Video1 = _teacherVideoRecordingInfo
-                });
+                _recordInfo.StopRecordingTime = DateTime.Now;
+                _eventAggregator.GetEvent<RecordCompletedEvent>().Publish(_recordInfo);
+                _config.VideoIndex += 1;
                 return result;
             }
         }

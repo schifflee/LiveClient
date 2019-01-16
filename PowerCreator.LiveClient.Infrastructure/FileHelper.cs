@@ -35,5 +35,11 @@ namespace PowerCreator.LiveClient.Infrastructure
         {
             return File.Exists(fileFullPath);
         }
+        public static long GetFileSize(string filePath)
+        {
+            if (!File.Exists(filePath)) return 0;
+
+            return new FileInfo(filePath).Length;
+        }
     }
 }
