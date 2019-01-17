@@ -4,11 +4,8 @@ using LiveClientDesktop.Services;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveClientDesktop.ViewModels
 {
@@ -21,6 +18,7 @@ namespace LiveClientDesktop.ViewModels
 
         private ObservableCollection<UploadCoursewareItemViewModel> uploadFiles;
 
+        public DelegateCommand<string> SetUploadCommand { get; set; }
         public ObservableCollection<UploadCoursewareItemViewModel> UploadFiles
         {
             get { return uploadFiles; }
@@ -30,7 +28,6 @@ namespace LiveClientDesktop.ViewModels
                 this.RaisePropertyChanged("UploadFiles");
             }
         }
-        public DelegateCommand<int?> SetUploadCommand { get; set; }
 
         public UploadCoursewareViewModel(SystemConfig config, UploadCoursewareService uploadCoursewareService, EventSubscriptionManager eventSubscriptionManager)
         {
@@ -39,12 +36,12 @@ namespace LiveClientDesktop.ViewModels
             eventSubscriptionManager.Subscribe<RecordCompletedEvent, RecordInfo>(null, Handler, null);
             UploadFiles = new ObservableCollection<UploadCoursewareItemViewModel>();
             uploadCoursewareService.OnUpload += UploadCoursewareService_OnUpload;
-            SetUploadCommand = new DelegateCommand<int?>(new Action<int?>(SetUploadByIndex));
+            SetUploadCommand = new DelegateCommand<string>(new Action<string>(SetUploadByIndex));
         }
-        private void SetUploadByIndex(int? index)
+        private void SetUploadByIndex(string id)
         {
-            if (!index.HasValue) return;
-            UploadFiles.Where(item => item.Index == index.Value).ForEach((item) =>
+            if (string.IsNullOrEmpty(id)) return;
+            UploadFiles.Where(item => item.Id == id).ForEach((item) =>
             {
                 item.IsUpload = !item.IsUpload;
                 _uploadCoursewareService.SetTaskIsExecutable(item.ScheduleId, item.Index, item.IsUpload);
@@ -94,6 +91,11 @@ namespace LiveClientDesktop.ViewModels
 
     public class UploadCoursewareItemViewModel : NotificationObject
     {
+        public UploadCoursewareItemViewModel()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+        public string Id { get; set; }
         public int Index { get; set; }
 
         public int ScheduleId { get; set; }

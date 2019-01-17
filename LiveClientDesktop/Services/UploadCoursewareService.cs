@@ -5,10 +5,7 @@ using PowerCreatorDotCom.Sdk.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.IO;
 using System.Threading;
 
 namespace LiveClientDesktop.Services
@@ -21,7 +18,14 @@ namespace LiveClientDesktop.Services
         private readonly WebPlatformApiFactory _webPlatformApiFactory;
         private readonly ICollection<UploadTaskInfo> _taskList;
         private IEnumerable<IStorage> storages;
-        private bool _isUploading;
+        public bool Uploading { get; private set; }
+        public bool TaskTotal
+        {
+            get
+            {
+                return _taskList.Any(item => !item.IsCompleted);
+            }
+        }
 
         public event Action<UploadTaskInfo> OnUpload;
         public UploadCoursewareService(SystemConfig config, StorageProvider storageProvider, IServiceClient serviceClient, WebPlatformApiFactory webPlatformApiFactory, EventSubscriptionManager eventSubscriptionManager)
@@ -48,8 +52,8 @@ namespace LiveClientDesktop.Services
 
         private void Upload()
         {
-            if (_isUploading) return;
-            _isUploading = true;
+            if (Uploading) return;
+            Uploading = true;
             Task.Run(() =>
             {
                 while (true)
@@ -105,7 +109,7 @@ namespace LiveClientDesktop.Services
                     Thread.Sleep(500);
                 }
 
-                _isUploading = false;
+                Uploading = false;
             });
         }
 

@@ -1,9 +1,4 @@
 ﻿using Microsoft.Practices.Unity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveClientDesktop.ViewModels
 {
@@ -51,6 +46,8 @@ namespace LiveClientDesktop.ViewModels
         [Dependency]
         public UploadCoursewareViewModel UploadCoursewareViewModel { get; set; }
 
-        
+        [Dependency]
+        public SettingsViewModel SettingsViewModel { get; set; }
+
     }
 }

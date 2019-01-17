@@ -107,6 +107,10 @@ namespace LiveClientDesktop.Services
             return SetRequestCookie(new VideoUploadCompletedRequest(_startupParameters.Domain, content));
         }
 
+        public SaveAlibabaVodVideoIdRequest CreateSaveAlibabaVodVideoIdRequest(int scheduleId, string videoId, string videoType, int videoIndex)
+        {
+            return SetRequestCookie(new SaveAlibabaVodVideoIdRequest(_startupParameters.Domain, scheduleId.ToString(), videoId, videoType, videoIndex.ToString()));
+        }
 
         private T SetRequestCookie<T>(T request) where T : HttpRequest
         {

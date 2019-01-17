@@ -34,6 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="aliyun-net-sdk-core">
+      <HintPath>..\..\..\project\aliyun-net-sdk-core\bin\Release\netstandard2.0\aliyun-net-sdk-core.dll</HintPath>
+    </Reference>
+    <Reference Include="aliyun-net-sdk-vod">
+      <HintPath>..\..\..\project\aliyun-net-sdk-vod\bin\Release\netstandard2.0\aliyun-net-sdk-vod.dll</HintPath>
+    </Reference>
+    <Reference Include="Aliyun.OSS">
+      <HintPath>..\..\..\project\aliyun-oss-csharp-sdk\sdk\bin\Release\Aliyun.OSS.dll</HintPath>
+    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
@@ -151,14 +160,18 @@
     </Compile>
     <Compile Include="Models\AlibabaVodStorageInfo.cs" />
     <Compile Include="Models\CreateFormTempFileResult.cs" />
+    <Compile Include="Models\CreateUploadVideoResponseResult.cs" />
+    <Compile Include="Models\FrameRateInfo.cs" />
     <Compile Include="Models\LiveAndRecordingOperateEventContext.cs" />
     <Compile Include="Models\LiveInfo.cs" />
     <Compile Include="Models\LiveStreamAddressInfo.cs" />
     <Compile Include="Models\NotifyVideoUploadCompletedForm.cs" />
     <Compile Include="Models\PresentationInfo.cs" />
     <Compile Include="Models\PreviewWindowInfo.cs" />
+    <Compile Include="Models\RateInfo.cs" />
     <Compile Include="Models\RecordInfo.cs" />
     <Compile Include="Models\RecordVideoInfo.cs" />
+    <Compile Include="Models\ResolutionInfo.cs" />
     <Compile Include="Models\SwitchDemonstrationSceneContext.cs" />
     <Compile Include="Models\UploadTaskInfo.cs" />
     <Compile Include="Models\VideoDeviceEventContext.cs" />
@@ -168,7 +181,7 @@
     <Compile Include="ServiceIntefaces\ILoginService.cs" />
     <Compile Include="ServiceIntefaces\IStorageInfo.cs" />
     <Compile Include="ServiceIntefaces\IStorage.cs" />
-    <Compile Include="Services\AlibabaOssStorage.cs" />
+    <Compile Include="Services\AlibabaOssStorageInstance.cs" />
     <Compile Include="Services\AliyunLiveStreamProvider.cs" />
     <Compile Include="Services\AutoLoginService.cs" />
     <Compile Include="Services\CameraDeviceService.cs" />
@@ -179,10 +192,11 @@
     <Compile Include="Services\PresentationInstanceRepository.cs" />
     <Compile Include="Services\PresentationsRepository.cs" />
     <Compile Include="Services\SpeechVideoLiveAndRecordProvider.cs" />
+    <Compile Include="Services\StorageInstance.cs" />
     <Compile Include="Services\StorageProvider.cs" />
     <Compile Include="Services\TeacherVideoLiveAndRecordProvider.cs" />
     <Compile Include="Services\UploadCoursewareService.cs" />
-    <Compile Include="Services\VodStorage.cs" />
+    <Compile Include="Services\VodStorageInstance.cs" />
     <Compile Include="Services\WebPlatformApiFactory.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
@@ -208,6 +222,7 @@
     <Compile Include="ViewModels\PreviewWindowViewModel.cs" />
     <Compile Include="ViewModels\RecordingControlViewModel.cs" />
     <Compile Include="ViewModels\RecordingTimeViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SpeechViewModel.cs" />
     <Compile Include="ViewModels\TimeRecorderViewModel.cs" />
@@ -268,6 +283,9 @@
     </Compile>
     <Compile Include="WindowViews\PreviewWindow.xaml.cs">
       <DependentUpon>PreviewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowViews\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowViews\SignInWindow.xaml.cs">
       <DependentUpon>SignInWindow.xaml</DependentUpon>
@@ -380,6 +398,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\ProgressBarStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ScrollViewDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\SliderStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -453,6 +479,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowViews\PreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowViews\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,9 +1,14 @@
 ﻿using LiveClientDesktop.Enums;
+using System.Collections.Generic;
 
 namespace LiveClientDesktop.Models
 {
     public class RecordVideoInfo
     {
+        public RecordVideoInfo()
+        {
+            UploadedCompleted = new Dictionary<int, bool>();
+        }
         private string fileName;
         public string FileName
         {
@@ -22,7 +27,7 @@ namespace LiveClientDesktop.Models
 
         public string TempFileID { get; set; }
 
-        public bool UploadedCompleted { get; set; }
+        public Dictionary<int, bool> UploadedCompleted { get; set; }
         public override string ToString()
         {
             return $"{VideoType.ToString()},{FileSavePath}\\{FileName}";

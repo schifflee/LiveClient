@@ -28,7 +28,7 @@ namespace LiveClientDesktop.Services
             {
                 foreach (var storageInfo in rsp.Value.Storages)
                 {
-                    storages.Add(new VodStorage(new VodStorageInfo()
+                    storages.Add(new VodStorageInstance(new VodStorageInfo()
                     {
                         Address = storageInfo.Address,
                         ID = storageInfo.ID,
@@ -38,7 +38,7 @@ namespace LiveClientDesktop.Services
                 }
             }
 
-            //storages.Add(new AlibabaOssStorage());
+            storages.Add(new AlibabaOssStorageInstance(_serviceClient, _webPlatformApiFactory));
 
             return WarpperResult(true, null, storages);
         }

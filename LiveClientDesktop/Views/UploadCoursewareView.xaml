@@ -17,7 +17,7 @@
 
                                     <linkBtn:FButton Foreground="#80BA45" 
                                                          Command="{Binding Path=DataContext.SetUploadCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}}"
-                                                         CommandParameter="{Binding Index}"
+                                                         CommandParameter="{Binding Id}"
                                                          Style="{StaticResource FButton_LinkButton}"
                                                          Content="{Binding BtnContent}"
                                                          IsEnabled="{Binding BtnIsEnable}"/>

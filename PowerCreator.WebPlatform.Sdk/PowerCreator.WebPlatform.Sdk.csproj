@@ -52,6 +52,7 @@
     <Compile Include="WebPlatform\Moedls\LiveClient\GetStoragesResponse.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginRequest.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\LiveClientLoginResponse.cs" />
+    <Compile Include="WebPlatform\Moedls\LiveClient\SaveAlibabaVodVideoIdRequest.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\StorageInfo.cs" />
     <Compile Include="WebPlatform\Moedls\LiveClient\VideoUploadCompletedRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\DeleteLiveDocumentRequest.cs" />
