@@ -16,6 +16,8 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
 
         bool SetVideoSource(IVideoDevice videoDevice);
 
+        void SetVideoResolution(int width, int height);
+        void SetVideoRate(int rate);
         bool StartVideoEncoder();
 
         bool StopVideoEncoder();

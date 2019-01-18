@@ -1,6 +1,5 @@
 ﻿using PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls;
 using PowerCreatorDotCom.Sdk.Core;
-using PowerCreatorDotCom.Sdk.Core.Http;
 using System;
 using System.Net;
 using System.Net.Sockets;

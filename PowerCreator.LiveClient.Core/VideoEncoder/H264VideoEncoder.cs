@@ -29,10 +29,22 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
         private int _outputDataSize = 0;
         private int _outputTimeStamp = 0;
         private bool _outputKeyFrame = false;
+        private int _resolutionWidth = 1280;
+        private int _resolutionHeight = 720;
+        private int _rate = 1500;
         public H264VideoEncoder()
         {
             _handle = VsNetVideoEncoderSdk.VideoEncoderEx_AllocInstance();
             _bitmapInfoHeader = new BitmapInfoHeader();
+        }
+        public void SetVideoResolution(int width, int height)
+        {
+            _resolutionWidth = width;
+            _resolutionHeight = height;
+        }
+        public void SetVideoRate(int rate)
+        {
+            _rate = rate;
         }
         public bool SetVideoSource(IVideoDevice videoDevice)
         {
@@ -57,7 +69,7 @@ namespace PowerCreator.LiveClient.Core.VideoEncoder
             {
                 _startEncoderTime = DateTime.Now;
                 CurrentUseVideoDevice.OpenDevice();
-                IsStartEncoder = SetEncoderInfo(CurrentUseVideoDevice.DeviceBitmapInfoHeaderIntPtr, 1500, 1280, 720, _bitmapInfoHeader, ref _bitmapInfoHeaderLength);
+                IsStartEncoder = SetEncoderInfo(CurrentUseVideoDevice.DeviceBitmapInfoHeaderIntPtr, _rate, _resolutionWidth, _resolutionHeight, _bitmapInfoHeader, ref _bitmapInfoHeaderLength);
                 CurrentUseVideoDevice.PushingData += CurrentUseVideoDevice_PushingData;
             }
             return IsStartEncoder;

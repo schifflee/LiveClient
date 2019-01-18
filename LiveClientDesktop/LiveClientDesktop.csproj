@@ -138,6 +138,7 @@
     <Compile Include="Enums\SceneType.cs" />
     <Compile Include="Enums\SwitchingVideoDeviceSourceEventType.cs" />
     <Compile Include="Enums\VideoType.cs" />
+    <Compile Include="EventAggregations\ConfigSaveEvent.cs" />
     <Compile Include="EventAggregations\EventSubscriptionManager.cs" />
     <Compile Include="EventAggregations\MicrophoneVolumeChangeEvent.cs" />
     <Compile Include="EventAggregations\OpenPrevireWindowEvent.cs" />
@@ -172,8 +173,10 @@
     <Compile Include="Models\RecordInfo.cs" />
     <Compile Include="Models\RecordVideoInfo.cs" />
     <Compile Include="Models\ResolutionInfo.cs" />
+    <Compile Include="Models\SpeakerInfo.cs" />
     <Compile Include="Models\SwitchDemonstrationSceneContext.cs" />
     <Compile Include="Models\UploadTaskInfo.cs" />
+    <Compile Include="Models\VideoDeviceAlias.cs" />
     <Compile Include="Models\VideoDeviceEventContext.cs" />
     <Compile Include="Models\VideoDeviceInfo.cs" />
     <Compile Include="Models\VodStorageInfo.cs" />
@@ -196,6 +199,8 @@
     <Compile Include="Services\StorageProvider.cs" />
     <Compile Include="Services\TeacherVideoLiveAndRecordProvider.cs" />
     <Compile Include="Services\UploadCoursewareService.cs" />
+    <Compile Include="Services\VideoDeviceAliasService.cs" />
+    <Compile Include="Services\VideoLiveAndRecordBaseProvider.cs" />
     <Compile Include="Services\VodStorageInstance.cs" />
     <Compile Include="Services\WebPlatformApiFactory.cs" />
     <Compile Include="Shell.xaml.cs">
@@ -591,6 +596,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="lib\YUVDraw.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\sound.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\5.jpg">

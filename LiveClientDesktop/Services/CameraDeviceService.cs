@@ -1,9 +1,7 @@
-﻿using PowerCreator.LiveClient.Core.VideoDevice;
+﻿using LiveClientDesktop.Models;
+using PowerCreator.LiveClient.Core.VideoDevice;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveClientDesktop.Services
 {
@@ -14,9 +12,16 @@ namespace LiveClientDesktop.Services
         {
             _videoDeviceManager = videoDeviceManager ?? throw new ArgumentNullException("videoDeviceManager");
         }
-        public IEnumerable<IVideoDevice> GetVideoDevices()
+        public IEnumerable<VideoDeviceInfo> GetVideoDevices()
         {
-            return _videoDeviceManager.GetVideoDevices();
+            ICollection<VideoDeviceInfo> videoDevices = new List<VideoDeviceInfo>();
+            var devices = _videoDeviceManager.GetVideoDevices();
+            foreach (var device in devices)
+            {
+                if (device.IsAvailable)
+                    videoDevices.Add(new VideoDeviceInfo(device));
+            }
+            return videoDevices;
         }
     }
 }

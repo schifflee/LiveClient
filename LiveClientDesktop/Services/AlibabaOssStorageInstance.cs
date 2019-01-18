@@ -3,15 +3,11 @@ using Aliyun.Acs.Core.Profile;
 using Aliyun.Acs.vod.Model.V20170321;
 using Aliyun.OSS;
 using LiveClientDesktop.Models;
-using LiveClientDesktop.ServiceIntefaces;
 using Newtonsoft.Json;
 using PowerCreatorDotCom.Sdk.Core;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveClientDesktop.Services
 {
@@ -61,7 +57,7 @@ namespace LiveClientDesktop.Services
 
         private CreateUploadVideoResponseResult GetUploadAddress(RecordVideoInfo info)
         {
-            DefaultAcsClient client = _initVodClient();
+            DefaultAcsClient client = InitVodClient();
             CreateUploadVideoResponse response = client.GetAcsResponse(CreateUploadVideoRequest(info));
             return new CreateUploadVideoResponseResult()
             {
@@ -79,7 +75,7 @@ namespace LiveClientDesktop.Services
             };
             return request;
         }
-        private DefaultAcsClient _initVodClient()
+        private DefaultAcsClient InitVodClient()
         {
             IClientProfile profile = DefaultProfile.GetProfile("cn-shanghai", _accessKeyId, _accessKeySecret);
             return new DefaultAcsClient(profile);

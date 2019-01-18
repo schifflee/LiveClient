@@ -2,6 +2,8 @@
 using PowerCreator.LiveClient.Infrastructure.Object;
 using PowerCreator.LiveClient.VsNetSdk;
 using System;
+using System.Runtime.ExceptionServices;
+using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -56,6 +58,16 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
             IsOpen = !(VsNetSoundRecorderSdk.SoundRecorder_CloseRecorder(_handle) == 0);
             return !IsOpen;
         }
+        [HandleProcessCorruptedStateExceptions]
+        [SecurityCritical]
+        public void GetAudioLevel(int data, int size, ref int leftChannelLoudness, ref int rightChannelLoudness)
+        {
+            try
+            {
+                VsNetSoundRecorderSdk.GetAudioLevel(AudioDataFormat, data, size, ref leftChannelLoudness, ref rightChannelLoudness);
+            }
+            catch { }
+        }
         private void StartPullAudioData()
         {
             _isRuningPullAudioData = true;
@@ -91,7 +103,7 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
             return VsNetSoundRecorderSdk.SoundRecorder_GetDataSize(_handle);
         }
 
-        
+
         #region IDisposable Support
         private bool disposedValue = false;
 

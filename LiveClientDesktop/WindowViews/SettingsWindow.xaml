@@ -105,10 +105,10 @@
                                     <ColumnDefinition Width="285"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="麦克风" Foreground="#BEBEBE" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                                <ComboBox Grid.Column="1" Foreground="#BEBEBE" BorderBrush="#BEBEBE" ItemsSource="{Binding SettingDataInfo.MicrophoneInfoList}"
+                                <ComboBox Grid.Column="1" Foreground="#BEBEBE" BorderBrush="#BEBEBE" ItemsSource="{Binding AduioDeviceList}"
                                           SelectedValuePath="ID"
-                                          DisplayMemberPath="DisplayName"
-                                          SelectedItem="{Binding SelectedMicrophone}"/>
+                                          DisplayMemberPath="Name"
+                                          SelectedItem="{Binding SelectedAudioDevice}"/>
                             </Grid>
                         </Grid>
                     </Controls:MetroTabItem>
@@ -135,8 +135,8 @@
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="70"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="1"  Background="#2A2F35" BorderBrush="#2A2F35" Command="{Binding BrowserSaveFolderCommand}" Width="100" Height="25" Content="更换目录" />
-                                <Button Grid.Column="3"  Background="#2A2F35" BorderBrush="#2A2F35" Command="{Binding OpenRecFileSaveFolderCommand}" Width="100" Height="25" Content="打开文件夹" />
+                                <Button Grid.Column="1"  Background="#2A2F35" BorderBrush="#2A2F35" x:Name="ChangeFolerBtn" Click="ChangeFolerBtn_Click"  Width="100" Height="25" Content="更换目录" />
+                                <Button Grid.Column="3"  Background="#2A2F35" BorderBrush="#2A2F35" x:Name="OpenFolderBtn" Click="OpenFolderBtn_Click"  Width="100" Height="25" Content="打开文件夹" />
                             </Grid>
                         </Grid>
                     </Controls:MetroTabItem>
@@ -161,10 +161,10 @@
                                     <ColumnDefinition Width="285"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="麦克风:"  Foreground="#BEBEBE" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <ComboBox x:Name="MicrophoneCombobox" Grid.Column="1"  Foreground="#BEBEBE" BorderBrush="#BEBEBE" ItemsSource="{Binding MicrophoneList}"
+                                <ComboBox x:Name="MicrophoneCombobox" Grid.Column="1"  Foreground="#BEBEBE" BorderBrush="#BEBEBE" ItemsSource="{Binding AduioDeviceList}"
                                           SelectedValuePath="ID"
-                                          DisplayMemberPath="DisplayName"
-                                          SelectedItem="{Binding SelectMicrophone}"/>
+                                          DisplayMemberPath="Name"
+                                          SelectedItem="{Binding DebugAduioDevice}"/>
                             </Grid>
                             <Grid Grid.Row="1" Margin="25 10 0 0" >
                                 <TextBlock Text="请点击打开麦克风后对着麦克风说话"  Foreground="#BEBEBE"/>
@@ -174,8 +174,8 @@
                                     <ColumnDefinition Width="110"/>
                                     <ColumnDefinition Width="215"/>
                                 </Grid.ColumnDefinitions>
-                                <Button BorderBrush="#4F8A15" x:Name="MicrophonPlayBtn" Background="#4F8A15" Height="25" Width="110" HorizontalAlignment="Left" FontSize="12"  Content="打开麦克风"></Button>
-                                <Button BorderBrush="#4F8A15" x:Name="MicrophonCloseBtn"  Visibility="Hidden" Background="#4F8A15" Height="25" Width="110" HorizontalAlignment="Left" FontSize="12"  Content="关闭麦克风"></Button>
+                                <Button BorderBrush="#4F8A15" x:Name="MicrophonPlayBtn" Click="MicrophonPlayBtn_Click" Background="#4F8A15" Height="25" Width="110" HorizontalAlignment="Left" FontSize="12"  Content="打开麦克风"></Button>
+                                <Button BorderBrush="#4F8A15" x:Name="MicrophonCloseBtn" Click="MicrophonCloseBtn_Click"  Visibility="Hidden" Background="#4F8A15" Height="25" Width="110" HorizontalAlignment="Left" FontSize="12"  Content="关闭麦克风"></Button>
                                 <ProgressBar x:Name="MicrophoneLoudness" Maximum="20" Height="10" Margin="10 0 0 0" Grid.Column="1"/>
                             </Grid>
                             <Grid Grid.Row="3">
@@ -187,7 +187,7 @@
                                 <ComboBox x:Name="SpeakerCombobox" Grid.Column="1"  Foreground="#BEBEBE" BorderBrush="#BEBEBE" ItemsSource="{Binding SpeakerList}"
                                           SelectedValuePath="ID"
                                           DisplayMemberPath="Name"
-                                          SelectedItem="{Binding SelectSpeaker}"
+                                          SelectedItem="{Binding SelectedSpeaker}"
                                          />
                             </Grid>
                             <Grid Grid.Row="4" Margin="25 10 0 0" >
@@ -198,7 +198,7 @@
                                     <ColumnDefinition Width="110"/>
                                     <ColumnDefinition Width="215"/>
                                 </Grid.ColumnDefinitions>
-                                <Button BorderBrush="#4F8A15" Background="#4F8A15" Height="25" Width="110"  x:Name="PlaySoundBtn" HorizontalAlignment="Left" FontSize="12"  Content="播放测试声音"></Button>
+                                <Button BorderBrush="#4F8A15" Background="#4F8A15" Height="25" Width="110"  x:Name="PlaySoundBtn" Click="PlaySoundBtn_Click" HorizontalAlignment="Left" FontSize="12"  Content="播放测试声音"></Button>
                                 <ProgressBar Height="10" x:Name="SoundLoudness" Margin="10 0 0 0" Maximum="2" Grid.Column="1"/>
                             </Grid>
 
@@ -208,10 +208,10 @@
                                     <ColumnDefinition Width="285"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="摄像头:"  Foreground="#BEBEBE" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                                <ComboBox  IsEnabled="False" x:Name="CameraCombobox" Grid.Column="1" Foreground="#BEBEBE" BorderBrush="#BEBEBE" ItemsSource="{Binding CameraList}"
+                                <ComboBox SelectionChanged="CameraCombobox_SelectionChanged"  IsEnabled="False" x:Name="CameraCombobox" Grid.Column="1" Foreground="#BEBEBE" BorderBrush="#BEBEBE" ItemsSource="{Binding VideoDeviceList}"
                                           SelectedValuePath="ID"
                                           DisplayMemberPath="Name"
-                                          SelectedItem="{Binding SelectCamera}"/>
+                                          SelectedItem="{Binding SelectedVideoDevice}"/>
                             </Grid>
                             <Grid Grid.Row="7">
                                 <Grid.ColumnDefinitions>
@@ -225,8 +225,8 @@
                                 </WindowsFormsHost>
                             </Grid>
                             <Grid Grid.Row="8" Margin="25 3 0 0">
-                                <Button   x:Name="OpenCameraBtn" BorderBrush="#4F8A15" Background="#4F8A15" Height="25" Width="110" HorizontalAlignment="Left" FontSize="12"  Content="打开预览画面"></Button>
-                                <Button   Visibility="Hidden" x:Name="CloseCameraBtn" BorderBrush="#4F8A15" Background="#4F8A15" Height="25" Width="110" FontSize="12" HorizontalAlignment="Left" Content="关闭预览画面"></Button>
+                                <Button   x:Name="OpenCameraBtn" Click="OpenCameraBtn_Click" BorderBrush="#4F8A15" Background="#4F8A15" Height="25" Width="110" HorizontalAlignment="Left" FontSize="12"  Content="打开预览画面"></Button>
+                                <Button    x:Name="CloseCameraBtn" Click="CloseCameraBtn_Click" Visibility="Hidden" BorderBrush="#4F8A15" Background="#4F8A15" Height="25" Width="110" FontSize="12" HorizontalAlignment="Left" Content="关闭预览画面"></Button>
                             </Grid>
                         </Grid>
 
@@ -241,7 +241,7 @@
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <TextBlock Text="视频输入设备:" Width="100"  Foreground="#BEBEBE" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Right" />
-                            <DataGrid Grid.Row="1"  Width="405" CanUserAddRows="False" ItemsSource="{Binding DeviceList}" CanUserDeleteRows="False" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
+                            <DataGrid Grid.Row="1"  Width="405" CanUserAddRows="False" ItemsSource="{Binding VideoDeviceAliasList}" CanUserDeleteRows="False" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
                                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding DeviceName}" IsReadOnly="True"
@@ -256,12 +256,13 @@
                     <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="其他设置" Padding="50 10" Height="41" VerticalAlignment="Bottom">
                         <Grid Background="#13171B">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="80"/>
+                                <RowDefinition Height="120"/>
                                 <RowDefinition Height="80"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" >
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
@@ -273,8 +274,16 @@
                                         <ColumnDefinition Width="30"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox IsChecked="{Binding UploadCompletedDeleteLocalFile}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignCheckBox}"  BorderBrush="#BEBEBE" HorizontalAlignment="Right"></CheckBox>
+                                    <CheckBox IsChecked="{Binding UploadCompletedAutoDeleteLocalFile}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignCheckBox}"  BorderBrush="#BEBEBE" HorizontalAlignment="Right"></CheckBox>
                                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Foreground="#BEBEBE" Margin="10 0 0 0">录制文件上传完成时自动删除本地文件</TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox IsChecked="{Binding AutoUpload}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignCheckBox}"  BorderBrush="#BEBEBE" HorizontalAlignment="Right"></CheckBox>
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Foreground="#BEBEBE" Margin="10 0 0 0">录制完成时自动上传课件</TextBlock>
                                 </Grid>
                             </Grid>
 
@@ -308,8 +317,8 @@
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="* 直播或录制开过程中无法修改设置" Visibility="{Binding ShowCanNotBeModifySettingsTip}" Foreground="Red" Margin="10 0 0 0" VerticalAlignment="Center"></TextBlock>
-                <Button Width="100" Grid.Column="1" IsEnabled="{Binding SaveBtnIsEnable}" Command="{Binding SaveCommand}" Content="确定"  Height="30" BorderBrush="#4F8A15" Background="#4F8A15" VerticalAlignment="Center"></Button>
-                <Button Width="100" Grid.Column="3" Height="30" Command="{Binding CancelSaveCommand}" Content="取消" BorderBrush="#4F8A15" Background="#4F8A15" VerticalAlignment="Center"></Button>
+                <Button Width="100" x:Name="SaveBtn" Click="SaveBtn_Click" Grid.Column="1" IsEnabled="{Binding SaveBtnIsEnable}" Content="确定"  Height="30" BorderBrush="#4F8A15" Background="#4F8A15" VerticalAlignment="Center"></Button>
+                <Button Width="100" x:Name="CancelBtn" Click="CancelBtn_Click" Grid.Column="3" Height="30" Content="取消" BorderBrush="#4F8A15" Background="#4F8A15" VerticalAlignment="Center"></Button>
             </Grid>
         </Grid>
     </Grid>

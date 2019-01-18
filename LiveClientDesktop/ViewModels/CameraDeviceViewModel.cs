@@ -30,8 +30,7 @@ namespace LiveClientDesktop.ViewModels
         {
             foreach (var item in _cameraDeviceService.GetVideoDevices())
             {
-                if (item.IsAvailable)
-                    cameraDeviceList.Add(new CameraDeviceItemViewModel(new VideoDeviceInfo(item)));
+                cameraDeviceList.Add(new CameraDeviceItemViewModel(item));
             }
             CameraDeviceList = cameraDeviceList.OrderByDescending(item => item.ID).ToList();
         }

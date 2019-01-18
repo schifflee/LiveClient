@@ -1,15 +1,16 @@
 ﻿using System.Linq;
+using LiveClientDesktop.EventAggregations;
 using Microsoft.Practices.Prism.Logging;
 using PowerCreator.LiveClient.Core;
 using PowerCreator.LiveClient.Core.AudioDevice;
 
 namespace LiveClientDesktop.Services
 {
-    public class SpeechVideoLiveAndRecordProvider : VideoLiveAndRecordProvider
+    public class SpeechVideoLiveAndRecordProvider : VideoLiveAndRecordBaseProvider
     {
         private readonly ILiveStreamAddressProvider _liveStreamAddressProvider;
-        public SpeechVideoLiveAndRecordProvider(SystemConfig config, ILoggerFacade logger, IAudioDeviceManager audioDeviceManager, ILiveStreamAddressProvider liveStreamAddressProvider)
-            : base(logger, audioDeviceManager, config.UseMicrophoneID)
+        public SpeechVideoLiveAndRecordProvider(SystemConfig config, ILoggerFacade logger, IAudioDeviceManager audioDeviceManager, ILiveStreamAddressProvider liveStreamAddressProvider, EventSubscriptionManager eventSubscriptionManager)
+            : base(config, logger, audioDeviceManager, eventSubscriptionManager)
         {
             _liveStreamAddressProvider = liveStreamAddressProvider;
         }

@@ -158,6 +158,23 @@ namespace PowerCreator.LiveClient.Core
             _useAudioDevice = audioDevice;
             return _aacEncoder.SetAudioDataSource(_useAudioDevice);
         }
+
+        public bool SetAudioDeviceById(int id)
+        {
+            if (_useAudioDevice.ID == id) return true;
+            var audioDevice = _audioDeviceManager.GetAudioDeviceById(id);
+            if (audioDevice == null) return false;
+            _useAudioDevice = audioDevice;
+            return _aacEncoder.SetAudioDataSource(_useAudioDevice);
+        }
+        protected void SetVideoResolution(int width, int height)
+        {
+            _videoEncoder.SetVideoResolution(width, height);
+        }
+        protected void SetVideoRate(int rate)
+        {
+            _videoEncoder.SetVideoRate(rate);
+        }
         protected abstract ILiveStreamAddressInfo GetliveStreamAddressInfo();
 
         private Tuple<bool, string> OperationResult(bool isSuccess, string errMsg = "")

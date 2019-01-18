@@ -31,8 +31,8 @@ namespace LiveClientDesktop
         public Shell(IUnityContainer container)
         {
             InitializeComponent();
-            _eventAggregator = container.Resolve<IEventAggregator>();
             _container = container;
+            _eventAggregator = container.Resolve<IEventAggregator>();
             shellViewModel = container.Resolve<ShellViewModel>();
             this.DataContext = shellViewModel;
             if (shellViewModel != null)
@@ -109,6 +109,11 @@ namespace LiveClientDesktop
                 m_WidthCache = grdWorkbench.ColumnDefinitions[2].Width;
                 grdWorkbench.ColumnDefinitions[2].Width = def;
             }
+        }
+
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowDialogWindow<SettingsWindow>(true);
         }
     }
 }

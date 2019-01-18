@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace PowerCreator.LiveClient.Infrastructure
 {
@@ -8,7 +9,10 @@ namespace PowerCreator.LiveClient.Infrastructure
     {
         public static IEnumerable<string> ReadFileContent(string filePath, string fileName)
         {
-            return File.ReadAllLines(Path.Combine(filePath, fileName));
+            string fileFullPath = Path.Combine(filePath, fileName);
+            if (FileExists(fileFullPath))
+                return File.ReadAllLines(Path.Combine(filePath, fileName));
+            else return Enumerable.Empty<string>();
         }
         public static void WriteAllLines(string filePath, string fileName, IEnumerable<string> contents)
         {

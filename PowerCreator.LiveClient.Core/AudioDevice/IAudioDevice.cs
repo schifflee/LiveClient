@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PowerCreator.LiveClient.Core.AudioDevice
 {
-    public interface IAudioDevice :IPushingDataPushingData<AudioDeviceDataContext>, IDisposable
+    public interface IAudioDevice : IPushingDataPushingData<AudioDeviceDataContext>, IDisposable
     {
         int ID { get; }
         string Name { get; }
@@ -15,6 +15,7 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
         IntPtr AudioDataFormat { get; }
         bool OpenDevice();
 
+        void GetAudioLevel(int data, int size, ref int leftChannelLoudness, ref int rightChannelLoudness);
         bool CloseDevice();
     }
 }

@@ -15,7 +15,7 @@
             <views:LivingTimeView DataContext="{Binding VMContext.LivingTimeViewModel}"/>
             <views:RecordingTimeView DataContext="{Binding VMContext.RecordingTimeViewModel}"/>
             <views:WelcomeView DataContext="{Binding VMContext.WelcomeViewModel}"/>
-            <ToggleButton ToolTip="设置">
+            <ToggleButton ToolTip="设置" Click="ToggleButton_Click">
                 <materialDesign:PackIcon Kind="Settings" />
             </ToggleButton>
         </Controls:WindowCommands>

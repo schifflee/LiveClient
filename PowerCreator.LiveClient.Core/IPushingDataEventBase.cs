@@ -2,8 +2,8 @@
 
 namespace PowerCreator.LiveClient.Core
 {
-    public interface IPushingDataPushingData<EventDataContext>
+    public interface IPushingDataPushingData<EventContext>
     {
-        event Action<EventDataContext> PushingData;
+        event Action<EventContext> PushingData;
     }
 }
