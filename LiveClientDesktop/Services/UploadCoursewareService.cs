@@ -112,7 +112,7 @@ namespace LiveClientDesktop.Services
                 Uploading = false;
             });
         }
-
+        //TODO 1、web获取状态  2、网络断开通知   3、帧率设置 4、自动升级程序 
         public void SetTaskIsExecutable(int scheduleId, int index, bool isExecute)
         {
             _taskList.Where(item => item.RecordInfo.Index == index && item.RecordInfo.ScheduleId == scheduleId).ForEach((item) =>
