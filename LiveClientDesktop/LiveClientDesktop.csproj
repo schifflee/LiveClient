@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>20190119084535786.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="aliyun-net-sdk-core">
       <HintPath>..\..\..\project\aliyun-net-sdk-core\bin\Release\netstandard2.0\aliyun-net-sdk-core.dll</HintPath>
@@ -501,6 +504,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="20190119084535786.ico" />
     <Content Include="lib\avcodec-58.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
