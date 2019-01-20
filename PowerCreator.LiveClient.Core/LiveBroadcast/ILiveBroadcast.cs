@@ -20,5 +20,11 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
 
         bool ResumeLive();
 
+        event Action OnNetworkInterruption;
+
+        event Action OnNetworkReconnectionSucceeded;
+
+        event Action OnNetworkReconnectionFailed;
+
     }
 }

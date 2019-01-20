@@ -24,7 +24,6 @@ namespace LiveClientDesktop.ViewModels
         private RecordVideoInfo _speechVideoRecordingInfo;
         private RecordVideoInfo _teacherVideoRecordingInfo;
         private RecordInfo _recordInfo;
-        private DateTime _startRecTime;
         private object syncState = new object();
         public DelegateCommand StartRecordingCommand { get; set; }
 
@@ -87,8 +86,8 @@ namespace LiveClientDesktop.ViewModels
             PauseRecordingCommand = new DelegateCommand(new Action(PauseRecording));
 
             _eventSubscriptionManager.Subscribe<LiveAndRecordingOperateEvent, LiveAndRecordingOperateEventContext>(null, LiveOperateEventHandler, EventFilter);
+            _eventSubscriptionManager.Subscribe<ShutDownEvent, bool>(null, SystemShutDownEventHandler, null);
         }
-
         private void LiveOperateEventHandler(LiveAndRecordingOperateEventContext context)
         {
             if (_config.RecordingStatusChangesAccordingToLiveBroadcastStatus)
@@ -227,6 +226,11 @@ namespace LiveClientDesktop.ViewModels
 
                 return result;
             }
+        }
+        private void SystemShutDownEventHandler(bool b)
+        {
+            _speechVideoLiveAndRecordProvider.Dispose();
+            _teacherVideoLiveAndRecordProvider.Dispose();
         }
     }
 }

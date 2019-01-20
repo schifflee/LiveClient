@@ -59,6 +59,7 @@
     <Compile Include="Enums\RecAndLiveState.cs" />
     <Compile Include="EnumWindows\IWindowEnumerator.cs" />
     <Compile Include="EnumWindows\WindowEnumerator.cs" />
+    <Compile Include="FrameRateSetting.cs" />
     <Compile Include="GDI32Api.cs" />
     <Compile Include="ILiveStreamAddressInfo.cs" />
     <Compile Include="IPushingDataEventBase.cs" />

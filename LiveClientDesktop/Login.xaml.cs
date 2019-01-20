@@ -39,50 +39,47 @@ namespace LiveClientDesktop
             _liveInfo = container.Resolve<LiveInfo>();
             _container = container;
 
-            
+
 
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Task.Run(() =>
+            var startupParams = _container.Resolve<StartupParameters>();
+            if (string.IsNullOrEmpty(startupParams.LiveId) || string.IsNullOrEmpty(startupParams.Guid) || string.IsNullOrEmpty(startupParams.Domain))
             {
-                Thread.Sleep(1000);
-
-                var loginResult = _autoLoginService.Login();
-                if (!loginResult.Item1) ShowMsgAndCloseThisWindow(loginResult.Item2);
-
-                var getLiveInfoResult = _autoLoginService.GetLiveInfo();
-                if (!getLiveInfoResult.Success) ShowMsgAndCloseThisWindow(getLiveInfoResult.Message);
-
-                SetLiveInfo(getLiveInfoResult.Value);
-
-                //var service = _container.Resolve<IServiceClient>();
-                //var start = _container.Resolve<StartupParameters>();
-                //using (var fs = File.Open(@"E:\密云直播课堂方案0613.pptx", FileMode.Open))
-                //{
-                //    UploadDocument uploadDocument = new UploadDocument("47.93.38.164", "613", "密云直播课堂方案0613", "张老师", ".pptx", fs);
-                //    uploadDocument.UseChunkedEncoding = true;
-                //    uploadDocument.StreamTransferProgress += streamProgressCallback;
-                //    uploadDocument.Headers.Add("Cookie", start.UserIdentity);
-                //    var s = service.GetResponse(uploadDocument);
-                //}
-
-
-                Dispatcher.Invoke(() =>
+                ShowMsgAndCloseThisWindow("缺少启动参数");
+            }
+            else {
+                Task.Run(() =>
                 {
-                    try
+                    Thread.Sleep(1000);
+
+                    var loginResult = _autoLoginService.Login();
+                    if (!loginResult.Item1) ShowMsgAndCloseThisWindow(loginResult.Item2);
+
+                    var getLiveInfoResult = _autoLoginService.GetLiveInfo();
+                    if (!getLiveInfoResult.Success) ShowMsgAndCloseThisWindow(getLiveInfoResult.Message);
+
+                    if (getLiveInfoResult.Value.StopTime < DateTime.Now) ShowMsgAndCloseThisWindow($"名为{getLiveInfoResult.Value.Title}的直播课堂已经结束");
+
+                    SetLiveInfo(getLiveInfoResult.Value);
+
+                    Dispatcher.Invoke(() =>
                     {
-                        Shell shell = _container.Resolve<Shell>();
-                        Application.Current.MainWindow = shell;
-                        this.Close();
-                        shell.Show();
-                    }
-                    catch (Exception ex)
-                    {
-                        ShowMsgAndCloseThisWindow(ex.Message);
-                    }
+                        try
+                        {
+                            Shell shell = _container.Resolve<Shell>();
+                            Application.Current.MainWindow = shell;
+                            this.Close();
+                            shell.Show();
+                        }
+                        catch (Exception ex)
+                        {
+                            ShowMsgAndCloseThisWindow(ex.Message);
+                        }
+                    });
                 });
-            });
+            }
 
         }
         private void SetLiveInfo(GetLiveInfoResponse getLiveInfoResponse)

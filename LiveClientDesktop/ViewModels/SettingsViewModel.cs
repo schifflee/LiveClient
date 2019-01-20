@@ -175,6 +175,20 @@ namespace LiveClientDesktop.ViewModels
             }
         }
 
+        private int duration;
+
+        public int Duration
+        {
+            get { return duration; }
+            set
+            {
+                if (value > 10) return;
+
+                duration = value;
+                this.RaisePropertyChanged("Duration");
+            }
+        }
+
 
 
         public SettingsViewModel(SystemConfig config,
@@ -228,7 +242,7 @@ namespace LiveClientDesktop.ViewModels
             VideoDeviceAliasList = _videoDeviceAliasService.GetDeviceAliasList();
             foreach (var item in VideoDeviceList)
             {
-                if (!VideoDeviceAliasList.Any(d => d.DeviceName == item.Name))
+                if (!VideoDeviceAliasList.Any(d => d.DeviceName == item.Name || d.DeviceNoteName == item.Name))
                     VideoDeviceAliasList.Add(new VideoDeviceAlias
                     {
                         DeviceName = item.Name,
@@ -248,6 +262,7 @@ namespace LiveClientDesktop.ViewModels
             RecordingStatusChangesAccordingToLiveBroadcastStatus = _config.RecordingStatusChangesAccordingToLiveBroadcastStatus;
             UploadCompletedAutoDeleteLocalFile = _config.UploadCompletedAutoDeleteLocalFile;
             AutoUpload = _config.IsAutoUpload;
+            Duration = _config.AutoDelayDuration;
             SaveBtnIsEnable = true;
         }
         public void Save()
@@ -261,6 +276,7 @@ namespace LiveClientDesktop.ViewModels
             _config.UseResolutionInfo = SelectedResolutionInfo;
             _config.UseRateInfo = SelectedRateInfo;
             _config.UseMicrophoneID = SelectedAudioDevice.ID;
+            _config.AutoDelayDuration = Duration;
             _config.Save();
         }
     }

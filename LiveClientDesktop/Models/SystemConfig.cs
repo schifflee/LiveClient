@@ -25,6 +25,7 @@ namespace LiveClientDesktop
             RecordingStatusChangesAccordingToLiveBroadcastStatus = false;
             UploadCompletedAutoDeleteLocalFile = false;
             IsAutoUpload = false;
+            AutoDelayDuration = 10;
         }
 
         public ResolutionInfo UseResolutionInfo { get; set; }
@@ -39,6 +40,7 @@ namespace LiveClientDesktop
         public int VideoIndex { get; set; }
         public bool IsAutoUpload { get; set; }
 
+        public int AutoDelayDuration { get; set; }
         public void Initialize()
         {
             var contents = FileHelper.ReadFileContent(AllDataSavePath, _saveFileName);

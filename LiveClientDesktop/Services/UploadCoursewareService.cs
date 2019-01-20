@@ -19,7 +19,7 @@ namespace LiveClientDesktop.Services
         private readonly ICollection<UploadTaskInfo> _taskList;
         private IEnumerable<IStorage> storages;
         public bool Uploading { get; private set; }
-        public bool TaskTotal
+        public bool IsThereTask
         {
             get
             {
@@ -50,6 +50,10 @@ namespace LiveClientDesktop.Services
             Upload();
         }
 
+        public void ClearTask()
+        {
+            _taskList.Clear();
+        }
         private void Upload()
         {
             if (Uploading) return;
@@ -112,7 +116,8 @@ namespace LiveClientDesktop.Services
                 Uploading = false;
             });
         }
-        //TODO 1、web获取状态  2、网络断开通知   3、帧率设置 4、自动升级程序 
+        //TODO 1、web获取状态 ✔  2、网络断开通知 ✔   3、帧率设置 ✔ 4、自动升级程序 ✔  5、程序启动判断课表是否结束 ✔
+        //TODO 6、窗口关闭释放非托管资源 ✔ 7、显示设备别名  ✔  8、直播或录制时禁止修改配置 ✔  9、启动参数  ✔ 10、自动延时
         public void SetTaskIsExecutable(int scheduleId, int index, bool isExecute)
         {
             _taskList.Where(item => item.RecordInfo.Index == index && item.RecordInfo.ScheduleId == scheduleId).ForEach((item) =>

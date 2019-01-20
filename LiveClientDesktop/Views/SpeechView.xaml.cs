@@ -249,6 +249,11 @@ namespace LiveClientDesktop.Views
                 _desktopWindowCollector.PushingData -= _desktopWindowCollector_PushingData;
             }
             catch { }
+            try
+            {
+                _desktopWindowCollector.Dispose();
+            }
+            catch { }
         }
         private void PPTClosedEventHandler(bool isClosed)
         {

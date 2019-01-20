@@ -47,3 +47,6 @@
 /Renderer.Core/obj
 /PowerCreatorDotCom.Sdk.Core/obj/Debug
 /PowerCreatorDotCom.Sdk.Core/bin/Debug
+/PowerCreator.WebPlatform.Sdk/bin/Release
+/PowerCreatorDotCom.Sdk.Core/bin/Release
+/PowerCreatorDotCom.Sdk.Core/obj/Release

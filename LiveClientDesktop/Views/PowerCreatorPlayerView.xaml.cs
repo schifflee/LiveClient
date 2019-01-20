@@ -59,6 +59,12 @@ namespace LiveClientDesktop.Views
         {
             if (isClosing)
                 MsPlayer.CloseDevice();
+
+            try
+            {
+                _desktopWindowCollector.Dispose();
+            }
+            catch { }
         }
     }
 }

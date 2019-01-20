@@ -6,6 +6,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace LiveClientDesktop.ViewModels
 {
@@ -28,6 +29,23 @@ namespace LiveClientDesktop.ViewModels
                 this.RaisePropertyChanged("UploadFiles");
             }
         }
+        private Visibility clearTaskBtnVisibility;
+
+        public Visibility ClearTaskBtnVisibility
+        {
+            get { return clearTaskBtnVisibility; }
+            set
+            {
+                clearTaskBtnVisibility = value;
+                this.RaisePropertyChanged("ClearTaskBtnVisibility");
+            }
+        }
+
+        public void ClearTask()
+        {
+            _uploadCoursewareService.ClearTask();
+            UploadFiles.Clear();
+        }
 
         public UploadCoursewareViewModel(SystemConfig config, UploadCoursewareService uploadCoursewareService, EventSubscriptionManager eventSubscriptionManager)
         {
@@ -37,6 +55,11 @@ namespace LiveClientDesktop.ViewModels
             UploadFiles = new ObservableCollection<UploadCoursewareItemViewModel>();
             uploadCoursewareService.OnUpload += UploadCoursewareService_OnUpload;
             SetUploadCommand = new DelegateCommand<string>(new Action<string>(SetUploadByIndex));
+            ClearTaskBtnVisibility = Visibility.Hidden;
+        }
+        public Tuple<bool, bool> GetUploadStatus()
+        {
+            return new Tuple<bool, bool>(_uploadCoursewareService.Uploading, _uploadCoursewareService.IsThereTask);
         }
         private void SetUploadByIndex(string id)
         {

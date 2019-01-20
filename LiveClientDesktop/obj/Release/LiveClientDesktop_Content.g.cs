@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("20190119084535786.ico")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/avcodec-58.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/avdevice-58.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/avfilter-7.dll")]
@@ -35,10 +36,12 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/ptzcontrol.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/swresample-3.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/swscale-5.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/system.utility.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/testfreetype.exe")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/user32.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/vsnet.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/vsreg.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/yuvdraw.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/sound.mp3")]
 
 

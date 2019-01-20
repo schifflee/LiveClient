@@ -19,6 +19,7 @@ namespace LiveClientDesktop.Services
         {
             SetVideoResolution(_config.UseResolutionInfo.Width, _config.UseResolutionInfo.Height);
             SetVideoRate(_config.UseRateInfo.Value);
+            SetAudioDeviceById(_config.UseMicrophoneID);
         }
     }
 }

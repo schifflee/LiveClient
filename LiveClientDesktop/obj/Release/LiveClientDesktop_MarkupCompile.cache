@@ -10,11 +10,11 @@ none
 false
 TRACE
 E:\项目\LiveClient\LiveClientDesktop\App.xaml
-14-1747736867
-32459532003
-52-1896443475
-36-636290823
-CustomControls\FButton.xaml;Shell.xaml;Styles\ButtonIcon.xaml;Styles\Colors.xaml;Styles\Menu.xaml;Views\CameraDeviceView.xaml;Views\ClassRoomTeachingView.xaml;Views\CourseContentsView.xaml;Views\LiveControlView.xaml;Views\MicrophoneVolumeControlView.xaml;Views\PlayVolumeControlView.xaml;Views\PowerCreatorPlayerView.xaml;Views\RecordingControlView.xaml;Views\SpeechView.xaml;
+30-246107238
+35657581106
+145521756623
+1511832180141
+CustomControls\FButton.xaml;Login.xaml;Shell.xaml;Styles\ButtonIcon.xaml;Styles\Colors.xaml;Styles\Menu.xaml;Styles\ProgressBarStyle.xaml;Styles\ScrollViewDictionary.xaml;Styles\SliderStyle.xaml;Views\CameraDeviceView.xaml;Views\ClassRoomTeachingView.xaml;Views\CourseContentsView.xaml;Views\LiveControlView.xaml;Views\LivingTimeView.xaml;Views\MicrophoneVolumeControlView.xaml;Views\PlayVolumeControlView.xaml;Views\PowerCreatorPlayerView.xaml;Views\RecordingControlView.xaml;Views\RecordingTimeView.xaml;Views\SignInView.xaml;Views\SpeechView.xaml;Views\UploadCoursewareView.xaml;Views\UploadDocumentView.xaml;Views\WebPageViewer.xaml;Views\WelcomeView.xaml;WindowViews\AskAQuestionWindow.xaml;WindowViews\PreviewWindow.xaml;WindowViews\SettingsWindow.xaml;WindowViews\SignInWindow.xaml;WindowViews\TestWindow.xaml;
 
 False
 

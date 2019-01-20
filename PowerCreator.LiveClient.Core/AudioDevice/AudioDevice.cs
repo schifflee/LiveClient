@@ -102,6 +102,15 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
         {
             return VsNetSoundRecorderSdk.SoundRecorder_GetDataSize(_handle);
         }
+        protected override void OnSubscribe()
+        {
+            OpenDevice();
+        }
+
+        protected override void OnAllUnSubscribe()
+        {
+            CloseDevice();
+        }
 
 
         #region IDisposable Support
@@ -125,15 +134,6 @@ namespace PowerCreator.LiveClient.Core.AudioDevice
             GC.SuppressFinalize(this);
         }
 
-        protected override void OnSubscribe()
-        {
-            OpenDevice();
-        }
-
-        protected override void OnAllUnSubscribe()
-        {
-            CloseDevice();
-        }
 
         #endregion
     }

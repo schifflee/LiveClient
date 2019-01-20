@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity;
 using System.Configuration;
 using System.Windows;
+using System.Web;
 
 namespace LiveClientDesktop
 {
@@ -15,7 +16,19 @@ namespace LiveClientDesktop
         }
         protected override DependencyObject CreateShell()
         {
+            InitializeStartupParameters();
             return this.Container.Resolve<Login>();
+        }
+        private void InitializeStartupParameters()
+        {
+            if (!string.IsNullOrEmpty(_startParams))
+            {
+                var startupParams = this.Container.Resolve<StartupParameters>();
+                var argsArr = HttpUtility.UrlDecode(_startParams).Replace("powercreator://", "").Split('|');
+                startupParams.LiveId = argsArr[0];
+                startupParams.Guid = argsArr[1];
+                startupParams.Domain = argsArr[2];
+            }
         }
         protected override void ConfigureModuleCatalog()
         {

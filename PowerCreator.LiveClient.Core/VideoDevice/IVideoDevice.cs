@@ -12,7 +12,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
     {
         int ID { get; }
 
-        string Name { get; }
+        string Name { get; set; }
 
         int Width { get; }
 

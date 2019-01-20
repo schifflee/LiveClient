@@ -13,7 +13,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
     {
         public int ID { get; private set; }
 
-        public string Name { get; private set; }
+        public string Name { get;  set; }
 
         public int Width { get; private set; }
 
@@ -104,7 +104,8 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
                 VsNetGDI_CopyWndToBitmapSdk.GDI_CopyWndToBitmap(_windowHandle, ref _sourceImageBuffer[0], ref _bitmapInfo);
                 VsNetImgScalerExSdk.ImgScalerEx_Convert(_handel, ref _sourceImageBuffer[0], _sourceImageBuffer.Length, ref _newImageBuffer[0], _newImageBuffer.Length);
                 Pushing(new VideoDeviceDataContext(_newImageBuffer.ToIntHandle(), _newImageBuffer.Length));
-                Thread.Sleep(40);
+                //TODO 应使用配置
+                Thread.Sleep(32);
             }
         }
         public bool SetWindowHandle(IntPtr intPtr)

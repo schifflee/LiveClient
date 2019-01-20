@@ -1,6 +1,8 @@
 ﻿using LiveClientDesktop.Enums;
 using LiveClientDesktop.EventAggregations;
 using LiveClientDesktop.HttpServer;
+using LiveClientDesktop.Models;
+using LiveClientDesktop.Services;
 using LiveClientDesktop.ViewModels;
 using LiveClientDesktop.Views;
 using LiveClientDesktop.WindowViews;
@@ -11,10 +13,11 @@ using PowerCreator.LiveClient.Core;
 using PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls;
 using PowerCreatorDotCom.Sdk.Core;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-
+using WinForm = System.Windows.Forms;
 namespace LiveClientDesktop
 {
     /// <summary>
@@ -25,27 +28,42 @@ namespace LiveClientDesktop
         private readonly IEventAggregator _eventAggregator;
         private readonly IUnityContainer _container;
         private readonly ShellViewModel shellViewModel;
+        private readonly RuntimeState _runtimeState;
+        private readonly UploadCoursewareService _uploadCoursewareService;
         private MetroWindow _dialogWindow;
-        private Button btnGrdSplitter;
-        private GridLength m_WidthCache;
+        private Button _btnGrdSplitter;
+        private GridLength _widthCache;
+        private WinForm.NotifyIcon _notifyIcon;
         public Shell(IUnityContainer container)
         {
             InitializeComponent();
             _container = container;
+            _runtimeState = container.Resolve<RuntimeState>();
             _eventAggregator = container.Resolve<IEventAggregator>();
             shellViewModel = container.Resolve<ShellViewModel>();
-            this.DataContext = shellViewModel;
-            if (shellViewModel != null)
-            {
-                shellViewModel.EventSubscriptionManager.Subscribe<OpenPrevireWindowEvent, bool>(null, ShowPrevireWindowView, null);
-                shellViewModel.EventSubscriptionManager.Subscribe<ShowClassRoomTeachingWindowEvent, ClassRoomTeachingWindowType>(null, show, null);
-            }
+            DataContext = shellViewModel;
+            _uploadCoursewareService = container.Resolve<UploadCoursewareService>();
+            shellViewModel.EventSubscriptionManager.Subscribe<OpenPrevireWindowEvent, bool>(null, ShowPrevireWindowView, null);
+            shellViewModel.EventSubscriptionManager.Subscribe<ShowClassRoomTeachingWindowEvent, ClassRoomTeachingWindowType>(null, ShowClassRoomTeachingWindow, null);
+            shellViewModel.EventSubscriptionManager.Subscribe<LiveNetworkStatusEvent, string>(null, LiveNetworkStatusEventHandler, null);
             Task.Run(() =>
             {
                 new HttpService(5479).listen();
             });
+            InitializeNotifyIcon();
         }
-        private void show(ClassRoomTeachingWindowType windowType)
+        private void InitializeNotifyIcon()
+        {
+            _notifyIcon = new WinForm.NotifyIcon();
+            _notifyIcon.Text = shellViewModel.WindowTitle;
+            _notifyIcon.Icon = new System.Drawing.Icon(@"20190119084535786.ico");
+            _notifyIcon.Visible = true;
+        }
+        private void LiveNetworkStatusEventHandler(string status)
+        {
+            _notifyIcon.ShowBalloonTip(2000, "系统提示", status, WinForm.ToolTipIcon.Warning);
+        }
+        private void ShowClassRoomTeachingWindow(ClassRoomTeachingWindowType windowType)
         {
             switch (windowType)
             {
@@ -85,14 +103,41 @@ namespace LiveClientDesktop
         }
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (_uploadCoursewareService.Uploading)
+            {
+                e.Cancel = true;
+                ShowDialogWindow<UploadCoursewareWindow>(true);
+                return;
+            }
+
+            if (_uploadCoursewareService.IsThereTask)
+            {
+                e.Cancel = true;
+                ShowDialogWindow<UploadCoursewareWindow>(true);
+                return;
+            }
+
+            if (_runtimeState.IsLiveRunning)
+            {
+                e.Cancel = true;
+                MessageBox.Show("当前系统正在直播,请先关闭直播", "系统提示");
+                return;
+            }
+            if (_runtimeState.IsRecording)
+            {
+                e.Cancel = true;
+                MessageBox.Show("当前系统正在录制,请先关闭录制", "系统提示");
+                return;
+            }
+
             _eventAggregator.GetEvent<ShutDownEvent>().Publish(true);
         }
 
         private void MetroWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
-            if (btnGrdSplitter != null)
-                btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
+            _btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
+            if (_btnGrdSplitter != null)
+                _btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
         }
         private void btnGrdSplitter_Click(object sender, RoutedEventArgs e)
         {
@@ -100,13 +145,13 @@ namespace LiveClientDesktop
             GridLength def = new GridLength(0);
             if (temp.Equals(def))
             {
-                grdWorkbench.ColumnDefinitions[2].Width = m_WidthCache;
-                btnGrdSplitter.Content = ">";
+                grdWorkbench.ColumnDefinitions[2].Width = _widthCache;
+                _btnGrdSplitter.Content = ">";
             }
             else
             {
-                btnGrdSplitter.Content = "<";
-                m_WidthCache = grdWorkbench.ColumnDefinitions[2].Width;
+                _btnGrdSplitter.Content = "<";
+                _widthCache = grdWorkbench.ColumnDefinitions[2].Width;
                 grdWorkbench.ColumnDefinitions[2].Width = def;
             }
         }

@@ -57,6 +57,7 @@
     <Compile Include="WebPlatform\Moedls\LiveClient\VideoUploadCompletedRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\DeleteLiveDocumentRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\DocumentInfo.cs" />
+    <Compile Include="WebPlatform\Moedls\Live\ExtendLiveRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveDocumentsRequest.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveDocumentsResponse.cs" />
     <Compile Include="WebPlatform\Moedls\Live\GetLiveInfoRequest.cs" />

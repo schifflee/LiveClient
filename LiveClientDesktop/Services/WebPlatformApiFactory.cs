@@ -112,6 +112,10 @@ namespace LiveClientDesktop.Services
             return SetRequestCookie(new SaveAlibabaVodVideoIdRequest(_startupParameters.Domain, scheduleId.ToString(), videoId, videoType, videoIndex.ToString()));
         }
 
+        public ExtendLiveRequest CreateExtendLiveRequest(int min)
+        {
+            return SetRequestCookie(new ExtendLiveRequest(_startupParameters.Domain, _startupParameters.LiveId, min));
+        }
         private T SetRequestCookie<T>(T request) where T : HttpRequest
         {
             request.Headers.Add("Cookie", _startupParameters.UserIdentity);

@@ -36,6 +36,15 @@
   <PropertyGroup>
     <ApplicationIcon>20190119084535786.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="aliyun-net-sdk-core">
       <HintPath>..\..\..\project\aliyun-net-sdk-core\bin\Release\netstandard2.0\aliyun-net-sdk-core.dll</HintPath>
@@ -143,6 +152,10 @@
     <Compile Include="Enums\VideoType.cs" />
     <Compile Include="EventAggregations\ConfigSaveEvent.cs" />
     <Compile Include="EventAggregations\EventSubscriptionManager.cs" />
+    <Compile Include="EventAggregations\LiveNetworkStatusEvent.cs" />
+    <Compile Include="EventAggregations\LoadCameraDeviceCompletedEvent.cs" />
+    <Compile Include="EventAggregations\LoadPresentationCompletedEvent.cs" />
+    <Compile Include="EventAggregations\LoadWarmVideoCompletedEvent.cs" />
     <Compile Include="EventAggregations\MicrophoneVolumeChangeEvent.cs" />
     <Compile Include="EventAggregations\OpenPrevireWindowEvent.cs" />
     <Compile Include="EventAggregations\PlayVolumeChangeEvent.cs" />
@@ -176,6 +189,7 @@
     <Compile Include="Models\RecordInfo.cs" />
     <Compile Include="Models\RecordVideoInfo.cs" />
     <Compile Include="Models\ResolutionInfo.cs" />
+    <Compile Include="Models\RuntimeState.cs" />
     <Compile Include="Models\SpeakerInfo.cs" />
     <Compile Include="Models\SwitchDemonstrationSceneContext.cs" />
     <Compile Include="Models\UploadTaskInfo.cs" />
@@ -301,6 +315,9 @@
     <Compile Include="WindowViews\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowViews\UploadCoursewareWindow.xaml.cs">
+      <DependentUpon>UploadCoursewareWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WinFormControl\MsPlayerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -340,6 +357,7 @@
       <DependentUpon>PowerPointViewer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -502,9 +520,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WindowViews\UploadCoursewareWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="20190119084535786.ico" />
+    <Content Include="20190119084535786.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="lib\avcodec-58.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

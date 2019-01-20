@@ -1,7 +1,9 @@
 ﻿using LiveClientDesktop.Enums;
+using LiveClientDesktop.EventAggregations;
 using LiveClientDesktop.Models;
 using LiveClientDesktop.Services;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.ViewModel;
 using PowerCreator.LiveClient.Infrastructure;
 using System;
@@ -13,6 +15,7 @@ namespace LiveClientDesktop.ViewModels
     public class PresentationViewModel : NotificationObject
     {
         protected readonly PresentationsRepository _presentationsRepository;
+        private readonly IEventAggregator _eventAggregator;
 
         public DelegateCommand OpenSelectPresentationFileWindow { get; set; }
         public DelegateCommand OpenSelectWarmVideoFileWindow { get; set; }
@@ -64,9 +67,11 @@ namespace LiveClientDesktop.ViewModels
             }
         }
 
-        public PresentationViewModel(PresentationsRepository presentationsRepository)
+        public PresentationViewModel(PresentationsRepository presentationsRepository, IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _presentationsRepository = presentationsRepository ?? throw new ArgumentNullException("presentationsRepository");
+
             OpenSelectPresentationFileWindow = new DelegateCommand(OpenSelectPresentationFileDialog);
             OpenSelectWarmVideoFileWindow = new DelegateCommand(OpenSelectWarmVideoFileDialog);
 
@@ -85,10 +90,12 @@ namespace LiveClientDesktop.ViewModels
         private void LoadPresentationItem()
         {
             PresentationList = LoadPresentationItem(DemoType.Presentation);
+            _eventAggregator.GetEvent<LoadPresentationCompletedEvent>().Publish(PresentationList.Select(item => item.Presentation).ToList());
         }
         private void LoadWarmVideoItem()
         {
             WarmVideoList = LoadPresentationItem(DemoType.WarmVideo);
+            _eventAggregator.GetEvent<LoadWarmVideoCompletedEvent>().Publish(WarmVideoList.Select(item => item.Presentation).ToList());
         }
         private void SetSelectedPresentationItem(List<PresentationItemViewModel> sourceList, Action<PresentationItemViewModel> callback, Func<PresentationItemViewModel, bool> where = null)
         {

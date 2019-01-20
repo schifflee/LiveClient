@@ -13,5 +13,7 @@ namespace PowerCreator.LiveClient.Core
         Tuple<bool, string> StartRecording(string recFileSavePath, string fileName);
         Tuple<bool, string> PauseRecording();
         Tuple<bool, string> StopRecording();
+
+        void Dispose();
     }
 }

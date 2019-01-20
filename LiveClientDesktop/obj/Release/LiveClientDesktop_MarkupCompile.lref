@@ -6,5 +6,10 @@ FE:\项目\LiveClient\LiveClientDesktop\Styles\Menu.xaml;;
 FE:\项目\LiveClient\LiveClientDesktop\Views\MicrophoneVolumeControlView.xaml;;
 FE:\项目\LiveClient\LiveClientDesktop\Views\PlayVolumeControlView.xaml;;
 FE:\项目\LiveClient\LiveClientDesktop\Views\PowerCreatorPlayerView.xaml;;
+FE:\项目\LiveClient\LiveClientDesktop\Views\SignInView.xaml;;
 FE:\项目\LiveClient\LiveClientDesktop\Views\SpeechView.xaml;;
+FE:\项目\LiveClient\LiveClientDesktop\Views\UploadCoursewareView.xaml;;
+FE:\项目\LiveClient\LiveClientDesktop\Views\UploadDocumentView.xaml;;
+FE:\项目\LiveClient\LiveClientDesktop\WindowViews\PreviewWindow.xaml;;
+FE:\项目\LiveClient\LiveClientDesktop\WindowViews\SettingsWindow.xaml;;
 

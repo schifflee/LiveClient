@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using DirectShowLib;
 using PowerCreator.LiveClient.Core.AudioEncoder;
 using PowerCreator.LiveClient.Core.Enums;
@@ -28,6 +24,46 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
         private string _liveStreamName;
         private bool _isPushStreamSuccess;
         private int _continuousPushFailedCount = 0;
+
+        private event Action _onNetworkInterruption;
+        public event Action OnNetworkInterruption
+        {
+            add
+            {
+                _onNetworkInterruption -= value;
+                _onNetworkInterruption += value;
+            }
+            remove
+            {
+                _onNetworkInterruption -= value;
+            }
+        }
+        private event Action _onNetworkReconnectionSucceeded;
+        public event Action OnNetworkReconnectionSucceeded
+        {
+            add
+            {
+                _onNetworkReconnectionSucceeded -= value;
+                _onNetworkReconnectionSucceeded += value;
+            }
+            remove
+            {
+                _onNetworkReconnectionSucceeded -= value;
+            }
+        }
+        private event Action _onNetworkReconnectionFailed;
+        public event Action OnNetworkReconnectionFailed
+        {
+            add
+            {
+                _onNetworkReconnectionFailed -= value;
+                _onNetworkReconnectionFailed += value;
+            }
+            remove
+            {
+                _onNetworkReconnectionFailed -= value;
+            }
+        }
         public LiveBroadcast(IVideoEncoder videoEncoder, IAacEncoder aacEncoder)
         {
             State = RecAndLiveState.NotStart;
@@ -130,6 +166,10 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
                 _continuousPushFailedCount = 0;
                 return;
             }
+            if (_continuousPushFailedCount == 0)
+            {
+                _onNetworkInterruption?.Invoke();
+            }
             _continuousPushFailedCount++;
             if (_continuousPushFailedCount > 100)
             {
@@ -140,13 +180,13 @@ namespace PowerCreator.LiveClient.Core.LiveBroadcast
                     bool reStartSuccess = StartLive();
                     if (reStartSuccess)
                     {
-                        //LogHelper.WriteLog(_name + "与服务器重连成功");
+                        _onNetworkReconnectionSucceeded?.Invoke();
                         break;
                     }
                     else
                     {
-                        //LogHelper.WriteLog(_name + "与服务器重连失败");
-                        Thread.Sleep(1000);
+                        _onNetworkReconnectionFailed?.Invoke();
+                        Thread.Sleep(5000);
                     }
                 }
             }

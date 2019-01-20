@@ -258,6 +258,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="120"/>
                                 <RowDefinition Height="80"/>
+                                <RowDefinition Height="80"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" >
@@ -302,6 +303,26 @@
                                     </Grid.ColumnDefinitions>
                                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding RecordingStatusChangesAccordingToLiveBroadcastStatus}" Style="{StaticResource MaterialDesignCheckBox}"  BorderBrush="#BEBEBE" HorizontalAlignment="Right"></CheckBox>
                                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Foreground="#BEBEBE" Margin="10 0 0 0">录制状态跟随直播状态</TextBlock>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="2" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock VerticalAlignment="Center" Margin="15 0 0 0"  Foreground="#BEBEBE">自动延时设置</TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="90"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Foreground="#BEBEBE" Margin="10 0 0 0">每次自动延时：</TextBlock>
+                                    <TextBox Grid.Column="1" Text="{Binding Duration}" Foreground="#BEBEBE"></TextBox>
+                                    <TextBlock Grid.Column="2" VerticalAlignment="Center" Foreground="#BEBEBE" Margin="10 0 0 0">分</TextBlock>
+
                                 </Grid>
                             </Grid>
                         </Grid>

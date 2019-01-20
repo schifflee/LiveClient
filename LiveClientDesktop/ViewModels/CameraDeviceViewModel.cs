@@ -33,6 +33,7 @@ namespace LiveClientDesktop.ViewModels
                 cameraDeviceList.Add(new CameraDeviceItemViewModel(item));
             }
             CameraDeviceList = cameraDeviceList.OrderByDescending(item => item.ID).ToList();
+            _eventAggregator.GetEvent<LoadCameraDeviceCompletedEvent>().Publish(CameraDeviceList.Select(item => item.OwnerVideoDevice.OwnerVideoDevice).ToList());
         }
         public void SetSelectCameraDevice(int? deviceID)
         {

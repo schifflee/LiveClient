@@ -13,7 +13,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
     {
         public int ID { get; private set; }
 
-        public string Name { get; private set; }
+        public string Name { get;  set; }
 
         public int Width { get; private set; }
 
@@ -49,6 +49,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
         private byte[] _buffer;
         private bool _isRuningPullDeviceData;
         private int _bufferHandle;
+        private int _frameRate = 30;
         internal VideoDevice(string videoDeviceName, int id, ILoggerFacade logger)
         {
             ID = id;
@@ -83,6 +84,9 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
                 Format = (VideoDeviceDataFormat)format;
                 if (_buffer == null)
                     _buffer = new byte[GetBufferSize()];
+
+                //TODO 应使用配置
+                _frameRate = FrameRateSetting.GetCameraFrameRate(width + height);
 
                 StartPullDeviceData();
             }
@@ -120,8 +124,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
                     }
                     Pushing(new VideoDeviceDataContext(_bufferHandle, _buffer.Length));
                 }
-
-                Thread.Sleep(40);
+                Thread.Sleep(_frameRate);
             }
         }
 

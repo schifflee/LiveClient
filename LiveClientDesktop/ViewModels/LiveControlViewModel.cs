@@ -76,10 +76,23 @@ namespace LiveClientDesktop.ViewModels
             _speechVideoLiveAndRecordProvider = container.Resolve<SpeechVideoLiveAndRecordProvider>();
             _teacherVideoLiveAndRecordProvider = container.Resolve<TeacherVideoLiveAndRecordProvider>();
 
+            _speechVideoLiveAndRecordProvider.OnNetworkInterruption += NetworkStatus;
+            _speechVideoLiveAndRecordProvider.OnNetworkReconnectionFailed += NetworkStatus;
+            _speechVideoLiveAndRecordProvider.OnNetworkReconnectionSucceeded += NetworkStatus;
+
+            _teacherVideoLiveAndRecordProvider.OnNetworkInterruption += NetworkStatus;
+            _teacherVideoLiveAndRecordProvider.OnNetworkReconnectionFailed += NetworkStatus;
+            _teacherVideoLiveAndRecordProvider.OnNetworkReconnectionSucceeded += NetworkStatus;
+
             StartLiveBtnIsEnable = true;
             StartLiveCommand = new DelegateCommand(new Action(StartLive));
             StopLiveCommand = new DelegateCommand(new Action(StopLive));
             PauseLiveCommand = new DelegateCommand(new Action(PauseLive));
+        }
+
+        private void NetworkStatus(string status)
+        {
+            _eventAggregator.GetEvent<LiveNetworkStatusEvent>().Publish(status);
         }
 
         private void StartLive()

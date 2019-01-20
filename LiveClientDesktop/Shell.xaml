@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:LiveClientDesktop.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Loaded="MetroWindow_Loaded"
-        mc:Ignorable="d" Title="密云直播客户端"
+        mc:Ignorable="d" Title="{Binding WindowTitle}"
         Closing="MetroWindow_Closing" TitlebarHeight="35"
         MinHeight="720" MinWidth="1280" Height="720" Width="1280">
     <Controls:MetroWindow.RightWindowCommands>

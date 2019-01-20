@@ -1,4 +1,5 @@
-﻿using LiveClientDesktop.ViewModels;
+﻿using LiveClientDesktop.Models;
+using LiveClientDesktop.ViewModels;
 using MahApps.Metro.Controls;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
@@ -41,10 +42,11 @@ namespace LiveClientDesktop.WindowViews
         {
             InitializeComponent();
         }
-        public SettingsWindow(SettingsViewModel settingsViewModel)
+        public SettingsWindow(SettingsViewModel settingsViewModel, RuntimeState runtimeState)
             : this()
         {
             this.DataContext = _settingsViewModel = settingsViewModel;
+            _settingsViewModel.SaveBtnIsEnable = !(runtimeState.IsLiving || runtimeState.IsRecording);
         }
 
         private void MicrophonPlayBtn_Click(object sender, RoutedEventArgs e)

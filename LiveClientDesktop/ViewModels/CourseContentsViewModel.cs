@@ -59,9 +59,9 @@ namespace LiveClientDesktop.ViewModels
         }
         private void SwitchScene(string sceneType)
         {
-            SwitchDemonstrationSceneContext context = new SwitchDemonstrationSceneContext() { SceneType = DemonstratioType.None };
+            SwitchDemonstrationSceneContext context = new SwitchDemonstrationSceneContext() { SceneType = DemonstratioType.None, Source = (SceneType)int.Parse(sceneType) };
             PresentationInfo presentationInfo;
-            switch ((SceneType)int.Parse(sceneType))
+            switch (context.Source)
             {
                 case SceneType.PPT:
                     if (PresentationViewModel.CurrentSelectedPresentation == null)

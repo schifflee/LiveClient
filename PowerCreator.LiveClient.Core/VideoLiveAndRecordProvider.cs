@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace PowerCreator.LiveClient.Core
 {
-    public abstract class VideoLiveAndRecordProvider : ISetupVideoLiveAndRecordingDevices, IVideoLiveProvider, IVideoRecordingProvider
+    public abstract class VideoLiveAndRecordProvider : ISetupVideoLiveAndRecordingDevices, IVideoLiveProvider, IVideoRecordingProvider, IDisposable
     {
         private IAudioDevice _useAudioDevice;
         private IVideoDevice _useVideoDevice;
@@ -23,6 +23,11 @@ namespace PowerCreator.LiveClient.Core
         private IVideoEncoder _videoEncoder;
         private readonly ILoggerFacade _logger;
         private readonly IAudioDeviceManager _audioDeviceManager;
+
+        public event Action<string> OnNetworkInterruption;
+        public event Action<string> OnNetworkReconnectionSucceeded;
+        public event Action<string> OnNetworkReconnectionFailed;
+
         protected abstract string Name { get; }
         public RecAndLiveState LiveState
         {
@@ -54,6 +59,23 @@ namespace PowerCreator.LiveClient.Core
             _aacEncoder.SetAudioDataSource(_useAudioDevice);
             _videoRecord = new Record.Record(_videoEncoder, _aacEncoder);
             _videoLiveBroadcast = new LiveBroadcast.LiveBroadcast(_videoEncoder, _aacEncoder);
+            _videoLiveBroadcast.OnNetworkInterruption += _videoLiveBroadcast_OnNetworkInterruption;
+            _videoLiveBroadcast.OnNetworkReconnectionFailed += _videoLiveBroadcast_OnNetworkReconnectionFailed;
+            _videoLiveBroadcast.OnNetworkReconnectionSucceeded += _videoLiveBroadcast_OnNetworkReconnectionSucceeded;
+        }
+        private void _videoLiveBroadcast_OnNetworkReconnectionSucceeded()
+        {
+            OnNetworkInterruption?.Invoke($"{Name}与直播服务器重连成功");
+        }
+
+        private void _videoLiveBroadcast_OnNetworkReconnectionFailed()
+        {
+            OnNetworkReconnectionFailed?.Invoke($"{Name}与直播服务器重连失败");
+        }
+
+        private void _videoLiveBroadcast_OnNetworkInterruption()
+        {
+            OnNetworkReconnectionSucceeded?.Invoke($"{Name}与直播服务器断开");
         }
 
         #region 录制操作
@@ -191,5 +213,36 @@ namespace PowerCreator.LiveClient.Core
                 return OperationResult(false, "VideoDevice Cannot be null.");
             return OperationResult(true);
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; 
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _videoRecord.Dispose();
+                    _videoLiveBroadcast.Dispose();
+                    _videoEncoder.Dispose();
+                    _aacEncoder.Dispose();
+                    _audioDeviceManager.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        
+         ~VideoLiveAndRecordProvider()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
