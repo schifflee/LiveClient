@@ -238,17 +238,21 @@ namespace LiveClientDesktop.ViewModels
             }
             VideoDeviceList = _cameraDeviceService.GetVideoDevices();
 
-            //TODO 对已移除的设备的备注名称需要做移除处理
+            
             VideoDeviceAliasList = _videoDeviceAliasService.GetDeviceAliasList();
-            foreach (var item in VideoDeviceList)
-            {
-                if (!VideoDeviceAliasList.Any(d => d.DeviceName == item.Name || d.DeviceNoteName == item.Name))
-                    VideoDeviceAliasList.Add(new VideoDeviceAlias
-                    {
-                        DeviceName = item.Name,
-                        DeviceNoteName = item.Name
-                    });
+            if (VideoDeviceAliasList != null) {
+                //TODO 对已移除的设备的备注名称需要做移除处理
+                foreach (var item in VideoDeviceList)
+                {
+                    if (!VideoDeviceAliasList.Any(d => d.DeviceName == item.Name || d.DeviceNoteName == item.Name))
+                        VideoDeviceAliasList.Add(new VideoDeviceAlias
+                        {
+                            DeviceName = item.Name,
+                            DeviceNoteName = item.Name
+                        });
+                }
             }
+            
             SelectedVideoDevice = VideoDeviceList.FirstOrDefault();
 
 

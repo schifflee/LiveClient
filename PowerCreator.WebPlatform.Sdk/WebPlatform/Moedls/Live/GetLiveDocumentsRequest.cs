@@ -8,7 +8,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class GetLiveDocumentsRequest : ServiceRequest<GetLiveDocumentsResponse>
     {
         public GetLiveDocumentsRequest(string domain, string liveId)
-            : base(domain, null, ControllerNames.LiveController, "DocumentList")
+            : base(domain, null, ControllerNames.LIVE_CONTROLLER, "DocumentList")
         {
             LiveId = liveId;
         }

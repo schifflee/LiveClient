@@ -7,7 +7,7 @@ namespace PowerCreator.WebPlatform.Sdk.Vod.Models
     public class AppendFileContentRequest : ServiceRequest<ServiceResponseValue>
     {
         public AppendFileContentRequest(string domain, string tempFileId, Stream content)
-            : base(domain, null, ControllerNames.TempFile, "AppendContent")
+            : base(domain, null, ControllerNames.TEMP_FILE_CONTROLLER, "AppendContent")
         {
             Id = tempFileId;
             Method = MethodType.POST;

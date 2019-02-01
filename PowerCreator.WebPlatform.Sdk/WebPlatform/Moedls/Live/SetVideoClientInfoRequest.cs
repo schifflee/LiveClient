@@ -5,7 +5,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class SetVideoClientInfoRequest : ServiceRequest<SetVideoClientInfoResponse>
     {
         public SetVideoClientInfoRequest(string domain)
-            : base(domain, null, ControllerNames.LiveController, "SetVideoClientInfo")
+            : base(domain, null, ControllerNames.LIVE_CONTROLLER, "SetVideoClientInfo")
         {
 
         }

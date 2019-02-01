@@ -8,7 +8,6 @@ namespace LiveClientDesktop.Services
 {
     public class TeacherVideoLiveAndRecordProvider : VideoLiveAndRecordBaseProvider
     {
-        private readonly SystemConfig _config;
         private readonly ILiveStreamAddressProvider _liveStreamAddressProvider;
         public TeacherVideoLiveAndRecordProvider(SystemConfig config, ILoggerFacade logger, IAudioDeviceManager audioDeviceManager, ILiveStreamAddressProvider liveStreamAddressProvider, EventSubscriptionManager eventSubscriptionManager)
             : base(config, logger, audioDeviceManager, eventSubscriptionManager)

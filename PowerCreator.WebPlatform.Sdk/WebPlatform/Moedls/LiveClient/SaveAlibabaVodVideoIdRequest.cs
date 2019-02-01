@@ -5,7 +5,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class SaveAlibabaVodVideoIdRequest : ServiceRequest<ServiceResponseValue>
     {
         public SaveAlibabaVodVideoIdRequest(string domain, string scheduleId, string videoId, string videoType, string videoIndex)
-            : base(domain, null, ControllerNames.LiveClient, "SaveAliYunVodVideoId")
+            : base(domain, null, ControllerNames.LIVE_CLIENT_CONTROLLER, "SaveAliYunVodVideoId")
         {
             ScheduleId = scheduleId;
             VideoId = videoId;

@@ -24,7 +24,7 @@ namespace LiveClientDesktop.Services
         public IEnumerable<VideoDeviceInfo> GetVideoDevices()
         {
             var deviceAliasList = _videoDeviceAliasService.GetDeviceAliasList();
-
+            if (deviceAliasList == null) deviceAliasList = new List<VideoDeviceAlias>();
             ICollection<VideoDeviceInfo> videoDevices = new List<VideoDeviceInfo>();
             var devices = _videoDeviceManager.GetVideoDevices();
             foreach (var device in devices)

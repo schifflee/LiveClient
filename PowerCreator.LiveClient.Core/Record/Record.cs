@@ -64,8 +64,11 @@ namespace PowerCreator.LiveClient.Core.Record
         {
             if (!IsRecord) return true;
 
+            
             _videoEncoder.PushingData -= VideoEncoderPushingData;
             _aacEncoder.PushingData -= AACEncoderPushingData;
+            _videoEncoder.StopVideoEncoder();
+            _aacEncoder.StopAudioEncoder();
             if (VsNetRecordSdk.FileMuxer_EndWrite(_handle) == 0)
             {
                 State = RecAndLiveState.NotStart;

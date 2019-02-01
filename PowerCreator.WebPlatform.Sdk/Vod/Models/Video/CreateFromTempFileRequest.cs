@@ -5,7 +5,7 @@ namespace PowerCreator.WebPlatform.Sdk.Vod.Models
     public class CreateFromTempFileRequest : ServiceRequest<CreateFromTempFileResponse>
     {
         public CreateFromTempFileRequest(string domain, int scheduleId, int videoIndex, string storageName, string[] fileId)
-            : base(domain, null, ControllerNames.VodVideo, "CreateFromTempFile")
+            : base(domain, null, ControllerNames.VOD_VIDEO_CONTROLLER, "CreateFromTempFile")
         {
             RecordId = scheduleId;
             VideoIndex = videoIndex;

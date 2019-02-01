@@ -49,7 +49,8 @@ namespace LiveClientDesktop.Views
 
             MsPlayer.OpenDevice(eventContext.OwnerVideoDevice);
 
-            _setupVideoLiveAndRecordingDevices?.SetVideoDevice(eventContext.OwnerVideoDevice);
+            _desktopWindowCollector?.SetWindowHandle(MsPlayerContainer.Handle);
+            //_setupVideoLiveAndRecordingDevices?.SetVideoDevice(eventContext.OwnerVideoDevice);
         }
         private bool EventFilter(VideoDeviceEventContext eventContext)
         {

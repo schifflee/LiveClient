@@ -7,6 +7,19 @@ namespace PowerCreator.LiveClient.Infrastructure
 {
     public static class FileHelper
     {
+        public static void SaveJsonFile<T>(string filePath, string fileName, params T[] data)
+        {
+            if (!data.Any()) return;
+
+            ICollection<string> contents = new List<string>();
+            foreach (var item in data)
+            {
+                contents.Add(JsonHelper.SerializeObject(item));
+            }
+            DeleteFile(filePath, fileName);
+            WriteAllLines(filePath, fileName, contents);
+
+        }
         public static IEnumerable<string> ReadFileContent(string filePath, string fileName)
         {
             string fileFullPath = Path.Combine(filePath, fileName);

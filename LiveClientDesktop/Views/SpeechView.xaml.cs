@@ -189,9 +189,9 @@ namespace LiveClientDesktop.Views
                     break;
                 case DemonstratioType.Image:
                     _player.Pause();
+                    AllSceneHidden();
                     if (_imagePath != context.UseDevice.ToString())
                     {
-                        AllSceneHidden();
                         _imagePath = context.UseDevice.ToString();
                         BitmapImage bitmap = new BitmapImage(new Uri(_imagePath));
                         ImageControl.ImageSource = bitmap;

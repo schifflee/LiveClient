@@ -3,6 +3,7 @@ using LiveClientDesktop.Models;
 using Microsoft.Practices.Prism.Events;
 using PowerCreator.LiveClient.Infrastructure;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace LiveClientDesktop
@@ -19,13 +20,6 @@ namespace LiveClientDesktop
             AllDataSavePath = AppDomain.CurrentDomain.BaseDirectory + "Data";
             RecFileSavePath = AppDomain.CurrentDomain.BaseDirectory + "RecFiles";
             TempImageSavePath = AppDomain.CurrentDomain.BaseDirectory + "TempWindowImages";
-            VideoVolume = 30;
-            MicrophoneVolume = 50;
-            UseMicrophoneID = 0;
-            RecordingStatusChangesAccordingToLiveBroadcastStatus = false;
-            UploadCompletedAutoDeleteLocalFile = false;
-            IsAutoUpload = false;
-            AutoDelayDuration = 10;
         }
 
         public ResolutionInfo UseResolutionInfo { get; set; }
@@ -44,15 +38,16 @@ namespace LiveClientDesktop
         public void Initialize()
         {
             var contents = FileHelper.ReadFileContent(AllDataSavePath, _saveFileName);
-            if (!contents.Any()) return;
+            if (!contents.Any())
+            {
+                LoadDefaultConfig();
+                return;
+            }
 
             var config = JsonHelper.DeserializeObject<SystemConfig>(FileHelper.ReadFileContent(AllDataSavePath, _saveFileName).First());
             if (config == null)
             {
-                UseResolutionInfo = new ResolutionInfo { DisplayName = "1280*720", Height = 720, Width = 1280, ID = 1 };
-                UseRateInfo = new RateInfo { ID = 3, DisplayName = "1500kbps", Value = 1500 };
-                UseFrameRateInfo = new FrameRateInfo { ID = 1, DisplayName = "25Fps", Value = 25 };
-                Save();
+                LoadDefaultConfig();
                 return;
             }
 
@@ -77,6 +72,21 @@ namespace LiveClientDesktop
                 _eventAggregator.GetEvent<ConfigSaveEvent>().Publish(true);
             }
             catch { }
+        }
+        private void LoadDefaultConfig() {
+            VideoVolume = 30;
+            MicrophoneVolume = 50;
+            UseMicrophoneID = 0;
+            RecordingStatusChangesAccordingToLiveBroadcastStatus = false;
+            UploadCompletedAutoDeleteLocalFile = false;
+            IsAutoUpload = false;
+            AutoDelayDuration = 10;
+            UseResolutionInfo = new ResolutionInfo { ID = 2, DisplayName = "960*540", Width = 960, Height = 540 };
+            UseRateInfo = new RateInfo { ID = 3, DisplayName = "1500kbps", Value = 1500 };
+            UseFrameRateInfo = new FrameRateInfo { ID = 1, DisplayName = "25Fps", Value = 25 };
+            if (!Directory.Exists(AllDataSavePath))
+                Directory.CreateDirectory(AllDataSavePath);
+            Save();
         }
     }
 }

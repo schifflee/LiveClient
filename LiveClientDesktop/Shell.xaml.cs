@@ -30,6 +30,7 @@ namespace LiveClientDesktop
         private readonly ShellViewModel shellViewModel;
         private readonly RuntimeState _runtimeState;
         private readonly UploadCoursewareService _uploadCoursewareService;
+        private readonly SystemConfig _config;
         private MetroWindow _dialogWindow;
         private Button _btnGrdSplitter;
         private GridLength _widthCache;
@@ -38,6 +39,7 @@ namespace LiveClientDesktop
         {
             InitializeComponent();
             _container = container;
+            _config = container.Resolve<SystemConfig>();
             _runtimeState = container.Resolve<RuntimeState>();
             _eventAggregator = container.Resolve<IEventAggregator>();
             shellViewModel = container.Resolve<ShellViewModel>();
@@ -54,10 +56,12 @@ namespace LiveClientDesktop
         }
         private void InitializeNotifyIcon()
         {
-            _notifyIcon = new WinForm.NotifyIcon();
-            _notifyIcon.Text = shellViewModel.WindowTitle;
-            _notifyIcon.Icon = new System.Drawing.Icon(@"20190119084535786.ico");
-            _notifyIcon.Visible = true;
+            _notifyIcon = new WinForm.NotifyIcon
+            {
+                Text = shellViewModel.WindowTitle,
+                Icon = new System.Drawing.Icon(AppDomain.CurrentDomain.BaseDirectory + "20190119084535786.ico"),
+                Visible = true
+            };
         }
         private void LiveNetworkStatusEventHandler(string status)
         {
@@ -129,7 +133,7 @@ namespace LiveClientDesktop
                 MessageBox.Show("当前系统正在录制,请先关闭录制", "系统提示");
                 return;
             }
-
+            _config.Save();
             _eventAggregator.GetEvent<ShutDownEvent>().Publish(true);
         }
 
@@ -137,9 +141,9 @@ namespace LiveClientDesktop
         {
             _btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
             if (_btnGrdSplitter != null)
-                _btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
+                _btnGrdSplitter.Click += new RoutedEventHandler(BtnGrdSplitter_Click);
         }
-        private void btnGrdSplitter_Click(object sender, RoutedEventArgs e)
+        private void BtnGrdSplitter_Click(object sender, RoutedEventArgs e)
         {
             GridLength temp = grdWorkbench.ColumnDefinitions[2].Width;
             GridLength def = new GridLength(0);

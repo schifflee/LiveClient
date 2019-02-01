@@ -5,7 +5,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class ExtendLiveRequest : ServiceRequest<ServiceResponseValue>
     {
         public ExtendLiveRequest(string domain,string liveId,int minutes)
-            : base(domain, null, ControllerNames.LiveController, "ExtendLive")
+            : base(domain, null, ControllerNames.LIVE_CONTROLLER, "ExtendLive")
         {
             LiveId = liveId;
             Minutes = minutes;

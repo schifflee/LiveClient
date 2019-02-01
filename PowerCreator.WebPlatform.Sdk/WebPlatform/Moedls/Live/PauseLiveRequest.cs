@@ -5,7 +5,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class PauseLiveRequest : ServiceRequest<PauseLiveResponse>
     {
         public PauseLiveRequest(string domain)
-            : base(domain, null, ControllerNames.LiveController, "PauseLive")
+            : base(domain, null, ControllerNames.LIVE_CONTROLLER, "PauseLive")
         {
         }
         private string liveId;

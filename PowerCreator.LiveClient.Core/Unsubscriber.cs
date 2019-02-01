@@ -7,7 +7,7 @@ namespace PowerCreator.LiveClient.Core
     {
         private List<IObserver<T>> _observers;
         private IObserver<T> _observer;
-        private Action<List<IObserver<T>>> _unSubscriberCompletedCallBack;
+        //private Action<List<IObserver<T>>> _unSubscriberCompletedCallBack;
         private string id;
         public Unsubscriber(List<IObserver<T>> observers, IObserver<T> observer/*, Action<List<IObserver<T>>> unSubscriberCompletedCallBack*/)
         {

@@ -7,7 +7,7 @@ namespace PowerCreator.WebPlatform.Sdk.Vod.Models
     public class CreateTempFileRequest : ServiceRequest<CreateTempFileResponse>
     {
         public CreateTempFileRequest(string domain, string fileName)
-            : base(domain, null, ControllerNames.TempFile, "Create")
+            : base(domain, null, ControllerNames.TEMP_FILE_CONTROLLER, "Create")
         {
             FileName = fileName;
         }

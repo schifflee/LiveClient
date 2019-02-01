@@ -3,31 +3,30 @@ using PowerCreatorDotCom.Sdk.Core.Http;
 using System;
 using System.Collections.Generic;
 
-namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
+namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls.Storage
 {
-    public class GetStoragesRequest : ServiceRequest<GetStoragesResponse>
+    public class GetStorageRequest : ServiceRequest<GetStoragesResponse>
     {
-        public GetStoragesRequest(string domain,int scheduleId)
-            : base(domain, null, ControllerNames.LIVE_CLIENT_CONTROLLER, "GetStorages")
+        public GetStorageRequest(string domain,string classroomId)
+            : base(domain, null, ControllerNames.STORAGE_CONTROLLER, "getStorage.ashx")
         {
-            RecordId = scheduleId;
+            this.classroomID = classroomId;
         }
-        private int recordId;
+        private string classroomID;
 
-        public int RecordId
+        public string ClassroomID
         {
-            get { return recordId; }
+            get { return classroomID; }
             set
             {
-                recordId = value;
-                this.AddQueryParameters("RecordId", value);
+                classroomID = value;
+                this.AddQueryParameters("ClassroomID", value);
             }
         }
         public override ServiceResponseResult<GetStoragesResponse> GetResponse(string responseContext, FormatType? format)
         {
             try
             {
-                GetStoragesResponse getStoragesResponse = new GetStoragesResponse();
                 var result = JsonToObject<ServiceResponseResult<List<StorageInfo>>>(responseContext);
                 return new ServiceResponseResult<GetStoragesResponse>
                 {

@@ -95,8 +95,8 @@ namespace LiveClientDesktop
         {
             Dispatcher.Invoke(() =>
             {
-                Close();
                 MessageBox.Show(msg, "系统提示");
+                Close();
             });
         }
     }

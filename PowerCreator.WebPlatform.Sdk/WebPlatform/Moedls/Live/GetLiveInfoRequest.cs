@@ -5,7 +5,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class GetLiveInfoRequest : ServiceRequest<GetLiveInfoResponse>
     {
         public GetLiveInfoRequest(string domain)
-            : base(domain, null, ControllerNames.LiveController, "GetLiveInfo")
+            : base(domain, null, ControllerNames.LIVE_CONTROLLER, "GetLiveInfo")
         {
 
         }

@@ -208,9 +208,9 @@ namespace PowerCreator.LiveClient.Core
         private Tuple<bool, string> Valid()
         {
             if (_useAudioDevice == null)
-                return OperationResult(false, "AudioDevice Cannot be null.");
+                return OperationResult(false, "Audio Device Cannot be null.");
             if (_useVideoDevice == null)
-                return OperationResult(false, "VideoDevice Cannot be null.");
+                return OperationResult(false, "Video Device Cannot be null.");
             return OperationResult(true);
         }
 

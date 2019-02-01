@@ -7,7 +7,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class StartLiveRequest : ServiceRequest<StartLiveResponse>
     {
         public StartLiveRequest(string domain)
-            : base(domain, null, ControllerNames.LiveController, "StartLive")
+            : base(domain, null, ControllerNames.LIVE_CONTROLLER, "StartLive")
         {
             Index = new string[] { "0", "1" };
         }

@@ -12,7 +12,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class UploadDocumentRequest : ServiceRequest<ServiceResponseValue>
     {
         public UploadDocumentRequest(string domain, string liveId, string title, string author, string ext, Stream content)
-            : base(domain, null, ControllerNames.LiveController, "DocumentAdd")
+            : base(domain, null, ControllerNames.LIVE_CONTROLLER, "DocumentAdd")
         {
             LiveID = liveId;
             Title = title;

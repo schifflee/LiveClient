@@ -10,7 +10,7 @@
         <WindowsFormsHost x:Name="DefaultScene" Visibility="Hidden">
             <ElementHost>
                 <Grid Background="#474747">
-                    <TextBlock FontSize="20" HorizontalAlignment="Center" Foreground="#5A5A5A" VerticalAlignment="Center">密云直播课堂</TextBlock>
+                    <TextBlock FontSize="26" HorizontalAlignment="Center" Foreground="#5A5A5A"  VerticalAlignment="Center">密云直播课堂</TextBlock>
                 </Grid>
             </ElementHost>
         </WindowsFormsHost>

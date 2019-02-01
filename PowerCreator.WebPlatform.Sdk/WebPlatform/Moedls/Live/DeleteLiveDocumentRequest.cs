@@ -5,7 +5,7 @@ namespace PowerCreator.WebPlatform.Sdk.WebPlatform.Moedls
     public class DeleteLiveDocumentRequest : ServiceRequest<ServiceResponseValue>
     {
         public DeleteLiveDocumentRequest(string domain, string liveId,string documentId)
-            : base(domain, null, ControllerNames.LiveController, "DocumentDel")
+            : base(domain, null, ControllerNames.LIVE_CONTROLLER, "DocumentDel")
         {
             LiveId = liveId;
             DocumentID = documentId;

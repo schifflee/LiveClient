@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using DirectShowLib;
@@ -13,7 +16,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
     {
         public int ID { get; private set; }
 
-        public string Name { get;  set; }
+        public string Name { get; set; }
 
         public int Width { get; private set; }
 
@@ -72,6 +75,7 @@ namespace PowerCreator.LiveClient.Core.VideoDevice
             if (!IsOpen) return true;
             _isRuningCollect = false;
             IsOpen = false;
+            _sourceImageBuffer = new byte[1920 * 1080 * 4];
             return VsNetImgScalerExSdk.ImgScalerEx_EndConvert(_handel) == 0;
         }
 
